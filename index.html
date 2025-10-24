@@ -586,8 +586,8 @@ strings firmware.bin | grep -i password</code></pre>
             <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>(tool --version 2>&1 ; date; tool [args]) |& tee logfile.txt</code></pre>
 
             <p class="command-desc">save JSON where possible</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nuclei -o nuclei.json -oJ nuclei.json
-ffuf -o ffuf.json -of json</code></pre>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nuclei -l hosts.txt -o nuclei.json -oJ nuclei.json
+ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></pre>
         </div>
     </div>
     
@@ -711,7 +711,7 @@ ffuf -o ffuf.json -of json</code></pre>
 
         // SECTION 14: Binary Reversing & Exploit Development
         "section14Title": { "en": "14) Binary Reversing & Exploit Development", "ru": "14) Реверсирование бинарных файлов и разработка эксплойтов", "he": "14) הנדסה הפוכה ופיתוח ניצול", "fr": "14) Rétro-ingénierie binaire et développement d'exploits", "de": "14) Binär-Reverse-Engineering & Exploit-Entwicklung" },
-        "section14Desc": { "en": "Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.", "ru": "Статический анализ (ELF), поиск ROP-гаджетов и настройка интерактивной отладки.", "he": "ניתוח סטטי (ELF), ציד גאדג'טים של ROP והגדרת ניפוי באגים אינטראקטיבי.", "fr": "Analyse statique (ELF), chasse aux gadgets ROP et configuration de débogage interactif.", "de": "Statische Analyse (ELF), ROP-Gadget-Suche und interaktives Debugging-Setup." },
+        "section14Desc": { "en": "Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.", "ru": "Статический анализ (ELF), поиск ROP-гаджетов и настройка интерактивной отладки.", "he": "ניתוח סטטי (ELF), ציד גאדג'טים של ROP והגדרת ניפוי באגים אינטראקטיבי.", "fr": "Analyse statique (ELF), chasse aux gadgets ROP et configuration de débogage interactif.", "de": "Tools zur Analyse von Header-Dateien, Assembly-Code und zur Vorbereitung von Buffer-Overflow-Exploits." },
         "section14CommandDesc": { "en": "Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.", "ru": "Инструменты, используемые для анализа заголовков исполняемых файлов, кода ассемблера и подготовки эксплойтов переполнения буфера.", "he": "כלים המשמשים לניתוח כותרות קבצים ניתנים להרצה, קוד אסמבלי והכנת ניצול גלישת חוצץ.", "fr": "Outils utilisés pour analyser les en-têtes de fichiers exécutables, le code assembleur et préparer des exploits de dépassement de tampon.", "de": "Tools zur Analyse von Header-Dateien, Assembly-Code und zur Vorbereitung von Buffer-Overflow-Exploits." },
 
         // SECTION 15: Fuzzing
@@ -736,7 +736,7 @@ ffuf -o ffuf.json -of json</code></pre>
     };
 
     // Global state for collapse tracking
-    let collapsed = false;
+    let collapsed = true; // Set to true to start collapsed
 
     // --- COOKIE AND LANGUAGE PERSISTENCE FUNCTIONS ---
 
@@ -805,7 +805,14 @@ ffuf -o ffuf.json -of json</code></pre>
         // 6. Save the preference
         setCookie('cheatsheet_lang', lang, 30);
         
-        // 7. Update share links URL
+        // 7. Update copy button text
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            if (btn.textContent !== "Copied!" && btn.textContent !== "Скопировано!" && btn.textContent !== "הועתק!" && btn.textContent !== "Copié!" && btn.textContent !== "Kopiert!") {
+                btn.textContent = translations['copyButtonText'][lang] || 'Copy';
+            }
+        });
+
+        // 8. Update share links URL
         const currentUrl = encodeURIComponent(window.location.href);
         const defaultText = encodeURIComponent("Penetration Testing & Vulnerability Research Cheatsheet by @trippingalien - A robust collection of commands for recon, exploits, and reversing.");
         
@@ -833,7 +840,6 @@ ffuf -o ffuf.json -of json</code></pre>
         const cleanedCode = code.split('\n').filter(line => !line.trim().startsWith('#') && line.trim() !== '').join('\n');
 
         navigator.clipboard.writeText(cleanedCode).then(() => {
-            const originalText = button.innerHTML;
             const lang = getCookie('cheatsheet_lang') || 'en';
             button.innerHTML = translations['copyButtonText'][lang] === 'Copy' ? 'Copied!' : 
                                translations['copyButtonText'][lang] === 'Копировать' ? 'Скопировано!' : 
@@ -852,18 +858,20 @@ ffuf -o ffuf.json -of json</code></pre>
 
     function setupSectionToggles() {
         document.querySelectorAll('.section-header').forEach(header => {
-            header.addEventListener('click', function() {
-                const sectionId = this.getAttribute('data-target');
-                const content = document.getElementById(sectionId);
-                const icon = this.querySelector('.toggle-icon');
+            const sectionId = header.getAttribute('data-target');
+            const content = document.getElementById(sectionId);
+            const icon = header.querySelector('.toggle-icon');
 
+            header.addEventListener('click', function() {
                 const isExpanded = content.style.display === 'block';
                 content.style.display = isExpanded ? 'none' : 'block';
                 icon.textContent = isExpanded ? '▶' : '▼';
                 this.setAttribute('aria-expanded', !isExpanded);
             });
-            // Initial state: collapsed=false, so set icon to expanded (▼)
-            header.querySelector('.toggle-icon').textContent = '▼';
+            
+            // Apply initial collapsed state 
+            content.style.display = collapsed ? 'none' : 'block';
+            icon.textContent = collapsed ? '▶' : '▼';
         });
     }
 
@@ -884,7 +892,8 @@ ffuf -o ffuf.json -of json</code></pre>
         const toggleKey = collapsed ? 'toggleButtonCollapsed' : 'toggleButtonExpanded';
         toggleButton.textContent = translations[toggleKey][lang];
     }
-
+    
+    // --- FIX: Corrected searchCommands function ---
     function searchCommands(query) {
         const sections = document.querySelectorAll('.section-container');
         const normalizedQuery = query.toLowerCase().trim();
@@ -895,6 +904,8 @@ ffuf -o ffuf.json -of json</code></pre>
             // Check if the section header or description matches
             const headerText = section.querySelector('.section-header').innerText.toLowerCase();
             const descText = section.querySelector('.section-desc').innerText.toLowerCase();
+            
+            // FIX: Defined the missing variable 'headerOrDescMatch'
             const headerOrDescMatch = headerText.includes(normalizedQuery) || descText.includes(normalizedQuery);
 
             const commandDescElements = sectionContent.querySelectorAll('.command-desc');
@@ -935,15 +946,19 @@ ffuf -o ffuf.json -of json</code></pre>
             }
         });
     }
+    // --- END FIX ---
 
 
     // --- INITIALIZATION ---
     window.onload = function() {
-        // 1. Get preferred language (default to English)
+        // 1. Set up section expand/collapse functionality (must run before translation/toggles)
+        setupSectionToggles();
+        
+        // 2. Get preferred language (default to English) and translate all content
         const storedLang = getCookie('cheatsheet_lang') || 'en';
         translate(storedLang);
 
-        // 2. Set up language dropdown event listener
+        // 3. Set up language dropdown event listener
         const langSelect = document.getElementById('languageSelect');
         if (langSelect) {
             langSelect.addEventListener('change', function() {
@@ -951,7 +966,7 @@ ffuf -o ffuf.json -of json</code></pre>
             });
         }
 
-        // 3. Set up button handlers
+        // 4. Set up button handlers
         document.getElementById('toggleAllButton').addEventListener('click', toggleAll);
         document.querySelectorAll('.copy-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -959,13 +974,13 @@ ffuf -o ffuf.json -of json</code></pre>
             });
         });
 
-        // 4. Set up search input handler
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            searchCommands(e.target.value);
-        });
-
-        // 5. Set up section expand/collapse functionality
-        setupSectionToggles();
+        // 5. Set up search input handler
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                searchCommands(e.target.value);
+            });
+        }
     };
 </script>
 
