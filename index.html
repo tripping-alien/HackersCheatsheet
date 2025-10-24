@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Penetration Testing & Vulnerability Research Cheatsheet</title>
+<meta name="description" content="Practical, searchable cheatsheet for penetration testing and vulnerability research commands. Authorized use only." />
+<link rel="icon" href="data:," />
+
+<!-- Highlight.js for code highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+<style>
+  :root{
+    --bg:#0d0f12; --card:#0f1720; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#06b6d4;
+    --glass: rgba(255,255,255,0.03);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%; margin:0; background:linear-gradient(180deg,#04050a 0%, #071027 60%); color:#e6eef7;}
+  .wrap{max-width:1100px;margin:28px auto;padding:20px;}
+  header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:18px;box-shadow:0 6px 24px rgba(12,18,40,0.6)}
+  h1{margin:0;font-size:1.5rem}
+  p.lead{margin:6px 0 0;color:var(--muted)}
+  .meta{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .badge{background:var(--glass);padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600;font-size:13px}
+  .topbar{display:flex;gap:10px;margin:18px 0;align-items:center}
+  .search{flex:1;position:relative}
+  .search input{width:100%;padding:12px 40px 12px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.25);color:inherit}
+  .search .key{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px}
+  .controls{display:flex;gap:8px}
+  button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:white;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 10px;border-radius:10px;cursor:pointer}
+  main{display:grid;grid-template-columns:280px 1fr;gap:20px}
+  nav{position:sticky;top:22px;background:rgba(255,255,255,0.02);padding:12px;border-radius:12px;height:calc(100vh - 90px);overflow:auto}
+  nav h3{margin:0 0 8px 0;color:var(--muted);font-size:13px}
+  nav a{display:block;padding:8px 10px;border-radius:8px;color:var(--muted);text-decoration:none;margin-bottom:6px}
+  nav a:hover{background:rgba(255,255,255,0.02);color:#fff}
+  section.content{background:rgba(255,255,255,0.02);padding:18px;border-radius:12px;min-height:60vh;overflow:auto}
+  .notice{background:linear-gradient(90deg, rgba(252,165,165,0.06), rgba(253,224,71,0.02));border-left:4px solid #eab308;color:#ffd; padding:12px;border-radius:8px;margin-bottom:14px}
+  article h2{margin-top:8px;color:#fff}
+  article p.lead-small{color:var(--muted);margin-top:0}
+  .code-section{margin-top:12px;margin-bottom:18px}
+  pre{background:#030712;padding:12px;border-radius:8px;overflow:auto;border:1px solid rgba(255,255,255,0.02)}
+  .code-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .code-actions{display:flex;gap:6px}
+  .chip{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-size:13px;color:var(--muted)}
+  .collapse{border-radius:8px;padding:6px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02)}
+  footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+  @media (max-width:920px){
+    main{grid-template-columns:1fr; }
+    nav{height:auto;position:relative}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">PT</div>
+    <div>
+      <h1>Penetration Testing &amp; Vulnerability Research — Cheatsheet</h1>
+      <p class="lead">Practical, searchable command reference for recon, scanning, research, fuzzing, reversing, and safe PoC testing.</p>
+    </div>
+    <div class="meta">
+      <div class="badge">AUTHORIZED USE ONLY</div>
+    </div>
+  </header>
+
+  <div class="topbar">
+    <div class="search" role="search">
+      <input id="search" placeholder="Search commands, tools, CVE..." aria-label="Search cheatsheet">
+      <div class="key">⌘/Ctrl+K</div>
+    </div>
+
+    <div class="controls">
+      <button class="ghost" id="toggleAll">Collapse All</button>
+      <button class="primary" id="downloadMd">Download Markdown</button>
+    </div>
+  </div>
+
+  <main>
+    <nav aria-label="Table of contents">
+      <h3>Contents</h3>
+      <a href="#1-recon">1. Recon</a>
+      <a href="#2-subdomain">2. Subdomain & DNS</a>
+      <a href="#3-port">3. Port & Service Discovery</a>
+      <a href="#4-web-fuzzing">4. Web Discovery & Fuzzing</a>
+      <a href="#5-web-app">5. Web App Testing</a>
+      <a href="#6-sca">6. Vulnerability Scanning & SCA</a>
+      <a href="#7-passwords">7. Passwords & AD</a>
+      <a href="#8-post-exploit">8. Post-Exploitation</a>
+      <a href="#9-network">9. Network & TLS</a>
+      <a href="#10-research">10. Vulnerability Research</a>
+      <a href="#11-reverse">11. Reversing & Exploit Dev</a>
+      <a href="#12-fuzzing">12. Fuzzing</a>
+      <a href="#13-mobile">13. Mobile & Firmware</a>
+      <a href="#14-safepoc">14. Safe PoC Testing</a>
+      <a href="#15-tips">15. Tips & Logging</a>
+    </nav>
+
+    <section class="content" id="content">
+      <div class="notice" role="alert">
+        <strong>Important — Authorized Use Only:</strong>
+        Only run these commands against systems you own or have explicit written authorization to test. Misuse is illegal and unethical. This site is for education, labs, and defensive hardening.
+      </div>
+
+      <article id="1-recon">
+        <h2>1) Recon — passive → active</h2>
+        <p class="lead-small">OSINT and basic DNS lookups to gather targets and context.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">whois / dig / nslookup</div>
+            <div class="code-actions">
+              <button class="ghost copyBtn" data-target="c1">Copy</button>
+            </div>
+          </div>
+          <pre><code id="c1" class="language-bash">whois example.com
+dig +short example.com A
+dig @8.8.8.8 example.com ANY
+nslookup -type=mx example.com
+
+# OSINT harvest
+theharvester -d example.com -b google -l 500
+shodan host 1.2.3.4</code></pre>
+        </div>
+      </article>
+
+      <article id="2-subdomain">
+        <h2>2) Subdomain &amp; DNS enumeration</h2>
+        <p class="lead-small">Discover subdomains and DNS records.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">amass / subfinder / crt.sh</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c2">Copy</button></div>
+          </div>
+          <pre><code id="c2" class="language-bash"># amass (passive + active + brute)
+amass enum -d example.com -o amass.txt
+amass enum -d example.com -brute -o amass_brute.txt
+
+# subfinder (fast passive)
+subfinder -d example.com -o subfinder.txt
+
+# crt.sh via curl + jq
+curl -s "https://crt.sh/?q=%25.example.com&output=json" | jq -r '.[].name_value' | sort -u
+
+# dnsrecon / dnsx
+dnsrecon -d example.com
+cat subdomains.txt | dnsx -a -resp -silent -o dnsx_a.txt</code></pre>
+        </div>
+      </article>
+
+      <article id="3-port">
+        <h2>3) Port &amp; service discovery</h2>
+        <p class="lead-small">Safe scanning patterns and fast discovery.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">nmap / masscan / netcat</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c3">Copy</button></div>
+          </div>
+          <pre><code id="c3" class="language-bash"># nmap (version + default scripts, full ports)
+nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24
+
+# host discovery
+nmap -sn 192.0.2.0/24
+
+# masscan (VERY noisy)
+masscan 192.0.2.0/24 -p1-65535 --rate=1000 -oG masscan.gnmap
+
+# service banner grab with netcat
+nc -vz 192.0.2.10 80
+echo | nc 192.0.2.10 25</code></pre>
+        </div>
+      </article>
+
+      <article id="4-web-fuzzing">
+        <h2>4) Web discovery &amp; fuzzing</h2>
+        <p class="lead-small">Directory discovery, vhost fuzzing and parameter bruteforce.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">ffuf / gobuster / curl</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c4">Copy</button></div>
+          </div>
+          <pre><code id="c4" class="language-bash"># ffuf
+ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json
+
+# gobuster (dir + vhost)
+gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 50 -o gobuster.txt
+gobuster vhost -u https://example.com -w vhosts.txt -t 30
+
+# bashed URL bruteforce (slow)
+while read p; do
+  curl -s -o /dev/null -w "%{http_code} %{url_effective}\n" https://example.com/$p
+done < wordlist.txt</code></pre>
+        </div>
+      </article>
+
+      <article id="5-web-app">
+        <h2>5) Web application testing &amp; exploitation</h2>
+        <p class="lead-small">HTTP checks, nikto, sqlmap, XSS tooling, and parameter discovery.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">curl / nikto / sqlmap / xss</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c5">Copy</button></div>
+          </div>
+          <pre><code id="c5" class="language-bash"># curl quick checks
+curl -I -L https://example.com
+curl -s -D - https://example.com/login -o /dev/null
+
+# nikto (webserver checks)
+nikto -h https://example.com -output nikto.txt
+
+# sqlmap (ONLY in-scope & lab)
+sqlmap -u "https://example.com/vuln.php?id=1" --batch --dbs
+
+# XSS tools
+dalfox url "https://example.com/page?param=FUZZ"
+xsstrike -u "https://example.com/page?param=1"
+
+# parameter discovery
+arjun -u "https://example.com/page" -o arjun.txt</code></pre>
+        </div>
+      </article>
+
+      <article id="6-sca">
+        <h2>6) Vulnerability scanning &amp; SCA</h2>
+        <p class="lead-small">Fast templates, SCA, SBOM generation and vulnerability lookup.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">nuclei / syft / grype / snyk</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c6">Copy</button></div>
+          </div>
+          <pre><code id="c6" class="language-bash"># nuclei (fast templates)
+nuclei -l hosts.txt -t cves/ -o nuclei_results.txt
+
+# syft: generate SBOM
+syft packages dir:./project -o json > sbom.json
+
+# grype: scan SBOM or dir
+grype dir:./project -o json -o grype.json
+grype sbom:sbom.json
+
+# snyk (requires account & token)
+snyk test --file=package.json
+snyk test --docker myimage:tag
+
+# npm / pip audits
+npm audit --json > npm-audit.json
+pip-audit -r requirements.txt --format json > pip-audit.json
+
+# Query NVD
+curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .</code></pre>
+        </div>
+      </article>
+
+      <article id="7-passwords">
+        <h2>7) Passwords, credentials &amp; AD tooling</h2>
+        <p class="lead-small">Online & offline password tools, impacket and BloodHound.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">hydra / john / hashcat / impacket</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c7">Copy</button></div>
+          </div>
+          <pre><code id="c7" class="language-bash"># hydra (online bruteforce) - AUTHORIZED ONLY
+hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt
+
+# john / hashcat (offline)
+john --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt
+hashcat -m 1000 -a 0 ntlm_hashes.txt /usr/share/wordlists/rockyou.txt
+
+# impacket scripts
+python3 /opt/impacket/examples/smbclient.py -username user -password pass 192.0.2.15
+python3 /opt/impacket/examples/secretsdump.py domain/USER:PASS -outputfile secrets
+
+# BloodHound collection (with rights)
+# Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
+        </div>
+      </article>
+
+      <article id="8-post-exploit">
+        <h2>8) Post-exploitation &amp; enumeration</h2>
+        <p class="lead-small">Quick local enumeration helpers (linPEAS, winPEAS, Sysinternals).</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">linpeas / winpeas / sysinternals</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c8">Copy</button></div>
+          </div>
+          <pre><code id="c8" class="language-bash"># Linux enumeration with linpeas
+curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/linpeas.sh | sh
+
+# Windows enumeration with winPEAS (lab only)
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/winPEAS/winPEASbat.exe" -OutFile winpeas.exe
+.\winpeas.exe</code></pre>
+        </div>
+      </article>
+
+      <article id="9-network">
+        <h2>9) Network capture / SSL / TLS checks</h2>
+        <p class="lead-small">pcap capture, tshark analysis and quick TLS checks.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">tcpdump / tshark / openssl</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c9">Copy</button></div>
+          </div>
+          <pre><code id="c9" class="language-bash"># tcpdump (capture 1000 packets)
+tcpdump -i eth0 -w capture.pcap -c 1000
+
+# tshark read
+tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri
+
+# quick cert info
+openssl s_client -connect example.com:443 -servername example.com </dev/null 2>/dev/null | openssl x509 -noout -text
+
+# sslyze / testssl.sh
+sslyze --regular example.com:443
+./testssl.sh example.com</code></pre>
+        </div>
+      </article>
+
+      <article id="10-research">
+        <h2>10) Vulnerability Research &amp; PoC Triage</h2>
+        <p class="lead-small">Search public PoCs, triage, isolate and verify safely.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">searchsploit / gh / gitleaks / docker</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c10">Copy</button></div>
+          </div>
+          <pre><code id="c10" class="language-bash"># searchsploit
+searchsploit "CVE-2021-44228"
+searchsploit --update
+searchsploit -m 49993  # copy exploit by EDB ID
+
+# clone exploit-db repo
+git clone https://github.com/offensive-security/exploitdb.git
+grep -R "CVE-2021-44228" exploitdb -n
+
+# fetch PoC read-only (inspect before running)
+curl -sL "https://raw.githubusercontent.com/user/repo/branch/poc.py" -o /tmp/poc.py
+sed -n '1,200p' /tmp/poc.py
+
+# run PoC inside an isolated container (no network)
+docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -c "python /poc/poc.py"</code></pre>
+        </div>
+      </article>
+
+      <article id="11-reverse">
+        <h2>11) Binary reversing &amp; exploit development</h2>
+        <p class="lead-small">Static inspection, decompilers and ROP gadget hunting.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">readelf / r2 / gdb / ropgadget</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c11">Copy</button></div>
+          </div>
+          <pre><code id="c11" class="language-bash"># ELF inspection
+readelf -h binary
+objdump -d binary | less
+strings binary
+
+# radare2
+r2 -AA binary
+
+# rop gadgets
+ropgadget --binary binary --only "pop|ret" > gadgets.txt
+
+# gdb + pwndbg
+gdb -q ./binary</code></pre>
+        </div>
+      </article>
+
+      <article id="12-fuzzing">
+        <h2>12) Fuzzing</h2>
+        <p class="lead-small">Classic fuzzers and HTTP/API fuzzers.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">afl / boofuzz / wfuzz</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c12">Copy</button></div>
+          </div>
+          <pre><code id="c12" class="language-bash"># afl (instrumented binary)
+afl-fuzz -i in_dir -o out_dir -- ./target @@
+
+# boofuzz (python)
+python3 boofuzz_example.py
+
+# wfuzz for HTTP
+wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.com/vuln?FUZZ=1"</code></pre>
+        </div>
+      </article>
+
+      <article id="13-mobile">
+        <h2>13) Mobile &amp; Firmware analysis</h2>
+        <p class="lead-small">APK decompilation, Frida dynamic hooks, firmware extraction.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">apktool / jadx / frida / binwalk</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c13">Copy</button></div>
+          </div>
+          <pre><code id="c13" class="language-bash"># Android decompile / inspect
+apktool d app.apk -o app_src
+jadx -d out app.apk
+
+# frida dynamic hooking
+frida -U -f com.example.app -l script.js --no-pause
+
+# firmware extraction
+binwalk -e firmware.bin
+strings firmware.bin | grep -i password</code></pre>
+        </div>
+      </article>
+
+      <article id="14-safepoc">
+        <h2>14) Safe PoC testing — containers &amp; labs</h2>
+        <p class="lead-small">Isolated containers, snapshots and no-network execution.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">docker / vm snapshots</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c14">Copy</button></div>
+          </div>
+          <pre><code id="c14" class="language-bash"># isolated container (no external network)
+docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash
+
+# spin up target service in container
+docker run --rm -p 8080:80 vuln-app:latest
+
+# take VM snapshot before PoC; rollback after testing</code></pre>
+        </div>
+      </article>
+
+      <article id="15-tips">
+        <h2>15) Helpful flags, output tips &amp; logging</h2>
+        <p class="lead-small">Save JSON, reduce noise, capture timestamps and tool versions.</p>
+
+        <div class="code-section">
+          <div class="code-toolbar"><div class="chip">nmap / nuclei / ffuf</div>
+            <div class="code-actions"><button class="ghost copyBtn" data-target="c15">Copy</button></div>
+          </div>
+          <pre><code id="c15" class="language-bash"># nmap output formats
+nmap -sC -sV -oA nmap-output target
+
+# tee logs with timestamps & tool version
+(tool --version 2>&1 ; date; tool [args]) |& tee logfile.txt
+
+# reduce scan noise
+nmap -T2 --max-retries 2 --host-timeout 30m target
+masscan --rate 100
+
+# save JSON where possible
+nuclei -o nuclei.json -oJ nuclei.json
+ffuf -o ffuf.json -of json</code></pre>
+        </div>
+
+        <div class="collapse" style="margin-top:10px">
+          <strong>Quick safety & research tips</strong>
+          <ul>
+            <li>Validate scanner findings manually — many false positives.</li>
+            <li>Isolate PoC execution (containers / VM snapshots).</li>
+            <li>Document CVE IDs, vendor advisories, affected versions, and PoC references.</li>
+            <li>Never weaponize vulnerabilities or test without explicit written permission.</li>
+          </ul>
+        </div>
+      </article>
+
+      <footer>
+        <div>Built for learning & defensive security • Use responsibly</div>
+        <div style="margin-top:6px"><small>Convert to Markdown, Gist or PDF via the buttons above.</small></div>
+      </footer>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Init highlight.js
+  hljs.configure({ignoreUnescapedHTML: true});
+  document.querySelectorAll('pre code').forEach((el) => hljs.highlightElement(el));
+
+  // Copy buttons
+  document.querySelectorAll('.copyBtn').forEach(btn=>{
+    btn.addEventListener('click', async () => {
+      const target = document.getElementById(btn.dataset.target);
+      if(!target) return;
+      try {
+        await navigator.clipboard.writeText(target.innerText);
+        btn.textContent = 'Copied';
+        setTimeout(()=>btn.textContent='Copy',1200);
+      } catch(e){
+        console.error('Copy failed',e);
+        btn.textContent = 'Copy (failed)';
+        setTimeout(()=>btn.textContent='Copy',1200);
+      }
+    });
+  });
+
+  // Collapse/expand logic
+  const codeSections = Array.from(document.querySelectorAll('.code-section'));
+  let collapsed = false;
+  document.getElementById('toggleAll').addEventListener('click', ()=>{
+    collapsed = !collapsed;
+    codeSections.forEach(cs=>{
+      const pre = cs.querySelector('pre');
+      if(!pre) return;
+      pre.style.display = collapsed ? 'none' : 'block';
+    });
+    document.getElementById('toggleAll').textContent = collapsed ? 'Expand All' : 'Collapse All';
+  });
+
+  // Search
+  const search = document.getElementById('search');
+  search.addEventListener('input', onSearch);
+  document.addEventListener('keydown', (e)=>{
+    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); search.focus(); search.select(); }
+  });
+
+  function onSearch(){
+    const q = search.value.trim().toLowerCase();
+    const articles = document.querySelectorAll('article');
+    if(!q){
+      articles.forEach(a=>a.style.display='block');
+      // Show all
+      return;
+    }
+    articles.forEach(a=>{
+      const text = a.innerText.toLowerCase();
+      a.style.display = text.includes(q) ? 'block' : 'none';
+    });
+  }
+
+  // Download as Markdown
+  document.getElementById('downloadMd').addEventListener('click', ()=>{
+    const md = buildMarkdown();
+    const blob = new Blob([md], {type:'text/markdown;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'pt-cheatsheet.md';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  function buildMarkdown(){
+    const title = '# Penetration Testing & Vulnerability Research Cheatsheet\\n\\n';
+    const warning = '**AUTHORIZED USE ONLY — READ FIRST:** Only run these commands against systems you own or have explicit written authorization. Misuse is illegal and unethical.\\n\\n';
+    const sections = [];
+    document.querySelectorAll('article').forEach(article=>{
+      const h = article.querySelector('h2')?.innerText || 'Section';
+      let md = `## ${h}\\n\\n`;
+      const ps = article.querySelectorAll('p.lead-small');
+      ps.forEach(p=> md += p.innerText + '\\n\\n');
+      article.querySelectorAll('pre code').forEach(code=>{
+        md += '```bash\\n' + code.innerText.trim() + '\\n```\\n\\n';
+      });
+      sections.push(md);
+    });
+    return title + warning + sections.join('\\n');
+  }
+
+  // Smooth scrolling for nav anchors
+  document.querySelectorAll('nav a').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+</script>
+</body>
+</html>
