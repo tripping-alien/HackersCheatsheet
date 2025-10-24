@@ -905,7 +905,7 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             const headerText = section.querySelector('.section-header').innerText.toLowerCase();
             const descText = section.querySelector('.section-desc').innerText.toLowerCase();
             
-            // FIX: Defined the missing variable 'headerOrDescMatch'
+            // CORRECTED: Explicitly define and calculate the match
             const headerOrDescMatch = headerText.includes(normalizedQuery) || descText.includes(normalizedQuery);
 
             const commandDescElements = sectionContent.querySelectorAll('.command-desc');
