@@ -16,7 +16,7 @@
 body{font-family:Inter,sans-serif;background:var(--bg);color:var(--muted);margin:0;padding:20px}
 .container{max-width:1100px;margin:0 auto;background:var(--card);padding:26px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
 h1{margin:0;color:var(--header);font-size:22px}
-h2{color:var(--header);font-size:1.3rem;margin-top:20px;border-left:4px solid var(--accent);padding-left:10px;cursor:pointer; display: flex; align-items: center;}
+h2{color:var(--header);font-size:1.3rem;margin-top:20px;border-left:4px solid var(--accent);padding-left:10px;cursor:pointer; display: flex; align-items: center; justify-content: space-between;}
 
 /* RTL adjustments for Hebrew */
 html[dir="rtl"] h2 {
@@ -24,15 +24,16 @@ html[dir="rtl"] h2 {
   border-right: 4px solid var(--accent);
   padding-left: 0;
   padding-right: 10px;
-  justify-content: flex-end; /* Align title and chips right */
   flex-direction: row-reverse; /* Put chips before the title text */
 }
+html[dir="rtl"] h2 .chip-container { flex-direction: row-reverse; }
 html[dir="rtl"] h2 .chip { margin-left: 0; margin-right: 8px; }
 
 pre{border-radius:8px;margin:10px 0;padding:12px;position:relative;background:var(--code-bg);overflow:auto;border:1px solid rgba(255,255,255,0.03)}
 .copy-btn{position:absolute;right:10px;top:10px;background:var(--accent-2);color:#000;border:none;padding:6px 8px;border-radius:6px;font-size:12px;cursor:pointer}
-.warning{border:1px solid #eab308;border-left:4px solid #eab308;background:rgba(234,179,8,0.07);color:#ffd;padding:12px;border-radius:8px}
+html[dir="rtl"] .copy-btn { left: 10px; right: auto; }
 
+.warning{border:1px solid #eab308;border-left:4px solid #eab308;background:rgba(234,179,8,0.07);color:#ffd;padding:12px;border-radius:8px}
 html[dir="rtl"] .warning {
   border-left: none;
   border-right: 4px solid #eab308;
@@ -43,10 +44,11 @@ html[dir="rtl"] .warning {
 #searchInput, #languageSelector{width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:none;background:var(--code-bg);color:var(--muted); box-sizing: border-box;}
 .language-tools { display: flex; gap: 10px; margin-bottom: 12px; }
 .language-tools > * { flex-grow: 1; }
-.chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;margin-left:8px;cursor:pointer}
+.chip-container { display: flex; gap: 8px; }
+.chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;cursor:pointer}
 button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none}
 footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
-footer a { color: var(--accent); text-decoration: none; } /* Ensure footer link styling */
+footer a { color: var(--accent); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -71,7 +73,7 @@ footer a { color: var(--accent); text-decoration: none; } /* Ensure footer link 
 <p data-i18n="warningBody" style="margin: 5px 0 0 0;"></p>
 </div>
 
-<h2 onclick="toggleSection('s1')" data-i18n="section1Title"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="recon">Recon</span></h2>
+<h2 onclick="toggleSection('s1')"><span data-i18n="section1Title">1) Recon & OSINT</span><span class="chip-container"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="recon">Recon</span></span></h2>
 <div id="s1">
 <p class="section-desc" data-i18n="section1Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Set target
@@ -97,7 +99,7 @@ shodan host 1.2.3.4</code></pre>
 <p class="command-desc" data-i18n="section1CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s2')" data-i18n="section2Title"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="dorking">Dorking</span></h2>
+<h2 onclick="toggleSection('s2')"><span data-i18n="section2Title">2) Recon: Search Engine Dorking & Exposed Assets</span><span class="chip-container"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="dorking">Dorking</span></span></h2>
 <div id="s2">
 <p class="section-desc" data-i18n="section2Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Find sensitive files (.pdf, .xls) on target domain
@@ -119,7 +121,7 @@ intitle:"report" filetype:docx site:target.com</code></pre>
 <p class="command-desc" data-i18n="section2CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s3')" data-i18n="section3Title"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="seo">SEO</span></h2>
+<h2 onclick="toggleSection('s3')"><span data-i18n="section3Title">3) SEO & Indexation Security</span><span class="chip-container"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="seo">SEO</span></span></h2>
 <div id="s3">
 <p class="section-desc" data-i18n="section3Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Check for security-sensitive disallow rules in robots.txt
@@ -143,7 +145,7 @@ site:example.com inurl:sessionid= OR inurl:PHPSESSID=
 <p class="command-desc" data-i18n="section3CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s4')" data-i18n="section4Title"><span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></h2>
+<h2 onclick="toggleSection('s4')"><span data-i18n="section4Title">4) Subdomain & DNS Enumeration</span><span class="chip-container"><span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></span></h2>
 <div id="s4">
 <p class="section-desc" data-i18n="section4Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Amass (passive + active + brute)
@@ -157,7 +159,7 @@ dnsrecon -d example.com -t std,brt,srv</code></pre>
 <p class="command-desc" data-i18n="section4CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s5')" data-i18n="section5Title"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="nmap">Nmap</span></h2>
+<h2 onclick="toggleSection('s5')"><span data-i18n="section5Title">5) Port & Service Discovery</span><span class="chip-container"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="nmap">Nmap</span></span></h2>
 <div id="s5">
 <p class="section-desc" data-i18n="section5Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Nmap (version, default scripts, full ports)
@@ -171,7 +173,7 @@ nc -vz 192.0.2.10 80</code></pre>
 <p class="command-desc" data-i18n="section5CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s6')" data-i18n="section6Title"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
+<h2 onclick="toggleSection('s6')"><span data-i18n="section6Title">6) Web Discovery & Fuzzing</span><span class="chip-container"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="fuzzing">Fuzzing</span></span></h2>
 <div id="s6">
 <p class="section-desc" data-i18n="section6Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ffuf (directory/file fuzzing)
@@ -182,7 +184,7 @@ gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 
 <p class="command-desc" data-i18n="section6CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s7')" data-i18n="section7Title"><span class="chip" data-tag="webapp">Webapp</span> <span class="chip" data-tag="sql">SQL</span> <span class="chip" data-tag="xss">XSS</span></h2>
+<h2 onclick="toggleSection('s7')"><span data-i18n="section7Title">7) Web Application Testing</span><span class="chip-container"><span class="chip" data-tag="webapp">Webapp</span> <span class="chip" data-tag="sql">SQL</span> <span class="chip" data-tag="xss">XSS</span></span></h2>
 <div id="s7">
 <p class="section-desc" data-i18n="section7Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nikto (webserver checks)
@@ -199,7 +201,7 @@ arjun -u "https://example.com/page" -o arjun.txt</code></pre>
 <p class="command-desc" data-i18n="section7CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s8')" data-i18n="section8Title"><span class="chip" data-tag="cve">CVE</span> <span class="chip" data-tag="sbom">SBOM</span></h2>
+<h2 onclick="toggleSection('s8')"><span data-i18n="section8Title">8) Vulnerability Scanning & SCA</span><span class="chip-container"><span class="chip" data-tag="cve">CVE</span> <span class="chip" data-tag="sbom">SBOM</span></span></h2>
 <div id="s8">
 <p class="section-desc" data-i18n="section8Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nuclei (fast templates)
@@ -216,7 +218,7 @@ curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .<
 <p class="command-desc" data-i18n="section8CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s9')" data-i18n="section9Title"><span class="chip" data-tag="passwords">Passwords</span> <span class="chip" data-tag="ad">AD</span></h2>
+<h2 onclick="toggleSection('s9')"><span data-i18n="section9Title">9) Passwords, Credentials & AD Tooling</span><span class="chip-container"><span class="chip" data-tag="passwords">Passwords</span> <span class="chip" data-tag="ad">AD</span></span></h2>
 <div id="s9">
 <p class="section-desc" data-i18n="section9Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># hydra (online bruteforce) - AUTHORIZED ONLY
@@ -233,7 +235,7 @@ Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
 <p class="command-desc" data-i18n="section9CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s10')" data-i18n="section10Title"><span class="chip" data-tag="exploit">Exploit</span> <span class="chip" data-tag="msf">MSF</span></h2>
+<h2 onclick="toggleSection('s10')"><span data-i18n="section10Title">10) Exploitation: Metasploit Framework (MSF)</span><span class="chip-container"><span class="chip" data-tag="exploit">Exploit</span> <span class="chip" data-tag="msf">MSF</span></span></h2>
 <div id="s10">
 <p class="section-desc" data-i18n="section10Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># start msfconsole
@@ -260,7 +262,7 @@ exploit</code></pre>
 <p class="command-desc" data-i18n="section10CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s11')" data-i18n="section11Title"><span class="chip" data-tag="shell">Shell</span> <span class="chip" data-tag="privesc">Privesc</span></h2>
+<h2 onclick="toggleSection('s11')"><span data-i18n="section11Title">11) Post-Exploitation: Shells & Enumeration</span><span class="chip-container"><span class="chip" data-tag="shell">Shell</span> <span class="chip" data-tag="privesc">Privesc</span></span></h2>
 <div id="s11">
 <p class="section-desc" data-i18n="section11Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># netcat listener (catch reverse shells)
@@ -280,7 +282,7 @@ curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/li
 <p class="command-desc" data-i18n="section11CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s12')" data-i18n="section12Title"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="tls">TLS</span></h2>
+<h2 onclick="toggleSection('s12')"><span data-i18n="section12Title">12) Network & TLS Checks</span><span class="chip-container"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="tls">TLS</span></span></h2>
 <div id="s12">
 <p class="section-desc" data-i18n="section12Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># tcpdump (capture 1000 packets on eth0)
@@ -297,7 +299,7 @@ sslyze --regular example.com:443</code></pre>
 <p class="command-desc" data-i18n="section12CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s13')" data-i18n="section13Title"><span class="chip" data-tag="vulnres">VulnRes</span> <span class="chip" data-tag="poc">PoC</span></h2>
+<h2 onclick="toggleSection('s13')"><span data-i18n="section13Title">13) Vulnerability Research & PoC Triage</span><span class="chip-container"><span class="chip" data-tag="vulnres">VulnRes</span> <span class="chip" data-tag="poc">PoC</span></span></h2>
 <div id="s13">
 <p class="section-desc" data-i18n="section13Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># searchsploit
@@ -312,7 +314,7 @@ docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -
 <p class="command-desc" data-i18n="section13CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s14')" data-i18n="section14Title"><span class="chip" data-tag="reversing">Reverse</span> <span class="chip" data-tag="pwn">Pwn</span></h2>
+<h2 onclick="toggleSection('s14')"><span data-i18n="section14Title">14) Binary Reversing & Exploit Development</span><span class="chip-container"><span class="chip" data-tag="reversing">Reverse</span> <span class="chip" data-tag="pwn">Pwn</span></span></h2>
 <div id="s14">
 <p class="section-desc" data-i18n="section14Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ELF inspection
@@ -331,7 +333,7 @@ gdb -q ./binary</code></pre>
 <p class="command-desc" data-i18n="section14CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s15')" data-i18n="section15Title"><span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
+<h2 onclick="toggleSection('s15')"><span data-i18n="section15Title">15) Fuzzing</span><span class="chip-container"><span class="chip" data-tag="fuzzing">Fuzzing</span></span></h2>
 <div id="s15">
 <p class="section-desc" data-i18n="section15Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># AFL (instrumented binary)
@@ -342,7 +344,7 @@ wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.c
 <p class="command-desc" data-i18n="section15CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s16')" data-i18n="section16Title"><span class="chip" data-tag="mobile">Mobile</span> <span class="chip" data-tag="firmware">Firmware</span></h2>
+<h2 onclick="toggleSection('s16')"><span data-i18n="section16Title">16) Mobile & Firmware Analysis</span><span class="chip-container"><span class="chip" data-tag="mobile">Mobile</span> <span class="chip" data-tag="firmware">Firmware</span></span></h2>
 <div id="s16">
 <p class="section-desc" data-i18n="section16Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># android decompile / inspect (apktool)
@@ -360,7 +362,7 @@ strings firmware.bin | grep -i password</code></pre>
 <p class="command-desc" data-i18n="section16CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s17')" data-i18n="section17Title"><span class="chip" data-tag="safety">Safety</span> <span class="chip" data-tag="logging">Logging</span></h2>
+<h2 onclick="toggleSection('s17')"><span data-i18n="section17Title">17) Safe PoC Testing & Logging</span><span class="chip-container"><span class="chip" data-tag="safety">Safety</span> <span class="chip" data-tag="logging">Logging</span></span></h2>
 <div id="s17">
 <p class="section-desc" data-i18n="section17Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># isolated container (no external network)
@@ -539,114 +541,17 @@ const translations = {
   "section17CommandDesc": {"en": "Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.", "ru": "Методы минимизации риска с помощью изоляции Docker и обеспечения подробного протоколирования результатов тестирования.", "he": "טכניקות למזעור סיכונים באמצעות בידוד Docker והבטחת רישום מפורט של תוצאות הבדיקה.", "fr": "Techniques pour minimiser les risques via l'isolation Docker et garantir la journalisation détaillée des résultats des tests.", "de": "Techniken zur Minimierung des Risikos durch Docker-Isolation und zur Gewährleistung einer detaillierten Protokollierung der Testergebnisse."},
 };
 
-// --- I18N (Language Switching) LOGIC ---
-function switchLanguage(lang) {
-  const html = document.documentElement;
-  html.setAttribute('lang', lang);
-
-  // Set reading direction (RTL for Hebrew, LTR otherwise)
-  html.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
-
-  // Iterate over all elements requiring translation
-  document.querySelectorAll('[data-i18n]').forEach(element => {
-    const key = element.getAttribute('data-i18n');
-    const translation = translations[key] ? translations[key][lang] : null;
-
-    if (translation) {
-      if (element.tagName === 'H2') {
-        // Handle H2: Preserve the inner HTML (chips) but replace the text content
-        const chips = element.innerHTML.match(/<span class="chip".*?<\/span>/g) || [];
-        // Note: For RTL, content needs to be placed at the *end* for correct layout logic
-        element.innerHTML = translation + ' ' + chips.join(' ');
-      } else if (element.tagName === 'SPAN' && key === 'githubLink') {
-        // Handle the GitHub link span, allowing HTML content
-        element.innerHTML = translation;
-      }
-      else {
-        // For H1, P, STRONG, FOOTER (text part), simple text replacement
-        element.textContent = translation;
-      }
-    }
-  });
-  
-  // Update placeholders
-  document.getElementById('searchInput').setAttribute('placeholder', translations.searchInputPlaceholder[lang]);
-
-  // Update button text based on current collapse state
-  const toggleBtn = document.getElementById('toggleAll');
-  const currentLang = document.documentElement.getAttribute('lang') || 'en';
-  if (collapsed) {
-    toggleBtn.textContent = translations.toggleButtonCollapsed[currentLang];
-  } else {
-    toggleBtn.textContent = translations.toggleButtonExpanded[currentLang];
-  }
-}
-
 // Global state for collapse tracking
 let collapsed = false;
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial Language Load
-    const defaultLang = document.getElementById('languageSelector').value;
-    switchLanguage(defaultLang);
-    
-    // 2. Collapse/Expand Logic
-    const toggleBtn = document.getElementById('toggleAll');
-    toggleBtn.addEventListener('click', () => {
-      collapsed = !collapsed;
-      for(let i = 1; i <= 17; i++) {
-        const el = document.getElementById('s' + i);
-        if(el) el.style.display = collapsed ? 'none' : 'block';
-      }
-      
-      const currentLang = document.documentElement.getAttribute('lang') || 'en';
-      if (collapsed) {
-        toggleBtn.textContent = translations.toggleButtonCollapsed[currentLang];
-      } else {
-        toggleBtn.textContent = translations.toggleButtonExpanded[currentLang];
-      }
-    });
+// --- COOKIE AND LANGUAGE PERSISTENCE FUNCTIONS ---
 
-    // 3. Ensure all sections are expanded initially
-    for(let i = 1; i <= 17; i++){ 
-      const el = document.getElementById('s' + i); 
-      if(el) el.style.display = 'block'; 
+// Helper function to set a cookie
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
     }
-});
-
-
-// --- UTILITY FUNCTIONS ---
-
-// Copy code
-function copyCode(btn){
-  const code = btn.parentElement.querySelector('code').innerText;
-  navigator.clipboard.writeText(code.trim());
-  const orig = btn.textContent;
-  btn.textContent='Copied!';
-  setTimeout(()=> btn.textContent=orig,1400);
-}
-
-// Collapse/expand single section
-function toggleSection(id){
-  const el=document.getElementById(id);
-  if(!el) return;
-  el.style.display=(el.style.display==='none' || el.style.display==='')?'block':'none';
-}
-
-// Search filter
-document.getElementById('searchInput').addEventListener('input',function(){
-  const q=this.value.trim().toLowerCase();
-  document.querySelectorAll('h2').forEach(h=>{
-    const next=h.nextElementSibling;
-    const text=(h.innerText + (next?next.innerText:"")).toLowerCase();
-    const show=!q || text.includes(q);
-    h.style.display=show?'flex':'none'; // use flex to re-show H2
-    if(next) next.style.display=show?'block':'none';
-  });
-});
-
-// Tag/chip filtering (REMOVED)
-
-</script>
-</body>
-</html>
+    // Using Secure is recommended for real-world HTTPS sites, but keeping
