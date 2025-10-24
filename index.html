@@ -1,9 +1,216 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Penetration Testing & Vulnerability Research — Cheatsheet</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penetration Testing & Vulnerability Research Cheatsheet</title>
+
+<!-- SEO Meta Tags -->
+<meta name="title" content="Penetration Testing & Vulnerability Research Cheatsheet">
+<meta name="description" content="Practical cheatsheet for penetration testing, vulnerability research, OSINT, fuzzing, reversing, safe PoC testing, and more. Authorized lab use only.">
+<meta name="keywords" content="Penetration Testing, Vulnerability Research, OSINT, Fuzzing, Exploit Development, Security Cheatsheet, Ethical Hacking, Red Team">
+<meta name="author" content="Your Name or Organization">
+<meta name="robots" content="index, follow">
+
+<!-- Prism.js CSS for dark theme -->
+<link href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism-tomorrow.css" rel="stylesheet" />
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<style>
+:root {
+    --bg: #0d0f12; --card: #0f1720; --muted: #94a3b8; --accent: #7c3aed; --accent-2: #06b6d4; --header-color: #e6eef7;
+}
+body { font-family: Inter, sans-serif; background: var(--bg); color: var(--muted); padding: 20px; line-height:1.6; }
+.container { max-width: 1000px; margin: 0 auto; background: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);}
+h1 { color: var(--header-color); border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom:10px;}
+h2 { color: var(--header-color); font-size: 1.5rem; margin-top:30px; border-left:4px solid var(--accent); padding-left:10px; cursor:pointer;}
+.section-desc { margin-top:-10px; margin-bottom:15px; font-style:italic; color: var(--muted);}
+.warning { border:1px solid #eab308; border-left:4px solid #eab308; background-color: rgba(234,179,8,0.1); color:#ffd; padding:15px; border-radius:8px; margin-bottom:20px;}
+pre { position: relative; border-radius:8px; }
+.chip { display:inline-block; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:6px; font-size:0.8em; color:var(--accent-2); margin-bottom:10px;}
+ul { list-style-type: disc; padding-left:20px; }
+li { margin-bottom:5px; }
+.copy-btn { position:absolute; top:8px; right:8px; background:var(--accent-2); color:#000; border:none; padding:3px 7px; font-size:0.75rem; cursor:pointer; border-radius:4px; z-index:2; }
+#searchInput { width:100%; padding:10px; margin-bottom:20px; border-radius:8px; border:none; background: var(--code-bg); color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Penetration Testing & Vulnerability Research Cheatsheet</h1>
+
+<input type="text" id="searchInput" placeholder="Search cheatsheet..." />
+
+<div class="warning">
+<strong>⚠️ IMPORTANT — AUTHORIZED USE ONLY:</strong>
+<ul>
+<li>Only run these commands against systems you own or have explicit written authorization. Misuse is illegal.</li>
+<li>This material is for education, professional training, and defensive hardening in controlled lab environments.</li>
+</ul>
+</div>
+
+<!-- Section template -->
+<h2 onclick="toggleSection('recon')">1. Recon & OSINT</h2>
+<div id="recon">
+<p class="section-desc">Footprinting and information gathering.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>whois example.com
+dig +short example.com
+theHarvester -d example.com -b all</code></pre>
+</div>
+
+<h2 onclick="toggleSection('dns')">2. Subdomain & DNS Enumeration</h2>
+<div id="dns">
+<p class="section-desc">Discover subdomains and DNS records.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>subfinder -d example.com
+amass enum -d example.com
+dnsenum example.com</code></pre>
+</div>
+
+<h2 onclick="toggleSection('ports')">3. Port Scanning & Service Enumeration</h2>
+<div id="ports">
+<p class="section-desc">Identify open ports and running services.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>nmap -sC -sV -oA scan_results example.com
+masscan -p1-65535 example.com</code></pre>
+</div>
+
+<h2 onclick="toggleSection('vulnscan')">4. Vulnerability Scanning</h2>
+<div id="vulnscan">
+<p class="section-desc">Automated vulnerability detection.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>nmap --script vuln example.com
+nikto -h example.com
+wpscan --url example.com</code></pre>
+</div>
+
+<h2 onclick="toggleSection('webapp')">5. Web Application Testing</h2>
+<div id="webapp">
+<p class="section-desc">Web security testing tools.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>sqlmap -u https://example.com/page?id=1 --batch
+gobuster dir -u https://example.com -w wordlist.txt
+ffuf -u https://example.com/FUZZ -w wordlist.txt</code></pre>
+</div>
+
+<h2 onclick="toggleSection('fuzzing')">6. Fuzzing</h2>
+<div id="fuzzing">
+<p class="section-desc">Automated input testing for vulnerabilities.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>afl-fuzz -i input -o output ./target_binary
+boofuzz -c config.py
+wfuzz -c -w payloads.txt --hc 404 https://example.com/FUZZ</code></pre>
+</div>
+
+<h2 onclick="toggleSection('exploit')">7. Exploit Development & PoC Testing</h2>
+<div id="exploit">
+<p class="section-desc">Safe PoC testing in lab environments.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>msfconsole
+python3 poc.py
+./exploit_binary target_ip</code></pre>
+</div>
+
+<h2 onclick="toggleSection('reversing')">8. Reverse Engineering & Binary Analysis</h2>
+<div id="reversing">
+<p class="section-desc">Analyze binaries safely.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>gdb ./binary
+radare2 ./binary
+ghidra</code></pre>
+</div>
+
+<h2 onclick="toggleSection('network')">9. Network & Protocol Analysis</h2>
+<div id="network">
+<p class="section-desc">Capture and analyze network traffic.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>tcpdump -i eth0 -w capture.pcap
+wireshark capture.pcap
+ettercap -T -q -M arp:remote /target_ip/ /gateway/</code></pre>
+</div>
+
+<h2 onclick="toggleSection('password')">10. Password Attacks & Bruteforce</h2>
+<div id="password">
+<p class="section-desc">Testing password strength safely.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>hydra -l admin -P wordlist.txt ssh://example.com
+john --wordlist=passwords.txt hash.txt</code></pre>
+</div>
+
+<h2 onclick="toggleSection('ad')">11. Active Directory / Windows Testing</h2>
+<div id="ad">
+<p class="section-desc">Windows domain security assessment.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>crackmapexec smb example.com -u user -p pass
+bloodhound
+impacket-secretsdump</code></pre>
+</div>
+
+<h2 onclick="toggleSection('linux')">12. Linux & Privilege Escalation</h2>
+<div id="linux">
+<p class="section-desc">Local Linux enumeration and privilege escalation.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>linpeas.sh
+sudo -l
+ps aux | grep root</code></pre>
+</div>
+
+<h2 onclick="toggleSection('social')">13. Social Engineering & Phishing Simulation</h2>
+<div id="social">
+<p class="section-desc">Phishing awareness & simulated attacks.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>gophish
+setoolkit
+evilginx2</code></pre>
+</div>
+
+<h2 onclick="toggleSection('reporting')">14. Reporting & Documentation</h2>
+<div id="reporting">
+<p class="section-desc">Record findings safely and professionally.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>KeepLabNotes.md
+Jira/Trello tickets for remediation
+Generate PDF or HTML reports for clients</code></pre>
+</div>
+
+<h2 onclick="toggleSection('safety')">15. Safety & Lab Best Practices</h2>
+<div id="safety">
+<p class="section-desc">Maintain safe, isolated, and ethical testing environments.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>Use VM snapshots
+Isolate lab network
+Always have authorization
+Document everything</code></pre>
+</div>
+
+</div>
+
+<!-- Prism.js -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-bash.min.js"></script>
+
+<script>
+// Copy code
+function copyCode(btn) {
+    const pre = btn.parentElement;
+    const code = pre.querySelector("code").innerText;
+    navigator.clipboard.writeText(code);
+    btn.textContent="Copied!";
+    setTimeout(()=>{btn.textContent="Copy";},1500);
+}
+
+// Collapse/expand sections
+function toggleSection(id){
+    const el=document.getElementById(id);
+    el.style.display=(el.style.display==="none"||!el.style.display)?"block":"none";
+}
+
+// Search filter
+const searchInput=document.getElementById("searchInput");
+searchInput.addEventListener("input",function(){
+    const query=this.value.toLowerCase();
+    document.querySelectorAll(".container h2").forEach(section=>{
+        const content=(section.textContent+ (section.nextElementSibling? section.nextElementSibling.textContent:"")).toLowerCase();
+        section.style.display=content.includes(query)?"":"none";
+        if(section.nextElementSibling) section.nextElementSibling.style.display=content.includes(query)?"block":"none";
+    });
+});
+</script>
+</body>
+</html>
+      "mainEntityOfPage": "https://yourdomain.com/pt-cheatsheet"
+    }
+    </script>
+
+    <!-- Your existing CSS links or inline styles go here -->
+</head>
 
   <!-- tiny SVG favicon (data URI) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230f1720'/%3E%3Ctext x='50' y='57' font-size='46' text-anchor='middle' fill='%237c3aed' font-family='Inter,Arial,Helvetica' font-weight='700'%3EPT%3C/text%3E%3C/svg%3E">
