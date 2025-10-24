@@ -46,6 +46,7 @@ html[dir="rtl"] .warning {
 .chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;margin-left:8px;cursor:pointer}
 button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none}
 footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+footer a { color: var(--accent); text-decoration: none; } /* Ensure footer link styling */
 </style>
 </head>
 <body>
@@ -57,6 +58,8 @@ footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
     <option value="en">English</option>
     <option value="ru">Русский (Russian)</option>
     <option value="he">עברית (Hebrew)</option>
+    <option value="fr">Français (French)</option>
+    <option value="de">Deutsch (German)</option>
   </select>
 </div>
 
@@ -380,7 +383,10 @@ ffuf -o ffuf.json -of json</code></pre>
 <button id="toggleAll"></button>
 </div>
 
-<footer data-i18n="footerText"></footer>
+<footer>
+    <span data-i18n="footerText"></span>
+    <span data-i18n="githubLink"></span>
+</footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.js"></script>
@@ -393,123 +399,144 @@ const translations = {
   "mainTitle": {
     "en": "Penetration Testing & Vulnerability Research — Robust Cheatsheet",
     "ru": "Чит-лист по тестированию на проникновение и исследованию уязвимостей",
-    "he": "גיליון רמאות מקיף לבדיקות חדירה ומחקר פגיעויות"
+    "he": "גיליון רמאות מקיף לבדיקות חדירה ומחקר פגיעויות",
+    "fr": "Aide-mémoire robuste pour les tests d'intrusion et la recherche de vulnérabilités",
+    "de": "Umfassendes Cheat Sheet für Penetrationstests und Schwachstellenforschung"
   },
   "warningTitle": {
     "en": "⚠️ AUTHORIZED USE ONLY",
     "ru": "⚠️ ТОЛЬКО ДЛЯ АВТОРИЗОВАННОГО ИСПОЛЬЗОВАНИЯ",
-    "he": "⚠️ שימוש מורשה בלבד"
+    "he": "⚠️ שימוש מורשה בלבד",
+    "fr": "⚠️ UTILISATION AUTORISÉE UNIQUEMENT",
+    "de": "⚠️ NUR FÜR AUTORISIERTE NUTZUNG"
   },
   "warningBody": {
     "en": "Run these commands only in lab environments or on targets you have explicit written permission to test.",
     "ru": "Запускайте эти команды только в лабораторных средах или на целях, для которых у вас есть явное письменное разрешение на тестирование.",
-    "he": "הפעל פקודות אלה רק בסביבות מעבדה או על יעדים שיש לך אישור כתוב מפורש לבדוק."
+    "he": "הפעל פקודות אלה רק בסביבות מעבדה או על יעדים שיש לך אישור כתוב מפורש לבדוק.",
+    "fr": "N'exécutez ces commandes que dans des environnements de laboratoire ou sur des cibles pour lesquelles vous disposez d'une autorisation écrite explicite.",
+    "de": "Führen Sie diese Befehle nur in Laborumgebungen oder auf Zielen aus, für die Sie eine ausdrückliche schriftliche Erlaubnis zum Testen haben."
   },
   "footerText": {
     "en": "Built for learning & defensive security • Use responsibly • Last update: 2025-10-24 • **Andrey Lopukhov, Individual**",
     "ru": "Создано для обучения и защитной безопасности • Используйте ответственно • Последнее обновление: 2025-10-24 • **Андрей Лопухов, Индивидуальный**",
-    "he": "נבנה ללמידה ואבטחה הגנתית • השתמשו באחריות • עדכון אחרון: 2025-10-24 • **אנדריי לופוחוב, יחיד**"
+    "he": "נבנה ללמידה ואבטחה הגנתית • השתמשו באחריות • עדכון אחרון: 2025-10-24 • **אנדריי לופוחוב, יחיד**",
+    "fr": "Conçu pour l'apprentissage et la sécurité défensive • Utiliser de manière responsable • Dernière mise à jour: 2025-10-24 • **Andrey Lopukhov, Individual**",
+    "de": "Erstellt für Lern- und Verteidigungszwecke • Verantwortungsbewusst nutzen • Letzte Aktualisierung: 2025-10-24 • **Andrey Lopukhov, Individual**"
+  },
+  "githubLink": {
+    "en": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">GitHub Repository</a>",
+    "ru": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">Репозиторий GitHub</a>",
+    "he": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">מאגר GitHub</a>",
+    "fr": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">Répertoire GitHub</a>",
+    "de": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">GitHub-Repository</a>"
   },
   "searchInputPlaceholder": {
     "en": "Search commands, tools, CVE...",
     "ru": "Поиск команд, инструментов, CVE...",
-    "he": "חפש פקודות, כלים, CVE..."
+    "he": "חפש פקודות, כלים, CVE...",
+    "fr": "Rechercher commandes, outils, CVE...",
+    "de": "Suche Befehle, Tools, CVE..."
   },
   "toggleButtonCollapsed": {
     "en": "Expand All",
     "ru": "Развернуть все",
-    "he": "הרחב הכל"
+    "he": "הרחב הכל",
+    "fr": "Tout développer",
+    "de": "Alle erweitern"
   },
   "toggleButtonExpanded": {
     "en": "Collapse All",
     "ru": "Свернуть все",
-    "he": "כווץ הכל"
+    "he": "כווץ הכל",
+    "fr": "Tout réduire",
+    "de": "Alle zuklappen"
   },
   
   // SECTION 1: Recon & OSINT
-  "section1Title": {"en": "1) Recon & OSINT", "ru": "1) Разведка и OSINT", "he": "1) סיור ואיסוף מודיעין גלוי"},
-  "section1Desc": {"en": "Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.", "ru": "Сбор следов, запросы WHOIS, поиск DNS и пассивный сбор данных сертификатов.", "he": "איסוף טביעת רגל, בדיקות WHOIS, חיפושי DNS ואיסוף פסיבי של נתוני תעודות SSL."},
-  "section1CommandDesc": {"en": "Commands gather domain info, DNS records, HTTP headers, and passive certificate/host data.", "ru": "Команды собирают информацию о домене, DNS-записи, заголовки HTTP и пассивные данные сертификатов/хостов.", "he": "פקודות לאיסוף פרטי דומיין, רשומות DNS, כותרות HTTP ונתוני אישור/מארח פסיביים."},
+  "section1Title": {"en": "1) Recon & OSINT", "ru": "1) Разведка и OSINT", "he": "1) סיור ואיסוף מודיעין גלוי", "fr": "1) Reconnaissance et OSINT", "de": "1) Aufklärung & OSINT"},
+  "section1Desc": {"en": "Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.", "ru": "Сбор следов, запросы WHOIS, поиск DNS и пассивный сбор данных сертификатов.", "he": "איסוף טביעת רגל, בדיקות WHOIS, חיפושי DNS ואיסוף פסיבי של נתוני תעודות SSL.", "fr": "Empreinte, recherches WHOIS, DNS et collecte passive de données de certificat.", "de": "Footprinting, WHOIS, DNS-Abfragen und passive Zertifikatdatenerfassung."},
+  "section1CommandDesc": {"en": "Commands gather domain info, DNS records, HTTP headers, and passive certificate/host data.", "ru": "Команды собирают информацию о домене, DNS-записи, заголовки HTTP и пассивные данные сертификатов/хостов.", "he": "פקודות לאיסוף פרטי דומיין, רשומות DNS, כותרות HTTP ונתוני אישור/מארח פסיביים.", "fr": "Les commandes recueillent des informations de domaine, des enregistrements DNS, des en-têtes HTTP et des données passives de certificat/hôte.", "de": "Befehle erfassen Domäneninformationen, DNS-Einträge, HTTP-Header und passive Zertifikats-/Hostdaten."},
 
   // SECTION 2: Recon: Search Engine Dorking & Exposed Assets
-  "section2Title": {"en": "2) Recon: Search Engine Dorking & Exposed Assets", "ru": "2) Разведка: Доркинг поисковых систем и открытые активы", "he": "2) סיור: דורקינג מנועי חיפוש ונכסים חשופים"},
-  "section2Desc": {"en": "Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.", "ru": "Использование расширенных операторов поиска (Дорков) для обнаружения открытых файлов, каталогов и неверных конфигураций.", "he": "שימוש באופרטורי חיפוש מתקדמים (דורקים) לגילוי קבצים, ספריות ותצורות שגויות שנחשפו."},
-  "section2CommandDesc": {"en": "These dorks work across all major search engines and are crucial for external reconnaissance.", "ru": "Эти дорки работают во всех основных поисковых системах и критически важны для внешней разведки.", "he": "דורקים אלו עובדים בכל מנועי החיפוש העיקריים והם חיוניים לסיור חיצוני."},
+  "section2Title": {"en": "2) Recon: Search Engine Dorking & Exposed Assets", "ru": "2) Разведка: Доркинг поисковых систем и открытые активы", "he": "2) סיור: דורקינג מנועי חיפוש ונכסים חשופים", "fr": "2) Dorking et Actifs Exposés", "de": "2) Suchmaschinen-Dorking & Exposed Assets"},
+  "section2Desc": {"en": "Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.", "ru": "Использование расширенных операторов поиска (Дорков) для обнаружения открытых файлов, каталогов и неверных конфигураций.", "he": "שימוש באופרטורי חיפוש מתקדמים (דורקים) לגילוי קבצים, ספריות ותצורות שגויות שנחשפו.", "fr": "Utilisation d'opérateurs de recherche avancés (Dorks) pour découvrir des fichiers, répertoires et erreurs de configuration exposés.", "de": "Verwendung erweiterter Suchoperatoren (Dorks) zur Entdeckung exponierter Dateien, Verzeichnisse und Fehlkonfigurationen."},
+  "section2CommandDesc": {"en": "These dorks work across all major search engines and are crucial for external reconnaissance.", "ru": "Эти дорки работают во всех основных поисковых системах и критически важны для внешней разведки.", "he": "דורקים אלו עובדים בכל מנועי החיפוש העיקריים והם חיוניים לסיור חיצוני.", "fr": "Ces dorks fonctionnent sur tous les principaux moteurs de recherche et sont cruciaux pour la reconnaissance externe.", "de": "Diese Dorks funktionieren auf allen gängigen Suchmaschinen und sind entscheidend für die externe Aufklärung."},
   
   // SECTION 3: SEO & Indexation Security
-  "section3Title": {"en": "3) SEO & Indexation Security", "ru": "3) Безопасность SEO и индексации", "he": "3) אבטחת SEO ואינדוקס"},
-  "section3Desc": {"en": "Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.", "ru": "Проверка на неверные конфигурации в robots.txt, мета-тегах и канонических URL-адресах, которые могут привести к непреднамеренному раскрытию данных.", "he": "בדיקת תצורות שגויות ב-robots.txt, תגי מטא וכתובות URL קנוניות שעלולות להוביל לחשיפת נתונים לא מכוונת."},
-  "section3CommandDesc": {"en": "These checks help find security issues caused by poor communication between developers and search engine crawlers.", "ru": "Эти проверки помогают выявить проблемы безопасности, вызванные плохой коммуникацией между разработчиками и поисковыми роботами.", "he": "בדיקות אלו מסייעות במציאת בעיות אבטחה שנגרמות מתקשורת לקויה בין מפתחים לסורקי מנועי חיפוש."},
+  "section3Title": {"en": "3) SEO & Indexation Security", "ru": "3) Безопасность SEO и индексации", "he": "3) אבטחת SEO ואינדוקס", "fr": "3) Sécurité SEO et Indexation", "de": "3) SEO- & Indexierungssicherheit"},
+  "section3Desc": {"en": "Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.", "ru": "Проверка на неверные конфигурации в robots.txt, мета-тегах и канонических URL-адресах, которые могут привести к непреднамеренному раскрытию данных.", "he": "בדיקת תצורות שגויות ב-robots.txt, תגי מטא וכתובות URL קנוניות שעלולות להוביל לחשיפת נתונים לא מכוונת.", "fr": "Test des erreurs de configuration dans robots.txt, les balises meta et les URL canoniques qui entraînent une exposition involontaire des données.", "de": "Überprüfung auf Fehlkonfigurationen in robots.txt, Meta-Tags und kanonischen URLs, die zu unbeabsichtigter Datenexposition führen."},
+  "section3CommandDesc": {"en": "These checks help find security issues caused by poor communication between developers and search engine crawlers.", "ru": "Эти проверки помогают выявить проблемы безопасности, вызванные плохой коммуникацией между разработчиками и поисковыми роботами.", "he": "בדיקות אלו מסייעות במציאת בעיות אבטחה שנגרמות מתקשורת לקויה בין מפתחים לסורקי מנועי חיפוש.", "fr": "Ces vérifications aident à trouver des problèmes de sécurité causés par une mauvaise communication entre les développeurs et les robots des moteurs de recherche.", "de": "Diese Prüfungen helfen, Sicherheitsprobleme zu finden, die durch schlechte Kommunikation zwischen Entwicklern und Suchmaschinen-Crawlern verursacht werden."},
 
   // SECTION 4: Subdomain & DNS Enumeration
-  "section4Title": {"en": "4) Subdomain & DNS Enumeration", "ru": "4) Перечисление субдоменов и DNS", "he": "4) אינומרציית דומיינים ו-DNS"},
-  "section4Desc": {"en": "Discovering subdomains and advanced DNS records using specialized tools.", "ru": "Обнаружение субдоменов и расширенных DNS-записей с помощью специализированных инструментов.", "he": "גילוי תתי-דומיינים ורשומות DNS מתקדמות באמצעות כלים מיוחדים."},
-  "section4CommandDesc": {"en": "Uses Amass and Subfinder for comprehensive target scope, combining passive and active sources.", "ru": "Использует Amass и Subfinder для комплексной области целей, объединяя пассивные и активные источники.", "he": "משתמש ב-Amass וב-Subfinder לכיסוי יעד מקיף, המשלב מקורות פסיביים ואקטיביים."},
+  "section4Title": {"en": "4) Subdomain & DNS Enumeration", "ru": "4) Перечисление субдоменов и DNS", "he": "4) אינומרציית דומיינים ו-DNS", "fr": "4) Énumération de sous-domaines et DNS", "de": "4) Subdomain- & DNS-Aufzählung"},
+  "section4Desc": {"en": "Discovering subdomains and advanced DNS records using specialized tools.", "ru": "Обнаружение субдоменов и расширенных DNS-записей с помощью специализированных инструментов.", "he": "גילוי תתי-דומיינים ורשומות DNS מתקדמות באמצעות כלים מיוחדים.", "fr": "Découverte de sous-domaines et d'enregistrements DNS avancés à l'aide d'outils spécialisés.", "de": "Entdeckung von Subdomains und erweiterten DNS-Einträgen mittels spezialisierter Tools."},
+  "section4CommandDesc": {"en": "Uses Amass and Subfinder for comprehensive target scope, combining passive and active sources.", "ru": "Использует Amass и Subfinder для комплексной области целей, объединяя пассивные и активные источники.", "he": "משתמש ב-Amass וב-Subfinder לכיסוי יעד מקיף, המשלב מקורות פסיביים ואקטיביים.", "fr": "Utilise Amass et Subfinder pour une portée cible complète, combinant des sources passives et actives.", "de": "Verwendet Amass und Subfinder für einen umfassenden Zielbereich, der passive und aktive Quellen kombiniert."},
   
   // SECTION 5: Port & Service Discovery
-  "section5Title": {"en": "5) Port & Service Discovery", "ru": "5) Обнаружение портов и служб", "he": "5) גילוי פורטים ושירותים"},
-  "section5Desc": {"en": "Aggressive port scanning, service versioning, and banner grabbing.", "ru": "Агрессивное сканирование портов, определение версий служб и захват баннеров.", "he": "סריקת פורטים אגרסיבית, גרסאות שירות ואיסוף באנרים."},
-  "section5CommandDesc": {"en": "The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports, fast timing, and output formats.", "ru": "Команда Nmap - безопасный, тщательный шаблон: скрипты по умолчанию, версии служб, все порты, быстрое время и форматы вывода.", "he": "פקודת Nmap היא דפוס בטוח ומקיף: סקריפטים ברירת מחדל, גרסאות שירות, כל הפורטים, תזמון מהיר ופורמטי פלט."},
+  "section5Title": {"en": "5) Port & Service Discovery", "ru": "5) Обнаружение портов и служб", "he": "5) גילוי פורטים ושירותים", "fr": "5) Découverte de ports et services", "de": "5) Port- & Service-Erkennung"},
+  "section5Desc": {"en": "Aggressive port scanning, service versioning, and banner grabbing.", "ru": "Агрессивное сканирование портов, определение версий служб и захват баннеров.", "he": "סריקת פורטים אגרסיבית, גרסאות שירות ואיסוף באנרים.", "fr": "Scan de ports agressif, versionnage de services et capture de bannières.", "de": "Aggressives Port-Scanning, Service-Versionierung und Banner Grabbing."},
+  "section5CommandDesc": {"en": "The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports, fast timing, and output formats.", "ru": "Команда Nmap - безопасный, тщательный шаблон: скрипты по умолчанию, версии служб, все порты, быстрое время и форматы вывода.", "he": "פקודת Nmap היא דפוס בטוח ומקיף: סקריפטים ברירת מחדל, גרסאות שירות, כל הפורטים, תזמון מהיר ופורמטי פלט.", "fr": "La commande Nmap est un modèle sûr et complet : scripts par défaut, versions de service, tous les ports, minutage rapide et formats de sortie.", "de": "Der Nmap-Befehl ist ein sicheres, gründliches Muster: Standard-Skripte, Service-Versionen, alle Ports, schnelles Timing und Ausgabeformate."},
 
   // SECTION 6: Web Discovery & Fuzzing
-  "section6Title": {"en": "6) Web Discovery & Fuzzing", "ru": "6) Веб-обнаружение и фаззинг", "he": "6) גילוי ופאזינג של ווב"},
-  "section6Desc": {"en": "Bruteforcing directories, files, and virtual hosts.", "ru": "Перебор каталогов, файлов и виртуальных хостов методом перебора.", "he": "כוח גס (Bruteforcing) על ספריות, קבצים ומארחים וירטואליים."},
-  "section6CommandDesc": {"en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302)."},
+  "section6Title": {"en": "6) Web Discovery & Fuzzing", "ru": "6) Веб-обнаружение и фаззинг", "he": "6) גילוי ופאזינג של ווב", "fr": "6) Découverte Web et Fuzzing", "de": "6) Web-Entdeckung & Fuzzing"},
+  "section6Desc": {"en": "Bruteforcing directories, files, and virtual hosts.", "ru": "Перебор каталогов, файлов и виртуальных хостов методом перебора.", "he": "כוח גס (Bruteforcing) על ספריות, קבצים ומארחים וירטואליים.", "fr": "Bruteforcing de répertoires, fichiers et hôtes virtuels.", "de": "Bruteforcing von Verzeichnissen, Dateien und virtuellen Hosts."},
+  "section6CommandDesc": {"en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302).", "fr": "Utilise ffuf et gobuster pour la découverte de contenu, en filtrant les codes d'état de succès courants (200, 301, 302).", "de": "Verwendet ffuf und gobuster zur Inhaltserkennung, Filterung nach gängigen Erfolgsstatuscodes (200, 301, 302)."},
 
   // SECTION 7: Web Application Testing
-  "section7Title": {"en": "7) Web Application Testing", "ru": "7) Тестирование веб-приложений", "he": "7) בדיקת יישומי ווב"},
-  "section7Desc": {"en": "Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.", "ru": "Быстрые проверки уязвимостей SQLi и XSS, а также базовая HTTP-диагностика.", "he": "בדיקות פגיעות מהירות עבור SQLi ו-XSS, בתוספת אבחון HTTP בסיסי."},
-  "section7CommandDesc": {"en": "Tools for checking common application layer flaws and enumerating hidden parameters.", "ru": "Инструменты для проверки общих недостатков уровня приложений и перечисления скрытых параметров.", "he": "כלים לבדיקת פגמים נפוצים בשכבת היישום ולאינומרציה של פרמטרים נסתרים."},
+  "section7Title": {"en": "7) Web Application Testing", "ru": "7) Тестирование веб-приложений", "he": "7) בדיקת יישומי ווב", "fr": "7) Test d'applications Web", "de": "7) Webanwendungstests"},
+  "section7Desc": {"en": "Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.", "ru": "Быстрые проверки уязвимостей SQLi и XSS, а также базовая HTTP-диагностика.", "he": "בדיקות פגיעות מהירות עבור SQLi ו-XSS, בתוספת אבחון HTTP בסיסי.", "fr": "Vérifications rapides des vulnérabilités SQLi et XSS, plus diagnostics HTTP de base.", "de": "Schnelle Schwachstellenprüfungen für SQLi und XSS, plus grundlegende HTTP-Diagnose."},
+  "section7CommandDesc": {"en": "Tools for checking common application layer flaws and enumerating hidden parameters.", "ru": "Инструменты для проверки общих недостатков уровня приложений и перечисления скрытых параметров.", "he": "כלים לבדיקת פגמים נפוצים בשכבת היישום ולאינומרציה של פרמטרים נסתרים.", "fr": "Outils pour vérifier les défauts courants de la couche application et énumérer les paramètres cachés.", "de": "Tools zur Überprüfung gängiger Schwachstellen der Anwendungsschicht und zur Aufzählung versteckter Parameter."},
 
   // SECTION 8: Vulnerability Scanning & SCA
-  "section8Title": {"en": "8) Vulnerability Scanning & SCA", "ru": "8) Сканирование уязвимостей и SCA", "he": "8) סריקת פגיעויות ו-SCA"},
-  "section8Desc": {"en": "Automated vulnerability template scanning, SBOM generation, and analysis.", "ru": "Автоматизированное сканирование шаблонов уязвимостей, создание и анализ SBOM.", "he": "סריקת תבניות פגיעות אוטומטית, יצירת SBOM (שטר חומרת תוכנה) וניתוח."},
-  "section8CommandDesc": {"en": "Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).", "ru": "Использует инструменты с открытым исходным кодом для сканирования инфраструктуры (Nuclei) и анализа зависимостей (Syft/Grype).", "he": "משתמש בכלים בקוד פתוח לסריקת תשתית (Nuclei) וניתוח תלות (Syft/Grype)."},
+  "section8Title": {"en": "8) Vulnerability Scanning & SCA", "ru": "8) Сканирование уязвимостей и SCA", "he": "8) סריקת פגיעויות ו-SCA", "fr": "8) Scan de vulnérabilités et SCA", "de": "8) Schwachstellenscan & SCA"},
+  "section8Desc": {"en": "Automated vulnerability template scanning, SBOM generation, and analysis.", "ru": "Автоматизированное сканирование шаблонов уязвимостей, создание и анализ SBOM.", "he": "סריקת תבניות פגיעות אוטומטית, יצירת SBOM (שטר חומרת תוכנה) וניתוח.", "fr": "Scan automatisé de modèles de vulnérabilité, génération et analyse de SBOM.", "de": "Automatisiertes Scannen von Schwachstellen-Templates, SBOM-Generierung und -Analyse."},
+  "section8CommandDesc": {"en": "Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).", "ru": "Использует инструменты с открытым исходным кодом для сканирования инфраструктуры (Nuclei) и анализа зависимостей (Syft/Grype).", "he": "משתמש בכלים בקוד פתוח לסריקת תשתית (Nuclei) וניתוח תלות (Syft/Grype).", "fr": "Utilise des outils open source pour le scan d'infrastructure (Nuclei) et l'analyse de dépendances (Syft/Grype).", "de": "Verwendet Open-Source-Tools für Infrastruktur-Scans (Nuclei) und Abhängigkeitsanalyse (Syft/Grype)."},
 
   // SECTION 9: Passwords, Credentials & AD Tooling
-  "section9Title": {"en": "9) Passwords, Credentials & AD Tooling", "ru": "9) Пароли, учетные данные и инструменты AD", "he": "9) סיסמאות, אישורים וכלי AD"},
-  "section9Desc": {"en": "Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.", "ru": "Онлайн-перебор (только с разрешения), автономный взлом хешей и инструменты перечисления Active Directory.", "he": "כוח גס מקוון (באישור בלבד), פיצוח Hash לא מקוון וכלי אינומרציית Active Directory."},
-  "section9CommandDesc": {"en": "Standard tools for credential testing, hash cracking, and AD environment assessment.", "ru": "Стандартные инструменты для тестирования учетных данных, взлома хешей и оценки среды AD.", "he": "כלים סטנדרטיים לבדיקת אישורים, פיצוח Hash והערכת סביבת AD."},
+  "section9Title": {"en": "9) Passwords, Credentials & AD Tooling", "ru": "9) Пароли, учетные данные и инструменты AD", "he": "9) סיסמאות, אישורים וכלי AD", "fr": "9) Mots de passe, Identifiants & Outils AD", "de": "9) Passwörter, Anmeldeinformationen & AD-Tools"},
+  "section9Desc": {"en": "Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.", "ru": "Онлайн-перебор (только с разрешения), автономный взлом хешей и инструменты перечисления Active Directory.", "he": "כוח גס מקוון (באישור בלבד), פיצוח Hash לא מקוון וכלי אינומרציית Active Directory.", "fr": "Bruteforce en ligne (autorisé uniquement), cassage de hash hors ligne et outils d'énumération Active Directory.", "de": "Online-Bruteforce (nur autorisiert), Offline-Hash-Cracking und Active Directory-Aufzählungstools."},
+  "section9CommandDesc": {"en": "Standard tools for credential testing, hash cracking, and AD environment assessment.", "ru": "Стандартные инструменты для тестирования учетных данных, взлома хешей и оценки среды AD.", "he": "כלים סטנדרטיים לבדיקת אישורים, פיצוח Hash והערכת סביבת AD.", "fr": "Outils standards pour le test d'identifiants, le cassage de hash et l'évaluation de l'environnement AD.", "de": "Standard-Tools für Anmeldeinformationstests, Hash-Cracking und AD-Umgebungsbewertung."},
 
   // SECTION 10: Exploitation: Metasploit Framework (MSF)
-  "section10Title": {"en": "10) Exploitation: Metasploit Framework (MSF)", "ru": "10) Эксплуатация: Metasploit Framework (MSF)", "he": "10) ניצול: Metasploit Framework (MSF)"},
-  "section10Desc": {"en": "Core Metasploit commands for searching, configuring, and executing exploits.", "ru": "Основные команды Metasploit для поиска, настройки и выполнения эксплойтов.", "he": "פקודות Metasploit ליבה לחיפוש, קביעת תצורה וביצוע ניצולים."},
-  "section10CommandDesc": {"en": "A template workflow for using auxiliary and exploit modules in the Metasploit console.", "ru": "Шаблон рабочего процесса для использования вспомогательных модулей и модулей эксплойтов в консоли Metasploit.", "he": "תבנית עבודה לשימוש במודולים עזר וניצול בקונסולת Metasploit."},
+  "section10Title": {"en": "10) Exploitation: Metasploit Framework (MSF)", "ru": "10) Эксплуатация: Metasploit Framework (MSF)", "he": "10) ניצול: Metasploit Framework (MSF)", "fr": "10) Exploitation: Metasploit Framework (MSF)", "de": "10) Exploit: Metasploit Framework (MSF)"},
+  "section10Desc": {"en": "Core Metasploit commands for searching, configuring, and executing exploits.", "ru": "Основные команды Metasploit для поиска, настройки и выполнения эксплойтов.", "he": "פקודות Metasploit ליבה לחיפוש, קביעת תצורה וביצוע ניצולים.", "fr": "Commandes Metasploit de base pour la recherche, la configuration et l'exécution d'exploits.", "de": "Kern-Metasploit-Befehle zum Suchen, Konfigurieren und Ausführen von Exploits."},
+  "section10CommandDesc": {"en": "A template workflow for using auxiliary and exploit modules in the Metasploit console.", "ru": "Шаблон рабочего процесса для использования вспомогательных модулей и модулей эксплойтов в консоли Metasploit.", "he": "תבנית עבודה לשימוש במודולים עזר וניצול בקונסולת Metasploit.", "fr": "Un flux de travail modèle pour l'utilisation de modules auxiliaires et d'exploitation dans la console Metasploit.", "de": "Ein Template-Workflow zur Verwendung von Hilfs- und Exploit-Modulen in der Metasploit-Konsole."},
 
   // SECTION 11: Post-Exploitation: Shells & Enumeration
-  "section11Title": {"en": "11) Post-Exploitation: Shells & Enumeration", "ru": "11) Пост-эксплуатация: Шелы и перечисление", "he": "11) פוסט-ניצול: מעטפות ואינומרציה"},
-  "section11Desc": {"en": "Listener commands, common reverse shell one-liners, and local privilege escalation helpers.", "ru": "Команды слушателя, общие однострочники обратной оболочки и помощники по повышению локальных привилегий.", "he": "פקודות Listener, שורות פקודה נפוצות של מעטפת הפוכה ועוזרי הרחבת הרשאות מקומיות."},
-  "section11CommandDesc": {"en": "Essential commands for establishing and maintaining remote access and internal host reconnaissance.", "ru": "Основные команды для установления и поддержания удаленного доступа и внутренней разведки хостов.", "he": "פקודות חיוניות ליצירה ותחזוקה של גישה מרחוק וסיור מארח פנימי."},
+  "section11Title": {"en": "11) Post-Exploitation: Shells & Enumeration", "ru": "11) Пост-эксплуатация: Шелы и перечисление", "he": "11) פוסט-ניצול: מעטפות ואינומרציה", "fr": "11) Post-Exploitation: Shells et Énumération", "de": "11) Post-Exploit: Shells & Aufzählung"},
+  "section11Desc": {"en": "Listener commands, common reverse shell one-liners, and local privilege escalation helpers.", "ru": "Команды слушателя, общие однострочники обратной оболочки и помощники по повышению локальных привилегий.", "he": "פקודות Listener, שורות פקודה נפוצות של מעטפת הפוכה ועוזרי הרחבת הרשאות מקומיות.", "fr": "Commandes d'écoute, one-liners courants de reverse shell et aides à l'escalade de privilèges locaux.", "de": "Listener-Befehle, gängige Reverse-Shell-One-Liner und Helfer zur lokalen Privilegienerweiterung."},
+  "section11CommandDesc": {"en": "Essential commands for establishing and maintaining remote access and internal host reconnaissance.", "ru": "Основные команды для установления и поддержания удаленного доступа и внутренней разведки хостов.", "he": "פקודות חיוניות ליצירה ותחזוקה של גישה מרחוק וסיור מארח פנימי.", "fr": "Commandes essentielles pour établir et maintenir l'accès à distance et la reconnaissance d'hôtes internes.", "de": "Wesentliche Befehle zur Einrichtung und Aufrechterhaltung des Fernzugriffs und der internen Host-Aufklärung."},
 
   // SECTION 12: Network & TLS Checks
-  "section12Title": {"en": "12) Network & TLS Checks", "ru": "12) Проверки сети и TLS", "he": "12) בדיקות רשת ו-TLS"},
-  "section12Desc": {"en": "Traffic capture, packet analysis, and SSL/TLS configuration checks.", "ru": "Захват трафика, анализ пакетов и проверка конфигурации SSL/TLS.", "he": "לכידת תעבורה, ניתוח מנות ובדיקות תצורת SSL/TLS."},
-  "section12CommandDesc": {"en": "Commands for network diagnostics and assessing the cryptographic strength of web endpoints.", "ru": "Команды для сетевой диагностики и оценки криптографической стойкости веб-конечных точек.", "he": "פקודות לאבחון רשת והערכת החוזק הקריפטוגרפי של נקודות קצה אינטרנט."},
+  "section12Title": {"en": "12) Network & TLS Checks", "ru": "12) Проверки сети и TLS", "he": "12) בדיקות רשת ו-TLS", "fr": "12) Vérifications Réseau et TLS", "de": "12) Netzwerk- & TLS-Prüfungen"},
+  "section12Desc": {"en": "Traffic capture, packet analysis, and SSL/TLS configuration checks.", "ru": "Захват трафика, анализ пакетов и проверка конфигурации SSL/TLS.", "he": "לכידת תעבורה, ניתוח מנות ובדיקות תצורת SSL/TLS.", "fr": "Capture de trafic, analyse de paquets et vérifications de configuration SSL/TLS.", "de": "Verkehrserfassung, Paketanalyse und SSL/TLS-Konfigurationsprüfungen."},
+  "section12CommandDesc": {"en": "Commands for network diagnostics and assessing the cryptographic strength of web endpoints.", "ru": "Команды для сетевой диагностики и оценки криптографической стойкости веб-конечных точек.", "he": "פקודות לאבחון רשת והערכת החוזק הקריפטוגרפי של נקודות קצה אינטרנט.", "fr": "Commandes pour le diagnostic réseau et l'évaluation de la force cryptographique des points de terminaison Web.", "de": "Befehle zur Netzwerkdiagnose und zur Bewertung der kryptografischen Stärke von Web-Endpunkten."},
 
   // SECTION 13: Vulnerability Research & PoC Triage
-  "section13Title": {"en": "13) Vulnerability Research & PoC Triage", "ru": "13) Исследование уязвимостей и сортировка PoC", "he": "13) מחקר פגיעויות וטריאז' PoC"},
-  "section13Desc": {"en": "Searching local exploit databases and safely running proof-of-concept code in isolation.", "ru": "Поиск локальных баз данных эксплойтов и безопасное выполнение кода подтверждения концепции в изоляции.", "he": "חיפוש בבסיסי נתונים מקומיים של ניצולים והרצת קוד הוכחת היתכנות (PoC) בבידוד בבטחה."},
-  "section13CommandDesc": {"en": "Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.", "ru": "Подчеркивает локальный поиск (searchsploit) и использование сетевых изолированных контейнеров для предотвращения горизонтального перемещения.", "he": "מדגיש חיפוש מקומי (searchsploit) ושימוש במכולות מבודדות רשת למניעת תנועה רוחבית."},
+  "section13Title": {"en": "13) Vulnerability Research & PoC Triage", "ru": "13) Исследование уязвимостей и сортировка PoC", "he": "13) מחקר פגיעויות וטריאז' PoC", "fr": "13) Recherche de Vulnérabilités et Tri PoC", "de": "13) Schwachstellenforschung & PoC-Triage"},
+  "section13Desc": {"en": "Searching local exploit databases and safely running proof-of-concept code in isolation.", "ru": "Поиск локальных баз данных эксплойтов и безопасное выполнение кода подтверждения концепции в изоляции.", "he": "חיפוש בבסיסי נתונים מקומיים של ניצולים והרצת קוד הוכחת היתכנות (PoC) בבידוד בבטחה.", "fr": "Recherche dans les bases de données d'exploits locales et exécution sécurisée de code de preuve de concept en isolement.", "de": "Suche in lokalen Exploit-Datenbanken und sichere Ausführung von Proof-of-Concept-Code in Isolation."},
+  "section13CommandDesc": {"en": "Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.", "ru": "Подчеркивает локальный поиск (searchsploit) и использование сетевых изолированных контейнеров для предотвращения горизонтального перемещения.", "he": "מדגיש חיפוש מקומי (searchsploit) ושימוש במכולות מבודדות רשת למניעת תנועה רוחבית.", "fr": "Met l'accent sur la recherche locale (searchsploit) et l'utilisation de conteneurs isolés du réseau pour prévenir les mouvements latéraux.", "de": "Betont die lokale Suche (searchsploit) und die Verwendung von netzwerkisolierten Containern zur Verhinderung von lateralen Bewegungen."},
 
   // SECTION 14: Binary Reversing & Exploit Development
-  "section14Title": {"en": "14) Binary Reversing & Exploit Development", "ru": "14) Реверсирование бинарных файлов и разработка эксплойтов", "he": "14) הנדסה הפוכה ופיתוח ניצול"},
-  "section14Desc": {"en": "Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.", "ru": "Статический анализ (ELF), поиск ROP-гаджетов и настройка интерактивной отладки.", "he": "ניתוח סטטי (ELF), ציד גאדג'טים של ROP והגדרת ניפוי באגים אינטראקטיבי."},
-  "section14CommandDesc": {"en": "Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.", "ru": "Инструменты, используемые для анализа заголовков исполняемых файлов, кода ассемблера и подготовки эксплойтов переполнения буфера.", "he": "כלים המשמשים לניתוח כותרות קבצים ניתנים להרצה, קוד אסמבלי והכנת ניצול גלישת חוצץ."},
+  "section14Title": {"en": "14) Binary Reversing & Exploit Development", "ru": "14) Реверсирование бинарных файлов и разработка эксплойтов", "he": "14) הנדסה הפוכה ופיתוח ניצול", "fr": "14) Rétro-ingénierie binaire et développement d'exploits", "de": "14) Binär-Reverse-Engineering & Exploit-Entwicklung"},
+  "section14Desc": {"en": "Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.", "ru": "Статический анализ (ELF), поиск ROP-гаджетов и настройка интерактивной отладки.", "he": "ניתוח סטטי (ELF), ציד גאדג'טים של ROP והגדרת ניפוי באגים אינטראקטיבי.", "fr": "Analyse statique (ELF), chasse aux gadgets ROP et configuration de débogage interactif.", "de": "Statische Analyse (ELF), ROP-Gadget-Suche und interaktives Debugging-Setup."},
+  "section14CommandDesc": {"en": "Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.", "ru": "Инструменты, используемые для анализа заголовков исполняемых файлов, кода ассемблера и подготовки эксплойтов переполнения буфера.", "he": "כלים המשמשים לניתוח כותרות קבצים ניתנים להרצה, קוד אסמבלי והכנת ניצול גלישת חוצץ.", "fr": "Outils utilisés pour analyser les en-têtes de fichiers exécutables, le code assembleur et préparer des exploits de dépassement de tampon.", "de": "Tools zur Analyse von Header-Dateien, Assembly-Code und zur Vorbereitung von Buffer-Overflow-Exploits."},
 
   // SECTION 15: Fuzzing
-  "section15Title": {"en": "15) Fuzzing", "ru": "15) Фаззинг", "he": "15) פאזינג"},
-  "section15Desc": {"en": "Instrumented binary fuzzing and HTTP request fuzzing for input discovery.", "ru": "Инструментированный фаззинг бинарных файлов и фаззинг HTTP-запросов для обнаружения ввода.", "he": "פאזינג בינארי מונחה ופאזינג בקשות HTTP לגילוי קלט."},
-  "section15CommandDesc": {"en": "AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.", "ru": "AFL используется для поиска сбоев в бинарных файлах C/C++; Wfuzz используется для фаззинга черного ящика веб-приложений.", "he": "AFL משמש למציאת קריסות בבינארי C/C++; Wfuzz משמש לפאזינג קופסה שחורה של ווב."},
+  "section15Title": {"en": "15) Fuzzing", "ru": "15) Фаззинг", "he": "15) פאזינג", "fr": "15) Fuzzing", "de": "15) Fuzzing"},
+  "section15Desc": {"en": "Instrumented binary fuzzing and HTTP request fuzzing for input discovery.", "ru": "Инструментированный фаззинг бинарных файлов и фаззинг HTTP-запросов для обнаружения ввода.", "he": "פאזינג בינארי מונחה ופאזינג בקשות HTTP לגילוי קלט.", "fr": "Fuzzing binaire instrumenté et fuzzing de requêtes HTTP pour la découverte d'entrées.", "de": "Instrumentiertes Binär-Fuzzing und HTTP-Anfrage-Fuzzing zur Eingabeerkennung."},
+  "section15CommandDesc": {"en": "AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.", "ru": "AFL используется для поиска сбоев в бинарных файлах C/C++; Wfuzz используется для фаззинга черного ящика веб-приложений.", "he": "AFL משמש למציאת קריסות בבינארי C/C++; Wfuzz משמש לפאזינג קופסה שחורה של ווב.", "fr": "AFL est utilisé pour trouver des crashs dans les binaires C/C++; Wfuzz est utilisé pour le fuzzing Web en boîte noire.", "de": "AFL wird zur Fehlersuche in C/C++-Binärdateien verwendet; Wfuzz wird für Black-Box-Web-Fuzzing eingesetzt."},
 
   // SECTION 16: Mobile & Firmware Analysis
-  "section16Title": {"en": "16) Mobile & Firmware Analysis", "ru": "16) Анализ мобильных устройств и прошивок", "he": "16) ניתוח מובייל וקושחה"},
-  "section16Desc": {"en": "Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.", "ru": "Декомпиляция APK, динамический анализ времени выполнения (Frida) и извлечение прошивки.", "he": "דה-קומפילציה של APKs, ניתוח זמן ריצה דינמי (Frida) וחילוץ קושחה."},
-  "section16CommandDesc": {"en": "Commands for static and dynamic analysis of Android apps and embedded system binaries.", "ru": "Команды для статического и динамического анализа приложений Android и бинарных файлов встроенных систем.", "he": "פקודות לניתוח סטטי ודינמי של אפליקציות אנדרואיד ובינארי מערכות משובצות."},
+  "section16Title": {"en": "16) Mobile & Firmware Analysis", "ru": "16) Анализ мобильных устройств и прошивок", "he": "16) ניתוח מובייל וקושחה", "fr": "16) Analyse Mobile et Firmware", "de": "16) Mobil- & Firmware-Analyse"},
+  "section16Desc": {"en": "Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.", "ru": "Декомпиляция APK, динамический анализ времени выполнения (Frida) и извлечение прошивки.", "he": "דה-קומפילציה של APKs, ניתוח זמן ריצה דינמי (Frida) וחילוץ קושחה.", "fr": "Décompilation d'APK, analyse dynamique d'exécution (Frida) et extraction de firmware.", "de": "Dekompliierung von APKs, dynamische Laufzeitanalyse (Frida) und Firmware-Extraktion."},
+  "section16CommandDesc": {"en": "Commands for static and dynamic analysis of Android apps and embedded system binaries.", "ru": "Команды для статического и динамического анализа приложений Android и бинарных файлов встроенных систем.", "he": "פקודות לניתוח סטטי ודינמי של אפליקציות אנדרואיד ובינארי מערכות משובצות.", "fr": "Commandes pour l'analyse statique et dynamique des applications Android et des binaires de systèmes embarqués.", "de": "Befehle zur statischen und dynamischen Analyse von Android-Apps und eingebetteten Systembinärdateien."},
 
   // SECTION 17: Safe PoC Testing & Logging
-  "section17Title": {"en": "17) Safe PoC Testing & Logging", "ru": "17) Безопасное тестирование PoC и ведение журнала", "he": "17) בדיקות PoC בטוחות ורישום לוגים"},
-  "section17Desc": {"en": "Ensuring safe, reproducible testing environments and comprehensive logging.", "ru": "Обеспечение безопасных, воспроизводимых сред тестирования и комплексного ведения журнала.", "he": "הבטחת סביבות בדיקה בטוחות וניתנות לשחזור ורישום לוגים מקיף."},
-  "section17CommandDesc": {"en": "Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.", "ru": "Методы минимизации риска с помощью изоляции Docker и обеспечения подробного протоколирования результатов тестирования.", "he": "טכניקות למזעור סיכונים באמצעות בידוד Docker והבטחת רישום מפורט של תוצאות הבדיקה."},
+  "section17Title": {"en": "17) Safe PoC Testing & Logging", "ru": "17) Безопасное тестирование PoC и ведение журнала", "he": "17) בדיקות PoC בטוחות ורישום לוגים", "fr": "17) Test PoC Sécurisé et Journalisation", "de": "17) Sicheres PoC-Testen & Protokollierung"},
+  "section17Desc": {"en": "Ensuring safe, reproducible testing environments and comprehensive logging.", "ru": "Обеспечение безопасных, воспроизводимых сред тестирования и комплексного ведения журнала.", "he": "הבטחת סביבות בדיקה בטוחות וניתנות לשחזור ורישום לוגים מקיף.", "fr": "Assurer des environnements de test sûrs et reproductibles et une journalisation complète.", "de": "Gewährleistung sicherer, reproduzierbarer Testumgebungen und umfassender Protokollierung."},
+  "section17CommandDesc": {"en": "Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.", "ru": "Методы минимизации риска с помощью изоляции Docker и обеспечения подробного протоколирования результатов тестирования.", "he": "טכניקות למזעור סיכונים באמצעות בידוד Docker והבטחת רישום מפורט של תוצאות הבדיקה.", "fr": "Techniques pour minimiser les risques via l'isolation Docker et garantir la journalisation détaillée des résultats des tests.", "de": "Techniken zur Minimierung des Risikos durch Docker-Isolation und zur Gewährleistung einer detaillierten Protokollierung der Testergebnisse."},
 };
 
 // --- I18N (Language Switching) LOGIC ---
@@ -529,9 +556,14 @@ function switchLanguage(lang) {
       if (element.tagName === 'H2') {
         // Handle H2: Preserve the inner HTML (chips) but replace the text content
         const chips = element.innerHTML.match(/<span class="chip".*?<\/span>/g) || [];
+        // Note: For RTL, content needs to be placed at the *end* for correct layout logic
         element.innerHTML = translation + ' ' + chips.join(' ');
-      } else {
-        // For H1, P, STRONG, FOOTER, simple text replacement
+      } else if (element.tagName === 'SPAN' && key === 'githubLink') {
+        // Handle the GitHub link span, allowing HTML content
+        element.innerHTML = translation;
+      }
+      else {
+        // For H1, P, STRONG, FOOTER (text part), simple text replacement
         element.textContent = translation;
       }
     }
@@ -542,10 +574,11 @@ function switchLanguage(lang) {
 
   // Update button text based on current collapse state
   const toggleBtn = document.getElementById('toggleAll');
+  const currentLang = document.documentElement.getAttribute('lang') || 'en';
   if (collapsed) {
-    toggleBtn.textContent = translations.toggleButtonCollapsed[lang];
+    toggleBtn.textContent = translations.toggleButtonCollapsed[currentLang];
   } else {
-    toggleBtn.textContent = translations.toggleButtonExpanded[lang];
+    toggleBtn.textContent = translations.toggleButtonExpanded[currentLang];
   }
 }
 
