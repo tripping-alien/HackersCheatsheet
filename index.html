@@ -6,10 +6,19 @@
     <title data-i18n="mainTitle">Penetration Testing & Vulnerability Research — Robust Cheatsheet</title>
     <style>
         /* CSS STYLES */
-        :root{ --bg:#0d0f12; --card:#0f1720; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#06b6d4; --header:#e6eef7; --code-bg:#1c1e26; }
-        body{font-family:Inter,sans-serif;background:var(--bg);color:var(--muted);margin:0;padding:20px}
-        .container{max-width:1100px;margin:0 auto;background:var(--card);padding:26px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
-        h1{margin:0;color:var(--header);font-size:22px}
+        :root{ 
+            /* HACKER AESTHETIC COLORS */
+            --bg:#000000; 
+            --card:#0a0a0a; 
+            --muted:#d4d4d4; 
+            --accent:#00ff41; /* Neon Green */
+            --accent-2:#14c7c7; /* Bright Teal */
+            --header:#00ff41; /* Neon Green */
+            --code-bg:#1c1e26; /* Dark Code Blocks */
+        }
+        body{font-family:Consolas, Monaco, monospace;background:var(--bg);color:var(--muted);margin:0;padding:20px}
+        .container{max-width:1100px;margin:0 auto;background:var(--card);padding:26px;border-radius:12px;box-shadow:0 0 40px rgba(0,255,65,0.2)}
+        h1{margin:0;color:var(--header);font-size:24px; text-shadow: 0 0 5px rgba(0,255,65,0.5);}
         h2{color:var(--header);font-size:1.3rem;margin-top:20px;border-left:4px solid var(--accent);padding-left:10px;cursor:pointer; display: flex; align-items: center; justify-content: space-between;}
         
         /* NEW STYLES for Header and Language Dropdown */
@@ -40,16 +49,18 @@
             text-decoration: none;
             font-size: 16px;
             transition: color 0.2s, background-color 0.2s;
+            border: 1px solid var(--accent-2);
         }
         
         .social-icon:hover {
-            color: white;
+            color: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
         }
 
-        .social-icon.twitter:hover { background-color: #1DA1F2; }
-        .social-icon.linkedin:hover { background-color: #0A66C2; }
-        .social-icon.telegram:hover { background-color: #2AABEE; }
-        .social-icon.github:hover { background-color: #6e5494; }
+        .social-icon.twitter:hover { background-color: #000; }
+        .social-icon.linkedin:hover { background-color: #000; }
+        .social-icon.telegram:hover { background-color: #000; }
+        .social-icon.github:hover { background-color: #000; }
 
         .lang-select-container {
             display: flex;
@@ -61,12 +72,13 @@
         .language-select {
             padding: 8px 10px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--accent);
             background: var(--code-bg);
-            color: var(--muted);
+            color: var(--accent);
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%2394a3b8' d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z'/%3E%3C/svg%3E");
+            /* Use a simple arrow or replace with SVG matching the color */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%2300ff41' d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 8px center;
             padding-right: 30px;
@@ -79,14 +91,14 @@
             border-right: 4px solid var(--accent);
             padding-left: 0;
             padding-right: 10px;
-            flex-direction: row-reverse; /* Put chips before the title text */
+            flex-direction: row-reverse;
         }
         html[dir="rtl"] h2 .chip-container { flex-direction: row-reverse; }
         html[dir="rtl"] h2 .chip { margin-left: 0; margin-right: 8px; }
 
         html[dir="rtl"] .lang-select-container {
             margin-left: 0;
-            margin-right: auto; /* Push to the left */
+            margin-right: auto;
         }
         
         html[dir="rtl"] .language-select {
@@ -106,22 +118,29 @@
         html[dir="rtl"] .toggle-icon { margin-right: auto; margin-left: 0; padding-right: 10px; padding-left: 0; }
         /* END RTL adjustments */
 
-        pre{border-radius:8px;margin:10px 0;padding:12px;position:relative;background:var(--code-bg);overflow:auto;border:1px solid rgba(255,255,255,0.03)}
-        .copy-btn{position:absolute;right:10px;top:10px;background:var(--accent-2);color:#000;border:none;padding:6px 8px;border-radius:6px;font-size:12px;cursor:pointer; transition: background-color 0.3s;}
-        .copy-btn:hover { background-color: #0bd; }
+        pre{border-radius:8px;margin:10px 0;padding:12px;position:relative;background:var(--code-bg);overflow:auto;border:1px solid var(--accent)}
+        .copy-btn{position:absolute;right:10px;top:10px;background:var(--accent);color:#000;border:none;padding:6px 8px;border-radius:6px;font-size:12px;cursor:pointer; transition: background-color 0.3s;}
+        .copy-btn:hover { background-color: var(--accent-2); }
 
-        .warning{border:1px solid #eab308;border-left:4px solid #eab308;background:rgba(234,179,8,0.07);color:#ffd;padding:12px;border-radius:8px}
+        .warning{border:1px solid var(--accent);border-left:4px solid var(--accent);background:rgba(0,255,65,0.07);color:var(--muted);padding:12px;border-radius:8px}
 
         .section-desc{margin-top:-8px;margin-bottom:12px;font-style:italic;color:var(--muted)}
-        .command-desc{font-size:0.85rem;margin-top:3px;margin-bottom:10px;color:#b0bcd4;font-style:italic}
+        .command-desc{font-size:0.85rem;margin-top:3px;margin-bottom:10px;color:var(--accent-2);font-style:italic; font-family:Consolas, Monaco, monospace;}
         
         .chip-container { display: flex; gap: 8px; }
-        .chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;cursor:default;}
-        #toggleAllButton{padding:10px;border-radius:8px;border:none;width: 100%; margin-bottom: 20px; font-weight: bold; cursor: pointer; background:rgba(255,255,255,0.05); color: var(--accent-2);}
-        #toggleAllButton:hover { background: rgba(255,255,255,0.08); }
+        .chip{display:inline-block;background:rgba(0,255,65,0.04);padding:4px 8px;border-radius:999px;color:var(--accent);border:1px solid rgba(0,255,65,0.3);font-size:12px;cursor:default;}
+        #toggleAllButton{padding:10px;border-radius:8px;border:none;width: 100%; margin-bottom: 20px; font-weight: bold; cursor: pointer; background:rgba(0,255,65,0.1); color: var(--accent);}
+        #toggleAllButton:hover { background: rgba(0,255,65,0.2); }
         footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
         footer a { color: var(--accent); text-decoration: none; }
-        .toggle-icon { margin-left: auto; padding-left: 10px; font-weight: bold; }
+        
+        /* EMOJI TOGGLE ICON */
+        .toggle-icon { 
+            margin-left: auto; 
+            padding-left: 10px; 
+            font-weight: bold; 
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -167,7 +186,7 @@
         <h2 class="section-header" data-i18n="section1Title" data-target="section-1">
             1) Recon & OSINT
             <span class="chip-container"><span class="chip">OSINT</span><span class="chip">Recon</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section1Desc">Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.</p>
         <div id="section-1" class="section-content">
@@ -200,7 +219,7 @@ shodan host 1.2.3.4</code></pre>
         <h2 class="section-header" data-i18n="section2Title" data-target="section-2">
             2) Recon: Search Engine Dorking & Exposed Assets
             <span class="chip-container"><span class="chip">OSINT</span><span class="chip">Dorking</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section2Desc">Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.</p>
         <div id="section-2" class="section-content">
@@ -229,7 +248,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section3Title" data-target="section-3">
             3) SEO & Indexation Security
             <span class="chip-container"><span class="chip">Web</span><span class="chip">SEO</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section3Desc">Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.</p>
         <div id="section-3" class="section-content">
@@ -256,7 +275,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section4Title" data-target="section-4">
             4) Subdomain & DNS Enumeration
             <span class="chip-container"><span class="chip">DNS</span><span class="chip">Subdomain</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section4Desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
         <div id="section-4" class="section-content">
@@ -277,7 +296,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section5Title" data-target="section-5">
             5) Port & Service Discovery
             <span class="chip-container"><span class="chip">Network</span><span class="chip">Nmap</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section5Desc">Aggressive port scanning, service versioning, and banner grabbing.</p>
         <div id="section-5" class="section-content">
@@ -298,7 +317,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section6Title" data-target="section-6">
             6) Web Discovery & Fuzzing
             <span class="chip-container"><span class="chip">Web</span><span class="chip">Fuzzing</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section6Desc">Bruteforcing directories, files, and virtual hosts.</p>
         <div id="section-6" class="section-content">
@@ -316,7 +335,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section7Title" data-target="section-7">
             7) Web Application Testing
             <span class="chip-container"><span class="chip">Webapp</span><span class="chip">SQL</span><span class="chip">XSS</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section7Desc">Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.</p>
         <div id="section-7" class="section-content">
@@ -340,7 +359,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section8Title" data-target="section-8">
             8) Vulnerability Scanning & SCA
             <span class="chip-container"><span class="chip">CVE</span><span class="chip">SBOM</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section8Desc">Automated vulnerability template scanning, SBOM generation, and analysis.</p>
         <div id="section-8" class="section-content">
@@ -364,7 +383,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section9Title" data-target="section-9">
             9) Passwords, Credentials & AD Tooling
             <span class="chip-container"><span class="chip">Passwords</span><span class="chip">AD</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section9Desc">Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.</p>
         <div id="section-9" class="section-content">
@@ -388,7 +407,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section10Title" data-target="section-10">
             10) Exploitation: Metasploit Framework (MSF)
             <span class="chip-container"><span class="chip">Exploit</span><span class="chip">MSF</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section10Desc">Core Metasploit commands for searching, configuring, and executing exploits.</p>
         <div id="section-10" class="section-content">
@@ -422,7 +441,7 @@ set LHOST 10.0.0.5</code></pre>
         <h2 class="section-header" data-i18n="section11Title" data-target="section-11">
             11) Post-Exploitation: Shells & Enumeration
             <span class="chip-container"><span class="chip">Shell</span><span class="chip">Privesc</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section11Desc">Listener commands, common reverse shell one-liners, and local privilege escalation helpers.</p>
         <div id="section-11" class="section-content">
@@ -449,7 +468,7 @@ set LHOST 10.0.0.5</code></pre>
         <h2 class="section-header" data-i18n="section12Title" data-target="section-12">
             12) Network & TLS Checks
             <span class="chip-container"><span class="chip">Network</span><span class="chip">TLS</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section12Desc">Traffic capture, packet analysis, and SSL/TLS configuration checks.</p>
         <div id="section-12" class="section-content">
@@ -473,7 +492,7 @@ set LHOST 10.0.0.5</code></pre>
         <h2 class="section-header" data-i18n="section13Title" data-target="section-13">
             13) Vulnerability Research & PoC Triage
             <span class="chip-container"><span class="chip">VulnRes</span><span class="chip">PoC</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section13Desc">Searching local exploit databases and safely running proof-of-concept code in isolation.</p>
         <div id="section-13" class="section-content">
@@ -495,7 +514,7 @@ searchsploit -m 49993 # copy exploit by EDB ID</code></pre>
         <h2 class="section-header" data-i18n="section14Title" data-target="section-14">
             14) Binary Reversing & Exploit Development
             <span class="chip-container"><span class="chip">Reverse</span><span class="chip">Pwn</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section14Desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.</p>
         <div id="section-14" class="section-content">
@@ -521,7 +540,7 @@ strings binary</code></pre>
         <h2 class="section-header" data-i18n="section15Title" data-target="section-15">
             15) Fuzzing
             <span class="chip-container"><span class="chip">Fuzzing</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section15Desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.</p>
         <div id="section-15" class="section-content">
@@ -539,7 +558,7 @@ strings binary</code></pre>
         <h2 class="section-header" data-i18n="section16Title" data-target="section-16">
             16) Mobile & Firmware Analysis
             <span class="chip-container"><span class="chip">Mobile</span><span class="chip">Firmware</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section16Desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.</p>
         <div id="section-16" class="section-content">
@@ -564,7 +583,7 @@ strings firmware.bin | grep -i password</code></pre>
         <h2 class="section-header" data-i18n="section17Title" data-target="section-17">
             17) Safe PoC Testing & Logging
             <span class="chip-container"><span class="chip">Safety</span><span class="chip">Logging</span></span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section17Desc">Ensuring safe, reproducible testing environments and comprehensive logging.</p>
         <div id="section-17" class="section-content">
@@ -593,7 +612,7 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
                 <span class="chip">Evasion</span>
                 <span class="chip">MSF</span>
             </span>
-            <span class="toggle-icon">▶</span>
+            <span class="toggle-icon" data-expanded="🔓" data-collapsed="🔒">🔒</span>
         </h2>
         <p class="section-desc" data-i18n="section18Desc">Generating and encoding reverse shell payloads. **AUTHORIZED USE ONLY.**</p>
         <div id="section-18" class="section-content">
@@ -795,8 +814,8 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
         
         // 6. Update copy button text
         document.querySelectorAll('.copy-btn').forEach(btn => {
-            // Only update if it's not currently showing "Copied!"
-            if (btn.textContent !== "Copied!" && btn.textContent !== "Скопировано!" && btn.textContent !== "הועתק!" && btn.textContent !== "Copié!" && btn.textContent !== "Kopiert!") {
+            // Only update if it's not currently showing a "Copied!" message
+            if (!btn.hasAttribute('data-copied')) {
                 btn.textContent = translations['copyButtonText'][lang] || 'Copy';
             }
         });
@@ -817,6 +836,11 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
         if (telegramShare) {
             telegramShare.href = `https://t.me/share/url?url=${currentUrl}&text=${defaultText}`;
         }
+        
+        // 8. Re-apply toggle icon state after translation, in case language changed
+        document.querySelectorAll('.toggle-icon').forEach(icon => {
+            icon.textContent = collapsed ? icon.getAttribute('data-collapsed') : icon.getAttribute('data-expanded');
+        });
     }
 
     // --- COPY & SECTION LOGIC ---
@@ -830,14 +854,18 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
 
         navigator.clipboard.writeText(cleanedCode).then(() => {
             const lang = getCookie('cheatsheet_lang') || 'en';
-            button.innerHTML = translations['copyButtonText'][lang] === 'Copy' ? 'Copied!' : 
+            const copiedText = translations['copyButtonText'][lang] === 'Copy' ? 'Copied!' : 
                                translations['copyButtonText'][lang] === 'Копировать' ? 'Скопировано!' : 
                                translations['copyButtonText'][lang] === 'העתק' ? 'הועתק!' : 
                                translations['copyButtonText'][lang] === 'Copier' ? 'Copié!' : 
                                translations['copyButtonText'][lang] === 'Kopieren' ? 'Kopiert!' : 'Copied!';
             
+            button.textContent = copiedText;
+            button.setAttribute('data-copied', 'true');
+            
             setTimeout(() => {
-                // Restore the original text by re-translating
+                // Restore the original text by re-translating and removing the flag
+                button.removeAttribute('data-copied');
                 translate(lang); 
             }, 1500);
         }).catch(err => {
@@ -850,17 +878,20 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             const sectionId = header.getAttribute('data-target');
             const content = document.getElementById(sectionId);
             const icon = header.querySelector('.toggle-icon');
+            const expandedIcon = icon.getAttribute('data-expanded');
+            const collapsedIcon = icon.getAttribute('data-collapsed');
 
             header.addEventListener('click', function() {
                 const isExpanded = content.style.display === 'block';
                 content.style.display = isExpanded ? 'none' : 'block';
-                icon.textContent = isExpanded ? '▶' : '▼';
+                icon.textContent = isExpanded ? collapsedIcon : expandedIcon;
                 this.setAttribute('aria-expanded', !isExpanded);
             });
             
             // Apply initial collapsed state 
             content.style.display = collapsed ? 'none' : 'block';
-            icon.textContent = collapsed ? '▶' : '▼';
+            icon.textContent = collapsed ? collapsedIcon : expandedIcon;
+            header.setAttribute('aria-expanded', !collapsed);
         });
     }
 
@@ -875,7 +906,13 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
         });
         
         document.querySelectorAll('.toggle-icon').forEach(icon => {
-            icon.textContent = collapsed ? '▶' : '▼';
+            const expandedIcon = icon.getAttribute('data-expanded');
+            const collapsedIcon = icon.getAttribute('data-collapsed');
+            icon.textContent = collapsed ? collapsedIcon : expandedIcon;
+        });
+        
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.setAttribute('aria-expanded', !collapsed);
         });
 
         const toggleKey = collapsed ? 'toggleButtonCollapsed' : 'toggleButtonExpanded';
