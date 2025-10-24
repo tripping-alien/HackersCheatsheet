@@ -4,265 +4,298 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="mainTitle">Penetration Testing & Vulnerability Research — Robust Cheatsheet</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-    /* REVISED CSS STYLES */
-:root{ 
-    /* DEEP SPACE AESTHETIC COLORS */
-    --bg: #10141b;             /* Deep Charcoal/Navy (Softer Black) */
-    --card: #1c212b;           /* Slightly lighter Card Background */
-    --muted: #e0e6f0;          /* Soft Off-White/Light Gray for Body Text */
-    
-    /* ACCENT COLORS */
-    --accent: #4fc0eb;         /* Bright Electric Blue (Primary Accent) */
-    --accent-glow: rgba(79, 192, 235, 0.4); /* Soft Blue Glow */
-    --accent-2: #c084fc;       /* Soft Neon Purple (Secondary Accent) */
-    --header: var(--accent);   /* Headers use the Electric Blue */
-    
-    --code-bg: #222a35;        /* Darker Blue-Gray Code Blocks */
-    --border: #334050;         /* Subtle Border/Line Color */
-}
-body{
-    font-family: 'SFMono-Regular', Consolas, Monaco, monospace; /* Modern monospace */
-    background:var(--bg);
-    color:var(--muted);
-    margin:0;
-    padding:20px
-}
-.container{
-    max-width:1100px;
-    margin:0 auto;
-    background:var(--card);
-    padding:26px;
-    border-radius:12px;
-    /* Soft Blue Box Shadow */
-    box-shadow:0 0 25px var(--accent-glow); 
-}
-h1{
-    margin:0;
-    color:var(--header);
-    font-size:26px; /* Slightly larger H1 */
-    text-shadow: 0 0 5px var(--accent-glow);
-    font-weight: 700;
-}
-h2{
-    color:var(--header);
-    font-size:1.4rem; /* Slightly larger H2 */
-    margin-top:20px;
-    border-left:4px solid var(--accent);
-    padding-left:10px;
-    cursor:pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between;
-    transition: color 0.2s; /* Transition for hover */
-}
-h2:hover {
-    color: var(--accent-2); /* Secondary accent on hover */
-}
+        /* CSS STYLES */
+        :root{ 
+            /* DEEP SPACE AESTHETIC COLORS */
+            --bg: #10141b;             /* Deep Charcoal/Navy (Softer Black) */
+            --card: #1c212b;           /* Slightly lighter Card Background */
+            --muted: #e0e6f0;          /* Soft Off-White/Light Gray for Body Text */
+            
+            /* ACCENT COLORS */
+            --accent: #4fc0eb;         /* Bright Electric Blue (Primary Accent) */
+            --accent-glow: rgba(79, 192, 235, 0.4); /* Soft Blue Glow */
+            --accent-2: #c084fc;       /* Soft Neon Purple (Secondary Accent) */
+            --header: var(--accent);   /* Headers use the Electric Blue */
+            
+            --code-bg: #222a35;        /* Darker Blue-Gray Code Blocks */
+            --border: #334050;         /* Subtle Border/Line Color */
+        }
+        body{
+            /* UPDATED FONT STACK */
+            font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, Monaco, monospace; 
+            background:var(--bg);
+            color:var(--muted);
+            margin:0;
+            padding:20px
+        }
+        .container{
+            max-width:1100px;
+            margin:0 auto;
+            background:var(--card);
+            padding:26px;
+            border-radius:12px;
+            box-shadow:0 0 25px var(--accent-glow);
+        }
+        h1{
+            margin:0;
+            color:var(--header);
+            font-size:26px;
+            text-shadow: 0 0 5px var(--accent-glow);
+            font-weight: 600; /* Use 600 weight from Plex Mono */
+        }
+        h2{
+            color:var(--header);
+            font-size:1.4rem;
+            margin-top:20px;
+            border-left:4px solid var(--accent);
+            padding-left:10px;
+            cursor:pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            transition: color 0.2s;
+        }
+        h2:hover {
+            color: var(--accent-2);
+        }
+        
+        /* NEW STYLES for Header and Language Dropdown */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap; 
+            gap: 15px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--code-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-2);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border);
+        }
+        
+        .social-icon:hover {
+            color: var(--muted);
+            background-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
 
-/* NEW STYLES for Header and Language Dropdown */
-.header-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap; 
-    gap: 15px;
-}
+        .lang-select-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+        
+        .language-select {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+            background: var(--code-bg);
+            color: var(--accent);
+            cursor: pointer;
+            appearance: none;
+            /* Updated SVG background image to use the new accent color (#4fc0eb) */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%234fc0eb' d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 30px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+        .language-select:focus {
+            outline: none;
+            border-color: var(--accent-2); 
+        }
+        
+        /* RTL adjustments for Hebrew */
+        html[dir="rtl"] h2 {
+            border-left: none;
+            border-right: 4px solid var(--accent);
+            padding-left: 0;
+            padding-right: 10px;
+            flex-direction: row-reverse;
+        }
+        html[dir="rtl"] h2 .chip-container { flex-direction: row-reverse; }
+        html[dir="rtl"] h2 .chip { margin-left: 0; margin-right: 8px; }
 
-.share-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
+        html[dir="rtl"] .lang-select-container {
+            margin-left: 0;
+            margin-right: auto;
+        }
+        
+        html[dir="rtl"] .language-select {
+            background-position: left 8px center;
+            padding-left: 30px;
+            padding-right: 10px;
+        }
+        
+        html[dir="rtl"] .header-bar {
+            flex-direction: row-reverse;
+        }
+        /* FIX for RTL: copy feedback is on the left */
+        html[dir="rtl"] .copy-feedback { right: auto; left: 10px; }
+        html[dir="rtl"] .warning {
+            border-left: none;
+            border-right: 4px solid var(--accent);
+        }
+        html[dir="rtl"] .toggle-icon { margin-right: auto; margin-left: 0; padding-right: 10px; padding-left: 0; }
+        /* END RTL adjustments */
 
-.social-icon {
-    width: 32px; /* Slightly larger icon */
-    height: 32px;
-    border-radius: 50%;
-    background-color: var(--code-bg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--accent-2); /* Use secondary accent for icon color */
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
-    border: 1px solid var(--border);
-}
+        /* PRE STYLES: Now clickable */
+        pre{
+            border-radius:8px;
+            margin:10px 0;
+            padding:14px;
+            position:relative;
+            background:var(--code-bg);
+            overflow:auto;
+            border:1px solid var(--border);
+            cursor: copy; 
+            transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+        pre:hover {
+            background: #2a3341;
+            box-shadow: 0 0 8px var(--accent-glow);
+            border-color: var(--accent);
+        }
+        
+        /* === FIX: Ensure code aligns flush left and wraps correctly === */
+        pre code {
+            white-space: pre-wrap;
+            display: block; /* Important for full width and alignment */
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* === NEW: The 'Copied!' feedback element === */
+        .copy-feedback {
+            position: absolute;
+            right: 10px;
+            top: 10px; 
+            z-index: 10;
+            background: var(--accent-2); 
+            color: var(--bg); 
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            opacity: 0; 
+            transition: opacity 0.3s;
+            pointer-events: none; 
+        }
+        .copy-feedback.visible {
+            opacity: 1; 
+        }
 
-.social-icon:hover {
-    color: var(--muted); /* White text on hover */
-    background-color: var(--accent); /* Blue background on hover */
-    box-shadow: 0 0 10px var(--accent-glow);
-}
+        /* Hide old copy button if any stray ones exist */
+        .copy-btn {
+            display: none !important;
+        }
 
-.lang-select-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
-}
+        .warning{
+            border:1px solid var(--accent);
+            border-left:4px solid var(--accent);
+            background:rgba(79, 192, 235, 0.09);
+            color:var(--muted);
+            padding:14px;
+            border-radius:8px
+        }
+        .warning strong {
+            color: var(--accent);
+        }
 
-.language-select {
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid var(--accent);
-    background: var(--code-bg);
-    color: var(--accent);
-    cursor: pointer;
-    appearance: none;
-    /* Updated SVG background image to use the new accent color (#4fc0eb) */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%234fc0eb' d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    padding-right: 30px;
-    font-size: 0.9rem;
-    transition: border-color 0.2s;
-}
-.language-select:focus {
-    outline: none;
-    border-color: var(--accent-2); /* Purple border on focus */
-}
+        .section-desc{
+            margin-top:-8px;
+            margin-bottom:12px;
+            font-style:italic;
+            color:var(--accent-2);
+            font-size: 0.95rem;
+        }
+        .command-desc{
+            font-size:0.85rem;
+            margin-top:3px;
+            margin-bottom:10px;
+            color:var(--accent);
+            font-style:italic; 
+            font-family:'IBM Plex Mono', 'SFMono-Regular', Consolas, Monaco, monospace;
+        }
+        
+        .chip-container { display: flex; gap: 8px; }
+        .chip{
+            display:inline-block;
+            background:rgba(79, 192, 235, 0.04);
+            padding:4px 8px;
+            border-radius:999px;
+            color:var(--accent);
+            border:1px solid rgba(79, 192, 235, 0.3);
+            font-size:12px;
+            cursor:default;
+            transition: background-color 0.2s;
+        }
+        .chip:hover {
+            background:rgba(79, 192, 235, 0.1);
+        }
 
-/* RTL adjustments for Hebrew */
-html[dir="rtl"] h2 {
-    border-left: none;
-    border-right: 4px solid var(--accent);
-}
-/* RTL adjustment for select arrow */
-html[dir="rtl"] .language-select {
-    background-position: left 8px center;
-}
-html[dir="rtl"] .warning {
-    border-left: none;
-    border-right: 4px solid var(--accent);
-}
-/* END RTL adjustments */
+        #toggleAllButton{
+            padding:12px;
+            border-radius:8px;
+            border:none;
+            width: 100%; 
+            margin-bottom: 20px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            background:rgba(79, 192, 235, 0.15);
+            color: var(--accent);
+            transition: background-color 0.2s;
+        }
+        #toggleAllButton:hover { 
+            background: rgba(79, 192, 235, 0.25);
+        }
 
-/* PRE STYLES: Now clickable */
-pre{
-    border-radius:8px;
-    margin:10px 0;
-    padding:14px; /* Increased padding */
-    position:relative;
-    background:var(--code-bg);
-    overflow:auto;
-    border:1px solid var(--border); /* Softer border */
-    
-    /* NEW: Click-to-copy cue */
-    cursor: copy; 
-    transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
-}
-pre:hover {
-    background: #2a3341; /* Slightly lighter blue-gray on hover */
-    box-shadow: 0 0 8px var(--accent-glow); /* Subtle blue glow on hover */
-    border-color: var(--accent);
-}
-
-/* === NEW: The 'Copied!' feedback element === */
-.copy-feedback {
-    position: absolute; /* Changed to absolute for proper positioning inside PRE */
-    right: 10px;
-    top: 10px; 
-    z-index: 10;
-    background: var(--accent-2); /* Neon Purple background */
-    color: var(--bg); /* Dark text on purple */
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-    opacity: 0; 
-    transition: opacity 0.3s;
-    pointer-events: none; 
-}
-.copy-feedback.visible {
-    opacity: 1; 
-}
-
-.warning{
-    border:1px solid var(--accent);
-    border-left:4px solid var(--accent);
-    background:rgba(79, 192, 235, 0.09); /* Soft blue background */
-    color:var(--muted);
-    padding:14px;
-    border-radius:8px
-}
-.warning strong {
-    color: var(--accent); /* Ensure title uses the accent color */
-}
-
-.section-desc{
-    margin-top:-8px;
-    margin-bottom:12px;
-    font-style:italic;
-    color:var(--accent-2); /* Use secondary accent color for description */
-    font-size: 0.95rem; /* Slightly larger */
-}
-.command-desc{
-    font-size:0.85rem;
-    margin-top:3px;
-    margin-bottom:10px;
-    color:var(--accent); /* Primary accent color for command description */
-    font-style:italic; 
-    font-family:'SFMono-Regular', Consolas, Monaco, monospace;
-}
-
-.chip-container { display: flex; gap: 8px; }
-.chip{
-    display:inline-block;
-    background:rgba(79, 192, 235, 0.04); /* Light blue background */
-    padding:4px 8px;
-    border-radius:999px;
-    color:var(--accent);
-    border:1px solid rgba(79, 192, 235, 0.3);
-    font-size:12px;
-    cursor:default;
-    transition: background-color 0.2s;
-}
-.chip:hover {
-    background:rgba(79, 192, 235, 0.1);
-}
-
-#toggleAllButton{
-    padding:12px; /* Increased padding */
-    border-radius:8px;
-    border:none;
-    width: 100%; 
-    margin-bottom: 20px; 
-    font-weight: bold; 
-    cursor: pointer; 
-    background:rgba(79, 192, 235, 0.15); /* Slightly darker blue button */
-    color: var(--accent);
-    transition: background-color 0.2s;
-}
-#toggleAllButton:hover { 
-    background: rgba(79, 192, 235, 0.25); /* Darker blue on hover */
-}
-footer{
-    margin-top:25px; /* Increased top margin */
-    color:var(--border); /* Muted gray for footer */
-    font-size:13px;
-    text-align:center
-}
-footer a { 
-    color: var(--accent); 
-    text-decoration: none; 
-    transition: color 0.2s;
-}
-footer a:hover {
-    color: var(--accent-2); /* Secondary accent on link hover */
-}
-
-/* EMOJI TOGGLE ICON */
-.toggle-icon { 
-    margin-left: auto; 
-    padding-left: 10px; 
-    font-weight: bold; 
-    font-size: 1.2rem;
-}
-
+        footer{
+            margin-top:25px;
+            color:var(--border);
+            font-size:13px;
+            text-align:center
+        }
+        footer a { 
+            color: var(--accent); 
+            text-decoration: none; 
+            transition: color 0.2s;
+        }
+        footer a:hover {
+            color: var(--accent-2);
+        }
+        
+        /* EMOJI TOGGLE ICON */
+        .toggle-icon { 
+            margin-left: auto; 
+            padding-left: 10px; 
+            font-weight: bold; 
+            font-size: 1.2rem;
+        }
     </style>
 
     <link rel="icon" href="💻"> 
@@ -1048,7 +1081,7 @@ run
         // SECTION 6: Web Discovery & Fuzzing
         "section6Title": { "en": "6) Web Discovery & Fuzzing", "ru": "6) Веб-обнаружение и фаззинг", "he": "6) גילוי ופאזינג של ווב", "fr": "6) Découverte Web et Fuzzing", "de": "6) Web-Entdeckung & Fuzzing" },
         "section6Desc": { "en": "Bruteforcing directories, files, and virtual hosts.", "ru": "Перебор каталогов, файлов и виртуальных хостов методом перебора.", "he": "כוח גס (Bruteforcing) על ספריות, קבצים ומארחים וירטואליים.", "fr": "Bruteforcing de répertoires, fichiers et hôtes virtuels.", "de": "Bruteforcing von Verzeichnissen, Dateien und virtuellen Hosts." },
-        "section6CommandDesc": { "en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302).", "fr": "Utilise ffuf et gobuster pour la découverte de contenu, en filtrant les codes d'état de succès courants (200, 301, 302).", "de": "Verwendet ffuf und gobuster für eine umfassende Zielbereich, der passive und aktive Quellen kombiniert." },
+        "section6CommandDesc": { "en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302).", "fr": "Utilise ffuf et gobuster pour la découverte de contenu, en filtrant les codes d'état de succès courants (200, 301, 302).", "de": "Verwendet ffuf und gobuster für einen umfassenden Zielbereich, der passive und aktive Quellen kombiniert." },
 
         // SECTION 7: Web Application Testing
         "section7Title": { "en": "7) Web Application Testing", "ru": "7) Тестирование веб-приложений", "he": "7) בדיקת יישומי ווב", "fr": "7) Test d'applications Web", "de": "7) Webanwendungstests" },
