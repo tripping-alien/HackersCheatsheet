@@ -73,9 +73,6 @@
             font-size: 0.9rem;
         }
         
-        /* Remove old language-tools styles */
-        .language-tools { display: none; } 
-
         /* RTL adjustments for Hebrew */
         html[dir="rtl"] h2 {
             border-left: none;
@@ -117,7 +114,6 @@
 
         .section-desc{margin-top:-8px;margin-bottom:12px;font-style:italic;color:var(--muted)}
         .command-desc{font-size:0.85rem;margin-top:3px;margin-bottom:10px;color:#b0bcd4;font-style:italic}
-        #searchInput{width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:none;background:var(--code-bg);color:var(--muted); box-sizing: border-box;}
         
         .chip-container { display: flex; gap: 8px; }
         .chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;cursor:default;}
@@ -167,13 +163,11 @@
         <p data-i18n="warningBody">Run these commands only in lab environments or on targets you have explicit written permission to test.</p>
     </div>
 
-    <input type="text" id="searchInput" placeholder="Search commands, tools, CVE...">
-
     <div class="section-container">
         <h2 class="section-header" data-i18n="section1Title" data-target="section-1">
             1) Recon & OSINT
             <span class="chip-container"><span class="chip">OSINT</span><span class="chip">Recon</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section1Desc">Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.</p>
         <div id="section-1" class="section-content">
@@ -206,7 +200,7 @@ shodan host 1.2.3.4</code></pre>
         <h2 class="section-header" data-i18n="section2Title" data-target="section-2">
             2) Recon: Search Engine Dorking & Exposed Assets
             <span class="chip-container"><span class="chip">OSINT</span><span class="chip">Dorking</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section2Desc">Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.</p>
         <div id="section-2" class="section-content">
@@ -235,7 +229,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section3Title" data-target="section-3">
             3) SEO & Indexation Security
             <span class="chip-container"><span class="chip">Web</span><span class="chip">SEO</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section3Desc">Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.</p>
         <div id="section-3" class="section-content">
@@ -244,7 +238,7 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc"># Check for security-sensitive disallow rules in robots.txt</p>
             <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s https://example.com/robots.txt | grep -i "disallow"</code></pre>
 
-            <p class="command-desc">Identify sensitive meta robots tags (e.g., noindex on login forms) - Should return "noindex" for sensitive, non-public pages.</p>
+            <p class="command-desc">Identify sensitive meta robots tags (e.g., noindex on login forms) - Should return "noindex" for sensitive, non-public pages.
             <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>grep -i 'meta name="robots"' page_source.html</code></pre>
 
             <p class="command-desc">Check for canonical tag misconfigurations (points to non-HTTPS, wrong domain, or internal staging) - Command run locally on page source:</p>
@@ -262,7 +256,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section4Title" data-target="section-4">
             4) Subdomain & DNS Enumeration
             <span class="chip-container"><span class="chip">DNS</span><span class="chip">Subdomain</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section4Desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
         <div id="section-4" class="section-content">
@@ -283,7 +277,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section5Title" data-target="section-5">
             5) Port & Service Discovery
             <span class="chip-container"><span class="chip">Network</span><span class="chip">Nmap</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section5Desc">Aggressive port scanning, service versioning, and banner grabbing.</p>
         <div id="section-5" class="section-content">
@@ -304,7 +298,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section6Title" data-target="section-6">
             6) Web Discovery & Fuzzing
             <span class="chip-container"><span class="chip">Web</span><span class="chip">Fuzzing</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section6Desc">Bruteforcing directories, files, and virtual hosts.</p>
         <div id="section-6" class="section-content">
@@ -322,7 +316,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section7Title" data-target="section-7">
             7) Web Application Testing
             <span class="chip-container"><span class="chip">Webapp</span><span class="chip">SQL</span><span class="chip">XSS</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section7Desc">Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.</p>
         <div id="section-7" class="section-content">
@@ -346,7 +340,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section8Title" data-target="section-8">
             8) Vulnerability Scanning & SCA
             <span class="chip-container"><span class="chip">CVE</span><span class="chip">SBOM</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section8Desc">Automated vulnerability template scanning, SBOM generation, and analysis.</p>
         <div id="section-8" class="section-content">
@@ -370,7 +364,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section9Title" data-target="section-9">
             9) Passwords, Credentials & AD Tooling
             <span class="chip-container"><span class="chip">Passwords</span><span class="chip">AD</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section9Desc">Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.</p>
         <div id="section-9" class="section-content">
@@ -394,7 +388,7 @@ intitle:"index of /" log</code></pre>
         <h2 class="section-header" data-i18n="section10Title" data-target="section-10">
             10) Exploitation: Metasploit Framework (MSF)
             <span class="chip-container"><span class="chip">Exploit</span><span class="chip">MSF</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section10Desc">Core Metasploit commands for searching, configuring, and executing exploits.</p>
         <div id="section-10" class="section-content">
@@ -428,7 +422,7 @@ set LHOST 10.0.0.5</code></pre>
         <h2 class="section-header" data-i18n="section11Title" data-target="section-11">
             11) Post-Exploitation: Shells & Enumeration
             <span class="chip-container"><span class="chip">Shell</span><span class="chip">Privesc</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section11Desc">Listener commands, common reverse shell one-liners, and local privilege escalation helpers.</p>
         <div id="section-11" class="section-content">
@@ -455,7 +449,7 @@ set LHOST 10.0.0.5</code></pre>
         <h2 class="section-header" data-i18n="section12Title" data-target="section-12">
             12) Network & TLS Checks
             <span class="chip-container"><span class="chip">Network</span><span class="chip">TLS</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section12Desc">Traffic capture, packet analysis, and SSL/TLS configuration checks.</p>
         <div id="section-12" class="section-content">
@@ -479,7 +473,7 @@ set LHOST 10.0.0.5</code></pre>
         <h2 class="section-header" data-i18n="section13Title" data-target="section-13">
             13) Vulnerability Research & PoC Triage
             <span class="chip-container"><span class="chip">VulnRes</span><span class="chip">PoC</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section13Desc">Searching local exploit databases and safely running proof-of-concept code in isolation.</p>
         <div id="section-13" class="section-content">
@@ -501,7 +495,7 @@ searchsploit -m 49993 # copy exploit by EDB ID</code></pre>
         <h2 class="section-header" data-i18n="section14Title" data-target="section-14">
             14) Binary Reversing & Exploit Development
             <span class="chip-container"><span class="chip">Reverse</span><span class="chip">Pwn</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section14Desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.</p>
         <div id="section-14" class="section-content">
@@ -527,7 +521,7 @@ strings binary</code></pre>
         <h2 class="section-header" data-i18n="section15Title" data-target="section-15">
             15) Fuzzing
             <span class="chip-container"><span class="chip">Fuzzing</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section15Desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.</p>
         <div id="section-15" class="section-content">
@@ -545,7 +539,7 @@ strings binary</code></pre>
         <h2 class="section-header" data-i18n="section16Title" data-target="section-16">
             16) Mobile & Firmware Analysis
             <span class="chip-container"><span class="chip">Mobile</span><span class="chip">Firmware</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section16Desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.</p>
         <div id="section-16" class="section-content">
@@ -570,7 +564,7 @@ strings firmware.bin | grep -i password</code></pre>
         <h2 class="section-header" data-i18n="section17Title" data-target="section-17">
             17) Safe PoC Testing & Logging
             <span class="chip-container"><span class="chip">Safety</span><span class="chip">Logging</span></span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section17Desc">Ensuring safe, reproducible testing environments and comprehensive logging.</p>
         <div id="section-17" class="section-content">
@@ -599,7 +593,7 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
                 <span class="chip">Evasion</span>
                 <span class="chip">MSF</span>
             </span>
-            <span class="toggle-icon">▼</span>
+            <span class="toggle-icon">▶</span>
         </h2>
         <p class="section-desc" data-i18n="section18Desc">Generating and encoding reverse shell payloads. **AUTHORIZED USE ONLY.**</p>
         <div id="section-18" class="section-content">
@@ -702,7 +696,7 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
         // SECTION 12: Network & TLS Checks
         "section12Title": { "en": "12) Network & TLS Checks", "ru": "12) Проверки сети и TLS", "he": "12) בדיקות רשת ו-TLS", "fr": "12) Vérifications Réseau et TLS", "de": "12) Netzwerk- & TLS-Prüfungen" },
         "section12Desc": { "en": "Traffic capture, packet analysis, and SSL/TLS configuration checks.", "ru": "Захват трафика, анализ пакетов и проверка конфигурации SSL/TLS.", "he": "לכידת תעבורה, ניתוח מנות ובדיקות תצורת SSL/TLS.", "fr": "Capture de trafic, analyse de paquets et vérifications de configuration SSL/TLS.", "de": "Verkehrserfassung, Paketanalyse und SSL/TLS-Konfigurationsprüfungen." },
-        "section12CommandDesc": { "en": "Commands for network diagnostics and assessing the cryptographic strength of web endpoints.", "ru": "Команды для сетевой диагностики и оценки криптографической стойкости веб-конечных точек.", "he": "פקודות לאבחון רשת והערכת החוזק הקריפטוגרפי של נקודות קצה אינטרנט.", "fr": "Commandes pour le diagnostic réseau et l'évaluation de la force cryptographique des points de terminaison Web.", "de": "Befehle zur Netzwerkdiagnose und zur Bewertung der kryptografischen Stärke von Web-Endpunkten." },
+        "section12CommandDesc": { "en": "Commands for network diagnostics and assessing the cryptographic strength of web endpoints.", "ru": "Команды для сетевой диагностики и оценки криптографической стойкости веб-конечных точек.", "he": "פקודות לאבחון רשת והערכת החוזק הקריפטוגרפי של נקודות קצה אינטרנט.", "fr": "Commandes pour le diagnostic réseau et l'évaluation de la force cryptographique des points de terminaison Web.", "de": "Wesentliche Befehle zur Einrichtung und Aufrechterhaltung des Fernzugriffs und der internen Host-Aufklärung." },
 
         // SECTION 13: Vulnerability Research & PoC Triage
         "section13Title": { "en": "13) Vulnerability Research & PoC Triage", "ru": "13) Исследование уязвимостей и сортировка PoC", "he": "13) מחקר פגיעויות וטריאז' PoC", "fr": "13) Recherche de Vulnérabilités et Tri PoC", "de": "13) Schwachstellenforschung & PoC-Triage" },
@@ -736,7 +730,7 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
     };
 
     // Global state for collapse tracking
-    let collapsed = true; // Set to true to start collapsed
+    let collapsed = true; // Default to collapsed
 
     // --- COOKIE AND LANGUAGE PERSISTENCE FUNCTIONS ---
 
@@ -783,36 +777,31 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             });
         }
 
-        // 3. Translate placeholder and title attributes
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-            searchInput.placeholder = translations['searchInputPlaceholder'][lang] || 'Search...';
-        }
-
-        // 4. Update the active language dropdown value
+        // 3. Update the active language dropdown value
         const langSelect = document.getElementById('languageSelect');
         if (langSelect) {
              langSelect.value = lang;
         }
 
-        // 5. Update the toggle button text
+        // 4. Update the toggle button text
         const toggleButton = document.getElementById('toggleAllButton');
         if (toggleButton) {
             const toggleKey = collapsed ? 'toggleButtonCollapsed' : 'toggleButtonExpanded';
             toggleButton.textContent = translations[toggleKey][lang] || (collapsed ? 'Expand All' : 'Collapse All');
         }
 
-        // 6. Save the preference
+        // 5. Save the preference
         setCookie('cheatsheet_lang', lang, 30);
         
-        // 7. Update copy button text
+        // 6. Update copy button text
         document.querySelectorAll('.copy-btn').forEach(btn => {
+            // Only update if it's not currently showing "Copied!"
             if (btn.textContent !== "Copied!" && btn.textContent !== "Скопировано!" && btn.textContent !== "הועתק!" && btn.textContent !== "Copié!" && btn.textContent !== "Kopiert!") {
                 btn.textContent = translations['copyButtonText'][lang] || 'Copy';
             }
         });
 
-        // 8. Update share links URL
+        // 7. Update share links URL
         const currentUrl = encodeURIComponent(window.location.href);
         const defaultText = encodeURIComponent("Penetration Testing & Vulnerability Research Cheatsheet by @trippingalien - A robust collection of commands for recon, exploits, and reversing.");
         
@@ -893,65 +882,9 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
         toggleButton.textContent = translations[toggleKey][lang];
     }
     
-    // --- FIX: Corrected searchCommands function ---
-    function searchCommands(query) {
-        const sections = document.querySelectorAll('.section-container');
-        const normalizedQuery = query.toLowerCase().trim();
-
-        sections.forEach(section => {
-            const sectionContent = section.querySelector('.section-content');
-            
-            // Check if the section header or description matches
-            const headerText = section.querySelector('.section-header').innerText.toLowerCase();
-            const descText = section.querySelector('.section-desc').innerText.toLowerCase();
-            
-            // CORRECTED: Explicitly define and calculate the match
-            const headerOrDescMatch = headerText.includes(normalizedQuery) || descText.includes(normalizedQuery);
-
-            const commandDescElements = sectionContent.querySelectorAll('.command-desc');
-            let commandMatches = false;
-
-            commandDescElements.forEach(desc => {
-                const pre = desc.nextElementSibling;
-                const code = pre ? pre.querySelector('code').innerText.toLowerCase() : '';
-                const description = desc.innerText.toLowerCase();
-                const matches = code.includes(normalizedQuery) || description.includes(normalizedQuery);
-
-                if (pre) {
-                    // Only show command/code block if it matches OR if query is empty
-                    pre.style.display = matches || normalizedQuery === '' ? 'block' : 'none';
-                }
-                desc.style.display = matches || normalizedQuery === '' ? 'block' : 'none';
-                
-                if (matches) {
-                    commandMatches = true;
-                }
-            });
-
-            // Show section if its header/desc matches OR if any command inside matches
-            const sectionMatches = headerOrDescMatch || commandMatches;
-
-            if (normalizedQuery === '') {
-                 section.style.display = 'block';
-                 // Restore the collapsed state if no search is active
-                 sectionContent.style.display = collapsed ? 'none' : 'block'; 
-                 section.querySelector('.toggle-icon').textContent = collapsed ? '▶' : '▼';
-            } else {
-                section.style.display = sectionMatches ? 'block' : 'none';
-                if (sectionMatches) {
-                     // Auto-expand matching sections during an active search
-                     sectionContent.style.display = 'block'; 
-                     section.querySelector('.toggle-icon').textContent = '▼';
-                }
-            }
-        });
-    }
-    // --- END FIX ---
-
-
     // --- INITIALIZATION ---
     window.onload = function() {
-        // 1. Set up section expand/collapse functionality (must run before translation/toggles)
+        // 1. Set up section expand/collapse functionality
         setupSectionToggles();
         
         // 2. Get preferred language (default to English) and translate all content
@@ -974,13 +907,7 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             });
         });
 
-        // 5. Set up search input handler
-        const searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-            searchInput.addEventListener('input', function(e) {
-                searchCommands(e.target.value);
-            });
-        }
+        // Search bar functionality removed
     };
 </script>
 
