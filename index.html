@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Penetration Testing & Vulnerability Research Cheatsheet — Robust Commands</title>
-<meta name="msvalidate.01" content="2F2A973A3D2E0F40E9B3221A4C6B14ED" />
+
 <link href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism-tomorrow.css" rel="stylesheet" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230f1720'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' fill='%237c3aed' font-family='Inter,Arial' font-weight='700'%3EPT%3C/text%3E%3C/svg%3E">
@@ -87,8 +87,32 @@ intitle:"report" filetype:docx site:target.com</code></pre>
 <p class="command-desc">These dorks work across all major search engines (Google, Bing, Yandex) and are crucial for external reconnaissance.</p>
 </div>
 
-<h2 onclick="toggleSection('s3')">3) Subdomain & DNS Enumeration <span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></h2>
+<h2 onclick="toggleSection('s3')">3) SEO Best Practices (Ranking Factors) <span class="chip" data-tag="seo">SEO</span> <span class="chip" data-tag="webapp">Webapp</span></h2>
 <div id="s3">
+<p class="section-desc">Optimization tips to improve site ranking, indexation, and organic traffic on Google, Yandex, and Bing.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># 1. Technical Health (Google, Bing, Yandex)
+# Ensure sitemap is declared in robots.txt and submitted to respective webmaster tools.
+# Verify all site pages return a 200 status code and fix 4xx/5xx errors.
+# Ensure canonical tags are correctly implemented for duplicate content.
+
+# 2. Page Experience / Core Web Vitals (Google Emphasis)
+# Test page speed and mobile-friendliness with Lighthouse or PageSpeed Insights.
+# Set proper viewport meta tag: <meta name="viewport" content="width=device-width, initial-scale=1">
+# Serve all content over HTTPS (crucial for ranking).
+
+# 3. Content Quality & EEAT (All Engines)
+# Use natural language and topic clusters, not just keywords.
+# Optimize title tags (under 60 chars) and meta descriptions (under 160 chars).
+# Yandex prioritizes user behavior (time on site, bounce rate) and quality signals.
+
+# 4. XML Sitemaps & Indexation
+# Generate XML sitemap: sitemap:https://example.com/sitemap.xml
+# Block sensitive URLs from crawling: Disallow: /admin/
+# Force search engine to re-crawl page: <meta name="robots" content="index, follow"></code></pre>
+<p class="command-desc">These are high-impact, cross-engine SEO checks for improving a website's overall search visibility and organic performance.</p>
+</div>
+<h2 onclick="toggleSection('s4')">4) Subdomain & DNS Enumeration <span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></h2>
+<div id="s4">
 <p class="section-desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Amass (passive + active + brute)
 amass enum -d example.com -o amass.txt
@@ -101,8 +125,8 @@ dnsrecon -d example.com -t std,brt,srv</code></pre>
 <p class="command-desc">Uses Amass and Subfinder for comprehensive target scope, combining passive and active sources.</p>
 </div>
 
-<h2 onclick="toggleSection('s4')">4) Port & Service Discovery <span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="nmap">Nmap</span></h2>
-<div id="s4">
+<h2 onclick="toggleSection('s5')">5) Port & Service Discovery <span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="nmap">Nmap</span></h2>
+<div id="s5">
 <p class="section-desc">Aggressive port scanning, service versioning, and banner grabbing.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Nmap (version, default scripts, full ports)
 nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24
@@ -115,8 +139,8 @@ nc -vz 192.0.2.10 80</code></pre>
 <p class="command-desc">The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports ($p-), fast timing ($T4), and output formats ($oA).</p>
 </div>
 
-<h2 onclick="toggleSection('s5')">5) Web Discovery & Fuzzing <span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
-<div id="s5">
+<h2 onclick="toggleSection('s6')">6) Web Discovery & Fuzzing <span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
+<div id="s6">
 <p class="section-desc">Bruteforcing directories, files, and virtual hosts.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ffuf (directory/file fuzzing)
 ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json
@@ -126,8 +150,8 @@ gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 
 <p class="command-desc">Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).</p>
 </div>
 
-<h2 onclick="toggleSection('s6')">6) Web Application Testing <span class="chip" data-tag="webapp">Webapp</span> <span class="chip" data-tag="sql">SQL</span> <span class="chip" data-tag="xss">XSS</span></h2>
-<div id="s6">
+<h2 onclick="toggleSection('s7')">7) Web Application Testing <span class="chip" data-tag="webapp">Webapp</span> <span class="chip" data-tag="sql">SQL</span> <span class="chip" data-tag="xss">XSS</span></h2>
+<div id="s7">
 <p class="section-desc">Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nikto (webserver checks)
 nikto -h https://example.com -output nikto.txt
@@ -143,8 +167,8 @@ arjun -u "https://example.com/page" -o arjun.txt</code></pre>
 <p class="command-desc">Tools for checking common application layer flaws and enumerating hidden parameters.</p>
 </div>
 
-<h2 onclick="toggleSection('s7')">7) Vulnerability Scanning & SCA <span class="chip" data-tag="cve">CVE</span> <span class="chip" data-tag="sbom">SBOM</span></h2>
-<div id="s7">
+<h2 onclick="toggleSection('s8')">8) Vulnerability Scanning & SCA <span class="chip" data-tag="cve">CVE</span> <span class="chip" data-tag="sbom">SBOM</span></h2>
+<div id="s8">
 <p class="section-desc">Automated vulnerability template scanning, SBOM generation, and analysis.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nuclei (fast templates)
 nuclei -l hosts.txt -t cves/ -o nuclei_results.txt
@@ -160,8 +184,8 @@ curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .<
 <p class="command-desc">Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).</p>
 </div>
 
-<h2 onclick="toggleSection('s8')">8) Passwords, Credentials & AD Tooling <span class="chip" data-tag="passwords">Passwords</span> <span class="chip" data-tag="ad">AD</span></h2>
-<div id="s8">
+<h2 onclick="toggleSection('s9')">9) Passwords, Credentials & AD Tooling <span class="chip" data-tag="passwords">Passwords</span> <span class="chip" data-tag="ad">AD</span></h2>
+<div id="s9">
 <p class="section-desc">Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># hydra (online bruteforce) - AUTHORIZED ONLY
 hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt
@@ -177,8 +201,8 @@ Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
 <p class="command-desc">Standard tools for credential testing, hash cracking, and AD environment assessment.</p>
 </div>
 
-<h2 onclick="toggleSection('s9')">9) Exploitation: Metasploit Framework (MSF) <span class="chip" data-tag="exploit">Exploit</span> <span class="chip" data-tag="msf">MSF</span></h2>
-<div id="s9">
+<h2 onclick="toggleSection('s10')">10) Exploitation: Metasploit Framework (MSF) <span class="chip" data-tag="exploit">Exploit</span> <span class="chip" data-tag="msf">MSF</span></h2>
+<div id="s10">
 <p class="section-desc">Core Metasploit commands for searching, configuring, and executing exploits.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># start msfconsole
 msfconsole
@@ -204,8 +228,8 @@ exploit</code></pre>
 <p class="command-desc">A template workflow for using auxiliary and exploit modules in the Metasploit console.</p>
 </div>
 
-<h2 onclick="toggleSection('s10')">10) Post-Exploitation: Shells & Enumeration <span class="chip" data-tag="shell">Shell</span> <span class="chip" data-tag="privesc">Privesc</span></h2>
-<div id="s10">
+<h2 onclick="toggleSection('s11')">11) Post-Exploitation: Shells & Enumeration <span class="chip" data-tag="shell">Shell</span> <span class="chip" data-tag="privesc">Privesc</span></h2>
+<div id="s11">
 <p class="section-desc">Listener commands, common reverse shell one-liners, and local privilege escalation helpers.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># netcat listener (catch reverse shells)
 nc -lvnp 4444
@@ -224,8 +248,8 @@ curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/li
 <p class="command-desc">Essential commands for establishing and maintaining remote access and internal host reconnaissance.</p>
 </div>
 
-<h2 onclick="toggleSection('s11')">11) Network & TLS Checks <span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="tls">TLS</span></h2>
-<div id="s11">
+<h2 onclick="toggleSection('s12')">12) Network & TLS Checks <span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="tls">TLS</span></h2>
+<div id="s12">
 <p class="section-desc">Traffic capture, packet analysis, and SSL/TLS configuration checks.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># tcpdump (capture 1000 packets on eth0)
 tcpdump -i eth0 -w capture.pcap -c 1000
@@ -241,8 +265,8 @@ sslyze --regular example.com:443</code></pre>
 <p class="command-desc">Commands for network diagnostics and assessing the cryptographic strength of web endpoints.</p>
 </div>
 
-<h2 onclick="toggleSection('s12')">12) Vulnerability Research & PoC Triage <span class="chip" data-tag="vulnres">VulnRes</span> <span class="chip" data-tag="poc">PoC</span></h2>
-<div id="s12">
+<h2 onclick="toggleSection('s13')">13) Vulnerability Research & PoC Triage <span class="chip" data-tag="vulnres">VulnRes</span> <span class="chip" data-tag="poc">PoC</span></h2>
+<div id="s13">
 <p class="section-desc">Searching local exploit databases and safely running proof-of-concept code in isolation.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># searchsploit
 searchsploit "CVE-2021-44228"
@@ -256,8 +280,8 @@ docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -
 <p class="command-desc">Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.</p>
 </div>
 
-<h2 onclick="toggleSection('s13')">13) Binary Reversing & Exploit Development <span class="chip" data-tag="reversing">Reverse</span> <span class="chip" data-tag="pwn">Pwn</span></h2>
-<div id="s13">
+<h2 onclick="toggleSection('s14')">14) Binary Reversing & Exploit Development <span class="chip" data-tag="reversing">Reverse</span> <span class="chip" data-tag="pwn">Pwn</span></h2>
+<div id="s14">
 <p class="section-desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ELF inspection
 readelf -h binary
@@ -275,8 +299,8 @@ gdb -q ./binary</code></pre>
 <p class="command-desc">Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.</p>
 </div>
 
-<h2 onclick="toggleSection('s14')">14) Fuzzing <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
-<div id="s14">
+<h2 onclick="toggleSection('s15')">15) Fuzzing <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
+<div id="s15">
 <p class="section-desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># AFL (instrumented binary)
 afl-fuzz -i in_dir -o out_dir -- ./target @@
@@ -286,8 +310,8 @@ wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.c
 <p class="command-desc">AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.</p>
 </div>
 
-<h2 onclick="toggleSection('s15')">15) Mobile & Firmware Analysis <span class="chip" data-tag="mobile">Mobile</span> <span class="chip" data-tag="firmware">Firmware</span></h2>
-<div id="s15">
+<h2 onclick="toggleSection('s16')">16) Mobile & Firmware Analysis <span class="chip" data-tag="mobile">Mobile</span> <span class="chip" data-tag="firmware">Firmware</span></h2>
+<div id="s16">
 <p class="section-desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># android decompile / inspect (apktool)
 apktool d app.apk -o app_src
@@ -304,8 +328,8 @@ strings firmware.bin | grep -i password</code></pre>
 <p class="command-desc">Commands for static and dynamic analysis of Android apps and embedded system binaries.</p>
 </div>
 
-<h2 onclick="toggleSection('s16')">16) Safe PoC Testing & Logging <span class="chip" data-tag="safety">Safety</span> <span class="chip" data-tag="logging">Logging</span></h2>
-<div id="s16">
+<h2 onclick="toggleSection('s17')">17) Safe PoC Testing & Logging <span class="chip" data-tag="safety">Safety</span> <span class="chip" data-tag="logging">Logging</span></h2>
+<div id="s17">
 <p class="section-desc">Ensuring safe, reproducible testing environments and comprehensive logging.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># isolated container (no external network)
 docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash
@@ -323,14 +347,17 @@ ffuf -o ffuf.json -of json</code></pre>
 </div>
 
 
+<div style="margin:12px 0">
+<button id="toggleAll">Collapse All</button>
+</div>
+
 <footer>
-Built for learning & defensive security • Use responsibly • Last update: 24/10/25
+Built for learning & defensive security • Use responsibly • Last update: 2025-10-24 • **Andrey Lopukhov, Individual**
 </footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-bash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
 // Copy code
@@ -353,8 +380,8 @@ function toggleSection(id){
 let collapsed=false;
 document.getElementById('toggleAll').addEventListener('click',()=>{
   collapsed=!collapsed;
-  // Adjusted to loop through 16 sections
-  for(let i=1;i<=16;i++){
+  // Adjusted to loop through 17 sections
+  for(let i=1;i<=17;i++){
     const el=document.getElementById('s'+i);
     if(el) el.style.display=collapsed?'none':'block';
   }
@@ -385,31 +412,9 @@ document.getElementById('tagFilter').addEventListener('input',function(){
   });
 });
 
-// PDF export (FIXED TO AVOID EMPTY PDF)
-document.getElementById('downloadPdf').addEventListener('click',()=>{
-  const container=document.querySelector('.container');
-  
-  // Temporary: Store original display states and force all sections to show for PDF rendering
-  const sections = document.querySelectorAll('[id^="s"]');
-  const originalDisplays = {};
-
-  sections.forEach((section, index) => {
-    originalDisplays[index] = section.style.display;
-    section.style.display = 'block'; // Force show
-  });
-
-  // Generate PDF
-  html2pdf().set({margin:0.5, filename:'pt-cheatsheet.pdf', html2canvas:{scale:2}}).from(container).save().then(() => {
-    // Revert to original display states after generation is complete
-    sections.forEach((section, index) => {
-      section.style.display = originalDisplays[index];
-    });
-  });
-});
-
 // Expand all sections initially
-// Adjusted to loop through 16 sections
-for(let i=1;i<=16;i++){ const el=document.getElementById('s'+i); if(el) el.style.display='block'; }
+// Adjusted to loop through 17 sections
+for(let i=1;i<=17;i++){ const el=document.getElementById('s'+i); if(el) el.style.display='block'; }
 </script>
 </body>
 </html>
