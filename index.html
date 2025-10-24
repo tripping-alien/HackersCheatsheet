@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penetration Testing & Vulnerability Research Cheatsheet — Robust Commands</title>
-<meta name="yandex-verification" content="cbe60833ffac57fa" />
+<title>Penetration Testing & Vulnerability Research Cheatsheet — Robust Commands (EN | RU | HE)</title>
+
 <link href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism-tomorrow.css" rel="stylesheet" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230f1720'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' fill='%237c3aed' font-family='Inter,Arial' font-weight='700'%3EPT%3C/text%3E%3C/svg%3E">
 
 <style>
+/* CSS remains unchanged */
 :root{
   --bg:#0d0f12; --card:#0f1720; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#06b6d4; --header:#e6eef7; --code-bg:#1c1e26;
 }
@@ -31,12 +32,22 @@ footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
 <body>
 <div class="container">
 <h1>Penetration Testing & Vulnerability Research — Robust Cheatsheet</h1>
+<p style="font-size: 14px; margin-top: -10px; color: var(--accent);">
+  **Russian:** Чит-лист по тестированию на проникновение. |
+  **Hebrew:** גיליון רמאות לבדיקות חדירה ומחקר פגיעויות
+</p>
 
 <input id="searchInput" placeholder="Search commands, tools, CVE..." />
 <input id="tagFilter" placeholder="Filter by tag/chip: OSINT, Web, Network..." />
 
 <div class="warning">
 <strong>⚠️ AUTHORIZED USE ONLY</strong> — Run these commands only in lab environments or on targets you have explicit written permission to test.
+<br>
+<small>
+  **RU:** **ТОЛЬКО ДЛЯ АВТОРИЗОВАННОГО ИСПОЛЬЗОВАНИЯ** — Запускайте эти команды только в лабораторных средах или на целях, для которых у вас есть явное письменное разрешение на тестирование.
+  <br>
+  **HE:** **שימוש מורשה בלבד ⚠️** — הפעל פקודות אלה רק בסביבות מעבדה או על יעדים שיש לך אישור כתוב מפורש לבדוק.
+</small>
 </div>
 
 <h2 onclick="toggleSection('s1')">1) Recon & OSINT <span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="recon">Recon</span></h2>
@@ -65,7 +76,7 @@ shodan host 1.2.3.4</code></pre>
 <p class="command-desc">Commands gather domain info, DNS records, HTTP headers, and passive certificate/host data.</p>
 </div>
 
-<h2 onclick="toggleSection('s2')">2) Recon: Search Engine Dorking & Exposed Assets <span class="chip" data-tag="seo">SEO</span> <span class="chip" data-tag="dorking">Dorking</span></h2>
+<h2 onclick="toggleSection('s2')">2) Recon: Search Engine Dorking & Exposed Assets <span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="dorking">Dorking</span></h2>
 <div id="s2">
 <p class="section-desc">Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.</p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Find sensitive files (.pdf, .xls) on target domain
@@ -87,30 +98,30 @@ intitle:"report" filetype:docx site:target.com</code></pre>
 <p class="command-desc">These dorks work across all major search engines (Google, Bing, Yandex) and are crucial for external reconnaissance.</p>
 </div>
 
-<h2 onclick="toggleSection('s3')">3) SEO Best Practices (Ranking Factors) <span class="chip" data-tag="seo">SEO</span> <span class="chip" data-tag="webapp">Webapp</span></h2>
+<h2 onclick="toggleSection('s3')">3) SEO & Indexation Security <span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="seo">SEO</span></h2>
 <div id="s3">
-<p class="section-desc">Optimization tips to improve site ranking, indexation, and organic traffic on Google, Yandex, and Bing.</p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># 1. Technical Health (Google, Bing, Yandex)
-# Ensure sitemap is declared in robots.txt and submitted to respective webmaster tools.
-# Verify all site pages return a 200 status code and fix 4xx/5xx errors.
-# Ensure canonical tags are correctly implemented for duplicate content.
+<p class="section-desc">Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.</p>
+<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Check for security-sensitive disallow rules in robots.txt
+curl -s https://example.com/robots.txt | grep -i "disallow"
 
-# 2. Page Experience / Core Web Vitals (Google Emphasis)
-# Test page speed and mobile-friendliness with Lighthouse or PageSpeed Insights.
-# Set proper viewport meta tag: <meta name="viewport" content="width=device-width, initial-scale=1">
-# Serve all content over HTTPS (crucial for ranking).
+# Identify sensitive meta robots tags (e.g., noindex on login forms)
+# Should return "noindex" for sensitive, non-public pages.
+grep -i 'meta name="robots"' page_source.html
 
-# 3. Content Quality & EEAT (All Engines)
-# Use natural language and topic clusters, not just keywords.
-# Optimize title tags (under 60 chars) and meta descriptions (under 160 chars).
-# Yandex prioritizes user behavior (time on site, bounce rate) and quality signals.
+# Check for canonical tag misconfigurations (points to non-HTTPS, wrong domain, or internal staging)
+# Command run locally on page source:
+grep -i '<link rel="canonical"' page_source.html
 
-# 4. XML Sitemaps & Indexation
-# Generate XML sitemap: sitemap:https://example.com/sitemap.xml
-# Block sensitive URLs from crawling: Disallow: /admin/
-# Force search engine to re-crawl page: <meta name="robots" content="index, follow"></code></pre>
-<p class="command-desc">These are high-impact, cross-engine SEO checks for improving a website's overall search visibility and organic performance.</p>
+# Check for unintended parameter indexation (e.g., session IDs in URL)
+# Use a dork to check if Google/Bing indexed URLs with sensitive parameters:
+site:example.com inurl:sessionid= OR inurl:PHPSESSID=
+
+# Use specialized tools to find indexation issues (e.g., using a sitemap scanner like Scrape-It)
+# scrape-it --sitemap https://example.com/sitemap.xml --check-robots
+</code></pre>
+<p class="command-desc">These checks help find security issues caused by poor communication between developers and search engine crawlers, often exposing staging environments or internal paths.</p>
 </div>
+
 <h2 onclick="toggleSection('s4')">4) Subdomain & DNS Enumeration <span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></h2>
 <div id="s4">
 <p class="section-desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
@@ -353,6 +364,11 @@ ffuf -o ffuf.json -of json</code></pre>
 
 <footer>
 Built for learning & defensive security • Use responsibly • Last update: 2025-10-24 • **Andrey Lopukhov, Individual**
+<br>
+<span style="font-size:11px;">
+  **RU:** Создано для обучения и защитной безопасности • Используйте ответственно
+  | **HE:** נבנה ללמידה ואבטחה הגנתית • השתמשו באחריות
+</span>
 </footer>
 </div>
 
