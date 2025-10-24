@@ -110,7 +110,8 @@
         html[dir="rtl"] .header-bar {
             flex-direction: row-reverse;
         }
-        html[dir="rtl"] .copy-btn { left: 10px; right: auto; }
+        /* FIX for RTL: copy button is on the left */
+        html[dir="rtl"] .copy-btn { right: auto; left: 10px; }
         html[dir="rtl"] .warning {
             border-left: none;
             border-right: 4px solid #eab308;
@@ -119,7 +120,22 @@
         /* END RTL adjustments */
 
         pre{border-radius:8px;margin:10px 0;padding:12px;position:relative;background:var(--code-bg);overflow:auto;border:1px solid var(--accent)}
-        .copy-btn{position:absolute;right:10px;top:10px;background:var(--accent);color:#000;border:none;padding:6px 8px;border-radius:6px;font-size:12px;cursor:pointer; transition: background-color 0.3s;}
+        
+        /* === FIX: Change position from absolute to sticky so it doesn't scroll with the PRE content === */
+        .copy-btn{
+            position: sticky; /* KEY FIX */
+            right: 10px;
+            top: 10px; /* Offset from the top of the visible container */
+            z-index: 10; /* Ensure it is above the code text */
+            background:var(--accent);
+            color:#000;
+            border:none;
+            padding:6px 8px;
+            border-radius:6px;
+            font-size:12px;
+            cursor:pointer; 
+            transition: background-color 0.3s;
+        }
         .copy-btn:hover { background-color: var(--accent-2); }
 
         .warning{border:1px solid var(--accent);border-left:4px solid var(--accent);background:rgba(0,255,65,0.07);color:var(--muted);padding:12px;border-radius:8px}
