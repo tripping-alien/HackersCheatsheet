@@ -1,5 +1,3 @@
-This is a fantastic, well-structured README. I've reviewed your content and applied necessary Markdown fixes, primarily removing redundant section headers at the end and ensuring correct spacing for clarity.
-Here is the cleaned and finalized README.md content, ready for your GitHub repository.
 # Penetration Testing & Vulnerability Research Cheatsheet 🛡️
 
 [![Live demo](https://img.shields.io/badge/demo-online-brightgreen)](https://hackerscheatsheet.onrender.com/)
