@@ -40,7 +40,7 @@ html[dir="rtl"] .warning {
 
 .section-desc{margin-top:-8px;margin-bottom:12px;font-style:italic;color:var(--muted)}
 .command-desc{font-size:0.85rem;margin-top:3px;margin-bottom:10px;color:#b0bcd4;font-style:italic}
-#searchInput, #tagFilter, #languageSelector{width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:none;background:var(--code-bg);color:var(--muted); box-sizing: border-box;}
+#searchInput, #languageSelector{width:100%;padding:10px;margin-bottom:12px;border-radius:8px;border:none;background:var(--code-bg);color:var(--muted); box-sizing: border-box;}
 .language-tools { display: flex; gap: 10px; margin-bottom: 12px; }
 .language-tools > * { flex-grow: 1; }
 .chip{display:inline-block;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:999px;color:var(--accent-2);font-size:12px;margin-left:8px;cursor:pointer}
@@ -61,14 +61,14 @@ footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
 </div>
 
 <input id="searchInput" placeholder="Search commands, tools, CVE..." />
-<input id="tagFilter" placeholder="Filter by tag/chip: OSINT, Web, Network..." />
+
 
 <div class="warning">
 <strong data-i18n="warningTitle">⚠️ AUTHORIZED USE ONLY</strong>
 <p data-i18n="warningBody" style="margin: 5px 0 0 0;"></p>
 </div>
 
-<h2 onclick="toggleSection('s1')" data-i18n="section1Title"></h2>
+<h2 onclick="toggleSection('s1')" data-i18n="section1Title"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="recon">Recon</span></h2>
 <div id="s1">
 <p class="section-desc" data-i18n="section1Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Set target
@@ -94,7 +94,7 @@ shodan host 1.2.3.4</code></pre>
 <p class="command-desc" data-i18n="section1CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s2')" data-i18n="section2Title"></h2>
+<h2 onclick="toggleSection('s2')" data-i18n="section2Title"><span class="chip" data-tag="osint">OSINT</span> <span class="chip" data-tag="dorking">Dorking</span></h2>
 <div id="s2">
 <p class="section-desc" data-i18n="section2Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Find sensitive files (.pdf, .xls) on target domain
@@ -116,7 +116,7 @@ intitle:"report" filetype:docx site:target.com</code></pre>
 <p class="command-desc" data-i18n="section2CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s3')" data-i18n="section3Title"></h2>
+<h2 onclick="toggleSection('s3')" data-i18n="section3Title"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="seo">SEO</span></h2>
 <div id="s3">
 <p class="section-desc" data-i18n="section3Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Check for security-sensitive disallow rules in robots.txt
@@ -140,7 +140,7 @@ site:example.com inurl:sessionid= OR inurl:PHPSESSID=
 <p class="command-desc" data-i18n="section3CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s4')" data-i18n="section4Title"></h2>
+<h2 onclick="toggleSection('s4')" data-i18n="section4Title"><span class="chip" data-tag="dns">DNS</span> <span class="chip" data-tag="subdomain">Subdomain</span></h2>
 <div id="s4">
 <p class="section-desc" data-i18n="section4Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Amass (passive + active + brute)
@@ -154,7 +154,7 @@ dnsrecon -d example.com -t std,brt,srv</code></pre>
 <p class="command-desc" data-i18n="section4CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s5')" data-i18n="section5Title"></h2>
+<h2 onclick="toggleSection('s5')" data-i18n="section5Title"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="nmap">Nmap</span></h2>
 <div id="s5">
 <p class="section-desc" data-i18n="section5Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># Nmap (version, default scripts, full ports)
@@ -168,7 +168,7 @@ nc -vz 192.0.2.10 80</code></pre>
 <p class="command-desc" data-i18n="section5CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s6')" data-i18n="section6Title"></h2>
+<h2 onclick="toggleSection('s6')" data-i18n="section6Title"><span class="chip" data-tag="web">Web</span> <span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
 <div id="s6">
 <p class="section-desc" data-i18n="section6Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ffuf (directory/file fuzzing)
@@ -179,7 +179,7 @@ gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 
 <p class="command-desc" data-i18n="section6CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s7')" data-i18n="section7Title"></h2>
+<h2 onclick="toggleSection('s7')" data-i18n="section7Title"><span class="chip" data-tag="webapp">Webapp</span> <span class="chip" data-tag="sql">SQL</span> <span class="chip" data-tag="xss">XSS</span></h2>
 <div id="s7">
 <p class="section-desc" data-i18n="section7Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nikto (webserver checks)
@@ -196,7 +196,7 @@ arjun -u "https://example.com/page" -o arjun.txt</code></pre>
 <p class="command-desc" data-i18n="section7CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s8')" data-i18n="section8Title"></h2>
+<h2 onclick="toggleSection('s8')" data-i18n="section8Title"><span class="chip" data-tag="cve">CVE</span> <span class="chip" data-tag="sbom">SBOM</span></h2>
 <div id="s8">
 <p class="section-desc" data-i18n="section8Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># nuclei (fast templates)
@@ -213,7 +213,7 @@ curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .<
 <p class="command-desc" data-i18n="section8CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s9')" data-i18n="section9Title"></h2>
+<h2 onclick="toggleSection('s9')" data-i18n="section9Title"><span class="chip" data-tag="passwords">Passwords</span> <span class="chip" data-tag="ad">AD</span></h2>
 <div id="s9">
 <p class="section-desc" data-i18n="section9Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># hydra (online bruteforce) - AUTHORIZED ONLY
@@ -230,7 +230,7 @@ Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip</code></pre>
 <p class="command-desc" data-i18n="section9CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s10')" data-i18n="section10Title"></h2>
+<h2 onclick="toggleSection('s10')" data-i18n="section10Title"><span class="chip" data-tag="exploit">Exploit</span> <span class="chip" data-tag="msf">MSF</span></h2>
 <div id="s10">
 <p class="section-desc" data-i18n="section10Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># start msfconsole
@@ -257,7 +257,7 @@ exploit</code></pre>
 <p class="command-desc" data-i18n="section10CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s11')" data-i18n="section11Title"></h2>
+<h2 onclick="toggleSection('s11')" data-i18n="section11Title"><span class="chip" data-tag="shell">Shell</span> <span class="chip" data-tag="privesc">Privesc</span></h2>
 <div id="s11">
 <p class="section-desc" data-i18n="section11Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># netcat listener (catch reverse shells)
@@ -277,7 +277,7 @@ curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/li
 <p class="command-desc" data-i18n="section11CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s12')" data-i18n="section12Title"></h2>
+<h2 onclick="toggleSection('s12')" data-i18n="section12Title"><span class="chip" data-tag="network">Network</span> <span class="chip" data-tag="tls">TLS</span></h2>
 <div id="s12">
 <p class="section-desc" data-i18n="section12Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># tcpdump (capture 1000 packets on eth0)
@@ -294,7 +294,7 @@ sslyze --regular example.com:443</code></pre>
 <p class="command-desc" data-i18n="section12CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s13')" data-i18n="section13Title"></h2>
+<h2 onclick="toggleSection('s13')" data-i18n="section13Title"><span class="chip" data-tag="vulnres">VulnRes</span> <span class="chip" data-tag="poc">PoC</span></h2>
 <div id="s13">
 <p class="section-desc" data-i18n="section13Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># searchsploit
@@ -309,7 +309,7 @@ docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -
 <p class="command-desc" data-i18n="section13CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s14')" data-i18n="section14Title"></h2>
+<h2 onclick="toggleSection('s14')" data-i18n="section14Title"><span class="chip" data-tag="reversing">Reverse</span> <span class="chip" data-tag="pwn">Pwn</span></h2>
 <div id="s14">
 <p class="section-desc" data-i18n="section14Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># ELF inspection
@@ -328,7 +328,7 @@ gdb -q ./binary</code></pre>
 <p class="command-desc" data-i18n="section14CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s15')" data-i18n="section15Title"></h2>
+<h2 onclick="toggleSection('s15')" data-i18n="section15Title"><span class="chip" data-tag="fuzzing">Fuzzing</span></h2>
 <div id="s15">
 <p class="section-desc" data-i18n="section15Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># AFL (instrumented binary)
@@ -339,7 +339,7 @@ wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.c
 <p class="command-desc" data-i18n="section15CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s16')" data-i18n="section16Title"></h2>
+<h2 onclick="toggleSection('s16')" data-i18n="section16Title"><span class="chip" data-tag="mobile">Mobile</span> <span class="chip" data-tag="firmware">Firmware</span></h2>
 <div id="s16">
 <p class="section-desc" data-i18n="section16Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># android decompile / inspect (apktool)
@@ -357,7 +357,7 @@ strings firmware.bin | grep -i password</code></pre>
 <p class="command-desc" data-i18n="section16CommandDesc"></p>
 </div>
 
-<h2 onclick="toggleSection('s17')" data-i18n="section17Title"></h2>
+<h2 onclick="toggleSection('s17')" data-i18n="section17Title"><span class="chip" data-tag="safety">Safety</span> <span class="chip" data-tag="logging">Logging</span></h2>
 <div id="s17">
 <p class="section-desc" data-i18n="section17Desc"></p>
 <pre class="language-bash"><button class="copy-btn" onclick="copyCode(this)">Copy</button><code># isolated container (no external network)
@@ -414,11 +414,6 @@ const translations = {
     "en": "Search commands, tools, CVE...",
     "ru": "Поиск команд, инструментов, CVE...",
     "he": "חפש פקודות, כלים, CVE..."
-  },
-  "filterInputPlaceholder": {
-    "en": "Filter by tag/chip: OSINT, Web, Network...",
-    "ru": "Фильтр по тегу: OSINT, Web, Network...",
-    "he": "סנן לפי תג: OSINT, Web, Network..."
   },
   "toggleButtonCollapsed": {
     "en": "Expand All",
@@ -544,7 +539,6 @@ function switchLanguage(lang) {
   
   // Update placeholders
   document.getElementById('searchInput').setAttribute('placeholder', translations.searchInputPlaceholder[lang]);
-  document.getElementById('tagFilter').setAttribute('placeholder', translations.filterInputPlaceholder[lang]);
 
   // Update button text based on current collapse state
   const toggleBtn = document.getElementById('toggleAll');
@@ -588,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// --- UTILITY FUNCTIONS (UNCHANGED) ---
+// --- UTILITY FUNCTIONS ---
 
 // Copy code
 function copyCode(btn){
@@ -618,17 +612,8 @@ document.getElementById('searchInput').addEventListener('input',function(){
   });
 });
 
-// Tag/chip filtering
-document.getElementById('tagFilter').addEventListener('input',function(){
-  const q=this.value.trim().toLowerCase();
-  document.querySelectorAll('h2').forEach(h=>{
-    const chips=[...h.querySelectorAll('.chip')].map(c=>c.dataset.tag.toLowerCase());
-    const next=h.nextElementSibling;
-    const show=!q || chips.some(t=>t.includes(q));
-    h.style.display=show?'flex':'none'; // use flex to re-show H2
-    if(next) next.style.display=show?'block':'none';
-  });
-});
+// Tag/chip filtering (REMOVED)
+
 </script>
 </body>
 </html>
