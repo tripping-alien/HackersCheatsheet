@@ -15,3 +15,4 @@ Thank you for your interest in contributing to **Hacker's Cheatsheet**!
 3. Submit a Pull Request with a clear description of the commands added.
 
 Please adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+

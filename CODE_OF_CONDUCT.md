@@ -11,3 +11,4 @@ We pledge to act and interact in ways that contribute to an open, welcoming, div
 Please report any unacceptable behavior to **smalltalkappsandrey@gmail.com**. Community leaders will treat all reports with strict confidentiality and fairness.
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1.
+
