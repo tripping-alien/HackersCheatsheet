@@ -1,7 +1,23 @@
-Penetration Testing & Vulnerability Research Cheatsheet 🛡️
+# 🛡️ Hacker's Cheatsheet — Cybersecurity & Pentesting Quick Reference
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Render-22c55e?style=for-the-badge&logo=render)](https://hackerscheatsheet.onrender.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Google Verified](https://img.shields.io/badge/Google_Search-Console_Verified-blue?style=for-the-badge)](https://hackerscheatsheet.onrender.com/)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20(Pure%20Vanilla)-informational?style=flat-square)](index.html)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+
 A practical, searchable command reference for recon, scanning, fuzzing, reversing, and exploitation.
 Intended for authorized use only—specifically for educational, defensive hardening, and professional security testing/lab environments.
-> 🚨 IMPORTANT: AUTHORIZED USE ONLY
+
+Hosted live on Render at **[https://hackerscheatsheet.onrender.com/](https://hackerscheatsheet.onrender.com/)**.
+
+---
+
+![Hacker's Cheatsheet Social Preview](og-preview.png)
+
+---
+
+> 🚨 **IMPORTANT: AUTHORIZED USE ONLY**  
 > Do not run these commands against systems you do not own or for which you do not have explicit written authorization from the asset owner. Misuse is illegal and unethical.
 > 
 Contents
