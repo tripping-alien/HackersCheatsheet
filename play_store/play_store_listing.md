@@ -1,7 +1,7 @@
 # Google Play Store Listing // Hacker's Cheatsheet Manual
 
 **Studio**: SmallTalk Apps (Est. 2014)  
-**Package Name**: `net.smalltalkapps.hackerscheatsheet`  
+**Package Name**: `net.smalltalkapps.cheatsheet`  
 **Target Canonical URL**: [https://hackerscheatsheet.onrender.com](https://hackerscheatsheet.onrender.com)  
 **Privacy Policy**: [https://smalltalkapps.net/privacy.html](https://smalltalkapps.net/privacy.html)  
 
