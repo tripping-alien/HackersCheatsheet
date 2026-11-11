@@ -1,4 +1,4 @@
-package com.smalltalkapps.hackerscheatsheet;
+package net.smalltalkapps.hackerscheatsheet;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
