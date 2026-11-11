@@ -1,6 +1,7 @@
 # 🛡️ Hacker's Cheatsheet — Cybersecurity & Pentesting Quick Reference
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Render-22c55e?style=for-the-badge&logo=render)](https://hackerscheatsheet.onrender.com/)
+[![Studio](https://img.shields.io/badge/Studio-smalltalkapps.art-FFBE3B.svg)](https://smalltalkapps.art)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![Google Verified](https://img.shields.io/badge/Google_Search-Console_Verified-blue?style=for-the-badge)](https://hackerscheatsheet.onrender.com/)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20(Pure%20Vanilla)-informational?style=flat-square)](index.html)
