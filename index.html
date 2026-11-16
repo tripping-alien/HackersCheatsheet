@@ -1387,8 +1387,29 @@ run
             return highlighted.join('\n');
         }
 
+        // ─── Zero-Dependency Cyber Sound Engine ───
+        let _audioCtx = null;
+        function playCyberBeep() {
+            try {
+                if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (_audioCtx.state === 'suspended') _audioCtx.resume();
+                const osc = _audioCtx.createOscillator();
+                const gain = _audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(_audioCtx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, _audioCtx.currentTime);
+                osc.frequency.setValueAtTime(1320, _audioCtx.currentTime + 0.03);
+                gain.gain.setValueAtTime(0.12, _audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, _audioCtx.currentTime + 0.08);
+                osc.start();
+                osc.stop(_audioCtx.currentTime + 0.09);
+            } catch (e) {}
+        }
+
         // Setup Copy buttons
         function copyToClipboard(button, text) {
+            playCyberBeep();
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = button.innerHTML;
                 button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
