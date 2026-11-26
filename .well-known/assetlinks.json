@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.smalltalkapps.cheatsheet",
+      "sha256_cert_fingerprints": [
+        "C6:2C:8A:B1:E6:1E:5F:DD:3A:D6:B1:0B:0C:F9:7C:86:AD:81:F7:8B:8C:B3:F8:01:33:DA:C2:04:80:1E:37:69"
+      ]
+    }
+  }
+]
