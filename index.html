@@ -1430,17 +1430,21 @@ run
         // Setup Copy buttons
         function copyToClipboard(button, text) {
             playCyberBeep();
+            if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') return;
+            if (!button.dataset.origHtml) {
+                button.dataset.origHtml = button.innerHTML;
+            }
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.innerHTML;
                 button.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!';
                 button.style.background = 'var(--accent-green)';
                 button.style.color = '#000';
-                setTimeout(() => {
-                    button.innerHTML = originalText;
+                clearTimeout(button._copyTimer);
+                button._copyTimer = setTimeout(() => {
+                    button.innerHTML = button.dataset.origHtml;
                     button.style.background = '';
                     button.style.color = '';
                 }, 2000);
-            });
+            }).catch(() => {});
         }
 
         document.querySelectorAll('.copy-btn').forEach(btn => {
